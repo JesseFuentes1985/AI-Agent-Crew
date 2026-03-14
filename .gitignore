@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+dashboard/node_modules/
+
+# Secrets & credentials — NEVER commit these
+dashboard/budget.json
+.openclaw/
+*.env
+.env*
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*

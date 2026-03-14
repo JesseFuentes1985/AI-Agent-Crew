@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🛸 Mission Control</title>
+  <style>
+    :root {
+      --bg: #08080f; --surface: #0f0f1a; --border: #1e1e35;
+      --text: #e0e0f0; --muted: #6b6b90; --accent: #00d4ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+    /* ── TOP NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--bg); z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .nav-title { font-size: 1.3rem; font-weight: 700; color: var(--accent); text-shadow: 0 0 20px rgba(0,212,255,.4); cursor: pointer; }
+    .back-btn {
+      background: rgba(255,255,255,.05); border: 1px solid var(--border);
+      color: var(--muted); font-size: 0.8rem; padding: .35rem .8rem;
+      border-radius: 6px; cursor: pointer; transition: all .15s; display: none;
+    }
+    .back-btn:hover { color: var(--text); border-color: var(--muted); }
+    .back-btn.visible { display: flex; align-items: center; gap: .4rem; }
+
+    /* Credit widget */
+    #credit-widget { display: flex; flex-direction: column; align-items: flex-end; gap: .2rem; }
+    #credit-label { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    #credit-amount {
+      font-size: 1.3rem; font-weight: 700; color: #00ff88;
+      text-shadow: 0 0 12px rgba(0,255,136,.4); cursor: pointer; transition: opacity .2s;
+    }
+    #credit-amount:hover { opacity: .8; }
+    #credit-amount.unset { font-size: .82rem; color: var(--muted); text-shadow: none; border: 1px dashed var(--border); padding: .3rem .7rem; border-radius: 6px; }
+    #credit-edit-form { display: none; align-items: center; gap: .4rem; }
+    #credit-edit-form.visible { display: flex; }
+    #credit-input { background: rgba(255,255,255,.06); border: 1px solid #00ff88; border-radius: 6px; color: var(--text); font-size: .95rem; font-weight: 600; width: 90px; padding: .3rem .5rem; outline: none; text-align: right; }
+    #credit-save { background: rgba(0,255,136,.15); border: 1px solid rgba(0,255,136,.4); color: #00ff88; font-size: .72rem; font-weight: 700; padding: .3rem .6rem; border-radius: 6px; cursor: pointer; }
+    #credit-cancel { background: transparent; border: 1px solid var(--border); color: var(--muted); font-size: .72rem; padding: .3rem .5rem; border-radius: 6px; cursor: pointer; }
+    #credit-updated { font-size: .62rem; color: var(--muted); }
+
+    /* Stats bar */
+    #stats-bar { display: flex; gap: 1.5rem; font-size: .82rem; color: var(--muted); }
+    #stats-bar span { color: var(--text); font-weight: 600; }
+
+    /* ── HOME GRID ── */
+    .home-tabs { display: flex; gap: .5rem; padding: .8rem 2rem 0; border-bottom: 1px solid var(--border); }
+    .tab { padding: .45rem 1rem; font-size: .8rem; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab:hover:not(.active) { color: var(--text); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; padding: 1.5rem 2rem; }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color .2s, box-shadow .2s; }
+    .card:hover { border-color: var(--accent); box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 12%, transparent); }
+
+    .card-header { padding: 1rem 1.2rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: .8rem; cursor: pointer; }
+    .card-header:hover .agent-name { text-decoration: underline; }
+
+    .agent-avatar { width: 48px; height: 48px; min-width: 48px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 35%, transparent); }
+    .agent-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .avatar-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: var(--border); }
+
+    .agent-info { flex: 1; }
+    .agent-name { font-size: 1rem; font-weight: 700; color: var(--accent); }
+    .agent-title { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
+
+    .view-board-btn {
+      font-size: .72rem; color: var(--muted); background: rgba(255,255,255,.04);
+      border: 1px solid var(--border); border-radius: 5px; padding: .25rem .6rem;
+      cursor: pointer; white-space: nowrap; transition: all .15s;
+    }
+    .view-board-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+    .skills { display: flex; flex-wrap: wrap; gap: .35rem; padding: .7rem 1.2rem; border-bottom: 1px solid var(--border); }
+    .skill-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); color: var(--accent); font-size: .65rem; font-weight: 600; letter-spacing: .04em; padding: .18rem .5rem; border-radius: 20px; text-transform: uppercase; }
+
+    .progress-wrap { padding: .6rem 1.2rem; border-bottom: 1px solid var(--border); }
+    .progress-label { display: flex; justify-content: space-between; font-size: .72rem; color: var(--muted); margin-bottom: .35rem; }
+    .progress-label span:last-child { color: var(--accent); font-weight: 600; }
+    .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .4s; box-shadow: 0 0 6px color-mix(in srgb, var(--accent) 60%, transparent); }
+
+    .task-list { padding: .4rem 0; max-height: 220px; overflow-y: auto; }
+    .task-list::-webkit-scrollbar { width: 3px; }
+    .task-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .task-item { display: flex; align-items: flex-start; gap: .6rem; padding: .45rem 1.2rem; cursor: pointer; transition: background .15s; }
+    .task-item:hover { background: rgba(255,255,255,.03); }
+    .task-check { width: 15px; height: 15px; min-width: 15px; border-radius: 4px; border: 1.5px solid var(--muted); margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all .2s; cursor: pointer; }
+    .task-check:hover { border-color: var(--accent); }
+    .task-item.done .task-check { background: var(--accent); border-color: var(--accent); }
+    .task-check svg { display: none; }
+    .task-item.done .task-check svg { display: block; }
+    .task-text { font-size: .8rem; color: var(--text); line-height: 1.4; flex: 1; }
+    .task-item.done .task-text { color: var(--muted); }
+    .task-delete { opacity: 0; color: var(--muted); cursor: pointer; font-size: .75rem; transition: opacity .15s, color .15s; }
+    .task-item:hover .task-delete { opacity: 1; }
+    .task-delete:hover { color: #ff6b6b; }
+
+    .add-task { display: flex; gap: .5rem; padding: .7rem 1.2rem; border-top: 1px solid var(--border); }
+    .add-task input { flex: 1; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: .78rem; padding: .4rem .65rem; outline: none; transition: border-color .2s; }
+    .add-task input::placeholder { color: var(--muted); }
+    .add-task input:focus { border-color: var(--accent); }
+    .add-task button { background: color-mix(in srgb, var(--accent) 18%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent); color: var(--accent); font-size: .72rem; font-weight: 600; padding: .4rem .75rem; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+    .add-task button:hover { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+
+    .notes-toggle { padding: .45rem 1.2rem; border-top: 1px solid var(--border); font-size: .72rem; font-weight: 600; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
+    .notes-toggle:hover { color: var(--text); }
+    .note-count { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); border-radius: 10px; padding: .1rem .5rem; font-size: .65rem; }
+    .notes-section { display: none; border-top: 1px solid var(--border); }
+    .notes-section.open { display: block; }
+    .note-list { max-height: 180px; overflow-y: auto; padding: .3rem 0; }
+    .note-item { padding: .55rem 1.2rem; border-bottom: 1px solid var(--border); }
+    .note-item:last-child { border-bottom: none; }
+    .note-date { font-size: .63rem; color: var(--muted); margin-bottom: .25rem; display: flex; justify-content: space-between; }
+    .note-text { font-size: .8rem; color: var(--text); line-height: 1.5; white-space: pre-wrap; }
+    .note-delete { opacity: 0; cursor: pointer; color: var(--muted); font-size: .72rem; transition: opacity .15s, color .15s; }
+    .note-item:hover .note-delete { opacity: 1; }
+    .note-delete:hover { color: #ff6b6b; }
+    .add-note { display: flex; gap: .5rem; padding: .6rem 1.2rem; border-top: 1px solid var(--border); }
+    .add-note textarea { flex: 1; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: .78rem; padding: .4rem .65rem; outline: none; resize: none; height: 52px; font-family: inherit; line-height: 1.4; transition: border-color .2s; }
+    .add-note textarea::placeholder { color: var(--muted); }
+    .add-note textarea:focus { border-color: var(--accent); }
+    .add-note button { background: color-mix(in srgb, var(--accent) 18%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent); color: var(--accent); font-size: .7rem; font-weight: 600; padding: .4rem .65rem; border-radius: 6px; cursor: pointer; align-self: flex-end; white-space: nowrap; }
+
+    /* ── AGENT PAGE ── */
+    .agent-page { padding: 0 2rem 3rem; }
+    .agent-hero { display: flex; align-items: center; gap: 1.2rem; padding: 1.5rem 0 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+    .agent-hero-avatar { width: 72px; height: 72px; min-width: 72px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 40%, transparent); }
+    .agent-hero-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .agent-hero-info h1 { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+    .agent-hero-info p { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
+    .agent-hero-stats { margin-left: auto; display: flex; gap: 1.2rem; font-size: .82rem; color: var(--muted); text-align: center; }
+    .hero-stat span { display: block; font-size: 1.4rem; font-weight: 700; color: var(--text); }
+    .hero-stat.progress-stat span { color: var(--accent); }
+
+    /* Kanban */
+    .kanban-wrap { margin-bottom: 1.5rem; }
+    .kanban-wrap h2 { font-size: .8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; }
+    .kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+    .kanban-col { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; display: flex; flex-direction: column; min-height: 250px; transition: border-color .2s, background .2s; }
+    .kanban-col.drag-over { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--surface)); }
+
+    .kanban-col-header { padding: .7rem 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+    .col-title { font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .col-count { background: var(--border); color: var(--muted); border-radius: 10px; padding: .1rem .5rem; font-size: .68rem; font-weight: 600; }
+    .col-queue .col-title   { color: var(--muted); }
+    .col-progress .col-title { color: #ff9f43; }
+    .col-done .col-title    { color: #00ff88; }
+
+    .kanban-cards { flex: 1; padding: .5rem; display: flex; flex-direction: column; gap: .4rem; overflow-y: auto; max-height: 420px; }
+    .kanban-cards::-webkit-scrollbar { width: 3px; }
+    .kanban-cards::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .kanban-card { background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 7px; padding: .6rem .75rem; cursor: grab; display: flex; align-items: flex-start; gap: .5rem; transition: border-color .15s, box-shadow .15s, opacity .15s; }
+    .kanban-card:hover { border-color: var(--accent); box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 15%, transparent); }
+    .kanban-card.dragging { opacity: .35; cursor: grabbing; }
+    .kanban-card.done-card .kanban-card-text { color: var(--muted); }
+
+    .drag-handle { color: var(--muted); font-size: .75rem; padding-top: 1px; cursor: grab; user-select: none; }
+    .kanban-card-text { flex: 1; font-size: .82rem; line-height: 1.4; color: var(--text); word-break: break-word; }
+    .kanban-card-actions { display: flex; gap: .25rem; opacity: 0; transition: opacity .15s; }
+    .kanban-card:hover .kanban-card-actions { opacity: 1; }
+    .kbtn { color: var(--muted); cursor: pointer; font-size: .78rem; padding: .15rem .25rem; border-radius: 3px; border: none; background: transparent; transition: color .15s, background .15s; }
+    .kbtn:hover { color: var(--text); background: rgba(255,255,255,.08); }
+    .kbtn.del:hover { color: #ff6b6b; }
+
+    .kanban-card-edit { display: none; flex: 1; }
+    .kanban-card-edit.visible { display: flex; gap: .4rem; flex: 1; }
+    .kanban-card-edit input { flex: 1; background: rgba(255,255,255,.06); border: 1px solid var(--accent); border-radius: 4px; color: var(--text); font-size: .82rem; padding: .25rem .45rem; outline: none; }
+    .edit-save { background: color-mix(in srgb, var(--accent) 18%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent); color: var(--accent); font-size: .7rem; padding: .25rem .5rem; border-radius: 4px; cursor: pointer; border: none; }
+
+    .kanban-add { padding: .5rem; border-top: 1px solid var(--border); display: flex; gap: .4rem; }
+    .kanban-add input { flex: 1; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: .78rem; padding: .35rem .6rem; outline: none; transition: border-color .2s; }
+    .kanban-add input::placeholder { color: var(--muted); font-size: .72rem; }
+    .kanban-add input:focus { border-color: var(--accent); }
+    .kanban-add button { background: color-mix(in srgb, var(--accent) 18%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent); color: var(--accent); font-size: .7rem; font-weight: 600; padding: .35rem .65rem; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+
+    /* Skills editor */
+    .section-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 1.2rem; }
+    .section-title { font-size: .75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; display: flex; align-items: center; justify-content: space-between; }
+    .skills-editor { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+    .skill-tag-edit { background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); color: var(--accent); font-size: .68rem; font-weight: 600; letter-spacing: .04em; padding: .2rem .5rem; border-radius: 20px; text-transform: uppercase; display: flex; align-items: center; gap: .3rem; }
+    .skill-tag-edit .rm { cursor: pointer; opacity: .6; font-size: .7rem; }
+    .skill-tag-edit .rm:hover { opacity: 1; color: #ff6b6b; }
+    .add-skill-form { display: flex; gap: .4rem; align-items: center; }
+    .add-skill-form input { background: rgba(255,255,255,.05); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-size: .75rem; padding: .25rem .5rem; outline: none; width: 120px; transition: border-color .2s; }
+    .add-skill-form input:focus { border-color: var(--accent); }
+    .add-skill-form button { background: transparent; border: 1px dashed var(--border); color: var(--muted); font-size: .72rem; padding: .25rem .55rem; border-radius: 5px; cursor: pointer; transition: all .15s; }
+    .add-skill-form button:hover { border-color: var(--accent); color: var(--accent); }
+    .skill-saved { font-size: .7rem; color: #00ff88; opacity: 0; transition: opacity .3s; }
+    .skill-saved.show { opacity: 1; }
+
+    /* Notes on agent page */
+    .agent-notes-list { display: flex; flex-direction: column; gap: .6rem; }
+    .agent-note-item { background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: 7px; padding: .7rem .9rem; }
+    .agent-note-meta { font-size: .65rem; color: var(--muted); margin-bottom: .3rem; display: flex; justify-content: space-between; }
+    .agent-note-text { font-size: .83rem; color: var(--text); line-height: 1.5; white-space: pre-wrap; }
+    .agent-note-del { cursor: pointer; opacity: .5; transition: opacity .15s, color .15s; }
+    .agent-note-del:hover { opacity: 1; color: #ff6b6b; }
+    .add-agent-note { display: flex; gap: .5rem; margin-top: .6rem; }
+    .add-agent-note textarea { flex: 1; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: .82rem; padding: .5rem .7rem; outline: none; resize: none; height: 64px; font-family: inherit; line-height: 1.4; transition: border-color .2s; }
+    .add-agent-note textarea::placeholder { color: var(--muted); }
+    .add-agent-note textarea:focus { border-color: var(--accent); }
+    .add-agent-note button { background: color-mix(in srgb, var(--accent) 18%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent); color: var(--accent); font-size: .75rem; font-weight: 600; padding: .5rem .8rem; border-radius: 6px; cursor: pointer; align-self: flex-end; white-space: nowrap; }
+
+    .loading { text-align: center; padding: 4rem; color: var(--muted); font-size: .9rem; }
+
+    @media (max-width: 900px) {
+      .kanban { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <div class="nav-title" onclick="goHome()">🛸 Mission Control</div>
+    <button class="back-btn" id="back-btn" onclick="goHome()">← All Agents</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:1.8rem;">
+    <div id="stats-bar">
+      <div>Tasks <span id="stat-total">—</span></div>
+      <div>Done <span id="stat-done">—</span></div>
+      <div>Left <span id="stat-remaining">—</span></div>
+    </div>
+    <div id="credit-widget">
+      <div id="credit-label">⚡ Anthropic Credits</div>
+      <div style="display:flex;align-items:center;gap:.5rem;">
+        <div id="credit-amount" class="unset" onclick="openCreditEdit()">+ Set Balance</div>
+        <div id="credit-edit-form">
+          <span style="color:var(--muted);">$</span>
+          <input id="credit-input" type="number" step="0.01" min="0" placeholder="0.00"
+            onkeydown="if(event.key==='Enter')saveBudget();if(event.key==='Escape')closeCreditEdit();"/>
+          <button id="credit-save" onclick="saveBudget()">Save</button>
+          <button id="credit-cancel" onclick="closeCreditEdit()">✕</button>
+        </div>
+      </div>
+      <div id="credit-updated"></div>
+    </div>
+  </div>
+</nav>
+
+<div id="app"><div class="loading">Loading crew...</div></div>
+
+<script>
+// ── Config ─────────────────────────────────────────────────
+const COLORS = {
+  orbit:'#00d4ff', greenlantern:'#00ff88', rick:'#39ff14',
+  quigon:'#ffd700', beast:'#4f8ef7', baymax:'#ff6b6b',
+  thanos:'#b44fff', tonystark:'#ff9f43'
+};
+const AVATARS = {
+  orbit:'avatars/orbit.jpg', greenlantern:'avatars/greenlantern.jpg',
+  rick:'avatars/rick.jpg', quigon:'avatars/quigon.jpg',
+  beast:'avatars/beast.jpg', baymax:'avatars/baymax.jpg',
+  thanos:'avatars/thanos.jpg', tonystark:'avatars/tonystark.jpg'
+};
+const AVATAR_POS = { tonystark:'center 25%' };
+
+// ── State ──────────────────────────────────────────────────
+let appData = null;
+let currentFilter = 'all';
+let dragState = {};
+
+// ── Bootstrap ──────────────────────────────────────────────
+async function init() {
+  // Load from cache instantly, render immediately
+  const cached = localStorage.getItem('mc_data');
+  if (cached) {
+    try { appData = JSON.parse(cached); updateStats(); } catch(e) {}
+  }
+  window.addEventListener('hashchange', route);
+  route(); // render from cache right away
+
+  // Then fetch fresh data in background
+  await Promise.all([loadData(), loadBudget()]);
+  route(); // re-render with fresh data
+}
+
+async function loadData() {
+  const res = await fetch('/api/tasks');
+  appData = await res.json();
+  localStorage.setItem('mc_data', JSON.stringify(appData));
+  updateStats();
+}
+
+function updateStats() {
+  let total = 0, done = 0;
+  Object.values(appData.agents).forEach(a => a.tasks.forEach(t => { total++; if (t.status === 'done' || t.done) done++; }));
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-remaining').textContent = total - done;
+}
+
+// ── Router ─────────────────────────────────────────────────
+function route() {
+  const hash = window.location.hash;
+  if (hash.startsWith('#/agent/')) {
+    const id = hash.replace('#/agent/', '');
+    if (appData) renderAgentPage(id);
+  } else {
+    if (appData) renderHomePage();
+  }
+}
+
+function goHome() { window.location.hash = ''; }
+function goToAgent(id) {
+  // Render immediately from cached data, no waiting
+  window.location.hash = `#/agent/${id}`;
+}
+
+// ── Home Page ──────────────────────────────────────────────
+function renderHomePage() {
+  document.getElementById('back-btn').classList.remove('visible');
+  if (!appData) return;
+
+  let agents = Object.entries(appData.agents);
+  if (currentFilter === 'pending') agents = agents.filter(([,a]) => a.tasks.some(t => t.status !== 'done' && !t.done));
+  if (currentFilter === 'done') agents = agents.filter(([,a]) => a.tasks.every(t => t.status === 'done' || t.done));
+
+  const html = `
+    <div class="home-tabs">
+      ${['all','pending','done'].map((f,i) =>
+        `<div class="tab ${currentFilter===f?'active':''}" onclick="setFilter('${f}')">${['All Agents','Has Pending','Completed'][i]}</div>`
+      ).join('')}
+    </div>
+    <div class="grid">
+      ${agents.length === 0 ? '<div class="loading">No agents match.</div>' : agents.map(([id,a]) => renderCard(id, a)).join('')}
+    </div>`;
+  document.getElementById('app').innerHTML = html;
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  renderHomePage();
+}
+
+function renderCard(id, agent) {
+  const color = COLORS[id] || '#888';
+  const tasks = agent.tasks || [];
+  const done = tasks.filter(t => t.status === 'done' || t.done).length;
+  const pct = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
+  const sorted = [...tasks].sort((a,b) => {
+    const aD = a.status === 'done' || a.done;
+    const bD = b.status === 'done' || b.done;
+    return aD - bD;
+  });
+  const notes = agent.notes || [];
+
+  return `<div class="card" style="--accent:${color}">
+    <div class="card-header" onclick="goToAgent('${id}')">
+      <div class="agent-avatar">
+        ${AVATARS[id] ? `<img src="${AVATARS[id]}" alt="${agent.name}" style="${AVATAR_POS[id]?`object-position:${AVATAR_POS[id]}`:''}" />` : `<div class="avatar-fallback">${agent.emoji}</div>`}
+      </div>
+      <div class="agent-info">
+        <div class="agent-name">${agent.name}</div>
+        <div class="agent-title">${agent.title}</div>
+      </div>
+      <div class="view-board-btn">Board →</div>
+    </div>
+    <div class="skills">${(agent.skills||[]).map(s=>`<span class="skill-tag">${esc(s)}</span>`).join('') || `<span style="color:var(--muted);font-size:.75rem">No skills</span>`}</div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span>${done}/${tasks.length} (${pct}%)</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="task-list">
+      ${sorted.length ? sorted.map(t => {
+        const isDone = t.status === 'done' || t.done;
+        return `<div class="task-item ${isDone?'done':''}">
+          <div class="task-check" onclick="quickToggle(event,'${id}','${t.id}','${t.status||'queue'}')"><svg width="9" height="7" viewBox="0 0 9 7"><path d="M1 3.5L3 5.5L8 1" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="task-text">${esc(t.text)}</span>
+          <span class="task-delete" onclick="deleteTask(event,'${id}','${t.id}')">✕</span>
+        </div>`;
+      }).join('') : `<div style="padding:.7rem 1.2rem;color:var(--muted);font-size:.78rem">No tasks yet.</div>`}
+    </div>
+    <div class="add-task">
+      <input type="text" placeholder="Add a task..." id="qi-${id}" onkeydown="if(event.key==='Enter')quickAdd('${id}')"/>
+      <button onclick="quickAdd('${id}')">+ Add</button>
+    </div>
+    <div class="notes-toggle" onclick="toggleNotes('${id}')">
+      <span>📝 Notes</span><span class="note-count">${notes.length}</span>
+    </div>
+    <div class="notes-section" id="ns-${id}">
+      <div class="note-list">${renderNotesList(id, notes)}</div>
+      <div class="add-note">
+        <textarea id="ni-${id}" placeholder="Write a note..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();quickNote('${id}');}"></textarea>
+        <button onclick="quickNote('${id}')">Save</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderNotesList(agentId, notes) {
+  if (!notes || notes.length === 0) return `<div style="padding:.7rem 1.2rem;color:var(--muted);font-size:.78rem">No notes yet.</div>`;
+  return notes.map(n => {
+    const d = new Date(n.createdAt);
+    return `<div class="note-item">
+      <div class="note-date">
+        <span>${d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} ${d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}</span>
+        <span class="note-delete" onclick="deleteNote(event,'${agentId}','${n.id}')">✕</span>
+      </div>
+      <div class="note-text">${esc(n.text)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Agent Page ─────────────────────────────────────────────
+function renderAgentPage(id) {
+  if (!appData) return;
+  const agent = appData.agents[id];
+  if (!agent) { goHome(); return; }
+
+  const color = COLORS[id] || '#888';
+  const tasks = agent.tasks || [];
+  const queue    = tasks.filter(t => t.status === 'queue'    || (!t.status && !t.done));
+  const progress = tasks.filter(t => t.status === 'progress');
+  const done     = tasks.filter(t => t.status === 'done'     || (!t.status && t.done));
+  const notes = agent.notes || [];
+
+  document.getElementById('back-btn').classList.add('visible');
+
+  document.getElementById('app').innerHTML = `
+  <div class="agent-page" style="--accent:${color}">
+
+    <div class="agent-hero">
+      <div class="agent-hero-avatar">
+        ${AVATARS[id] ? `<img src="${AVATARS[id]}" alt="${agent.name}" style="${AVATAR_POS[id]?`object-position:${AVATAR_POS[id]}`:''}" />` : `<div class="avatar-fallback">${agent.emoji}</div>`}
+      </div>
+      <div class="agent-hero-info">
+        <h1>${agent.name} ${agent.emoji}</h1>
+        <p>${agent.title}</p>
+      </div>
+      <div class="agent-hero-stats">
+        <div class="hero-stat"><span>${queue.length}</span>In Queue</div>
+        <div class="hero-stat progress-stat"><span>${progress.length}</span>In Progress</div>
+        <div class="hero-stat"><span>${done.length}</span>Done</div>
+      </div>
+    </div>
+
+    <div class="kanban-wrap">
+      <h2>Task Board</h2>
+      <div class="kanban">
+        ${renderKanbanCol(id, 'queue',    '📋 In Queue',    queue,    color)}
+        ${renderKanbanCol(id, 'progress', '🔄 In Progress', progress, color)}
+        ${renderKanbanCol(id, 'done',     '✅ Done',        done,     color)}
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">
+        <span>🧠 Skills</span>
+        <span class="skill-saved" id="skill-saved-${id}">Saved ✓</span>
+      </div>
+      <div class="skills-editor" id="skills-editor-${id}">
+        ${(agent.skills||[]).map(s => skillTag(id, s)).join('')}
+        <div class="add-skill-form">
+          <input id="skill-input-${id}" type="text" placeholder="Add skill..." onkeydown="if(event.key==='Enter')addSkill('${id}')"/>
+          <button onclick="addSkill('${id}')">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title"><span>📝 Notes</span></div>
+      <div class="agent-notes-list" id="agent-notes-${id}">
+        ${notes.length ? notes.map(n => agentNoteHtml(id, n)).join('') : `<div style="color:var(--muted);font-size:.82rem">No notes yet.</div>`}
+      </div>
+      <div class="add-agent-note">
+        <textarea id="agent-note-input-${id}" placeholder="Write a note for ${agent.name}... (Enter to save, Shift+Enter for new line)"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();addAgentNote('${id}');}"></textarea>
+        <button onclick="addAgentNote('${id}')">Save Note</button>
+      </div>
+    </div>
+
+  </div>`;
+}
+
+function renderKanbanCol(agentId, status, label, tasks, color) {
+  const cls = `col-${status}`;
+  return `<div class="kanban-col ${cls}" id="kcol-${agentId}-${status}"
+      ondragover="onDragOver(event,'${status}')"
+      ondrop="onDrop(event,'${agentId}','${status}')"
+      ondragleave="onDragLeave(event)">
+    <div class="kanban-col-header">
+      <span class="col-title">${label}</span>
+      <span class="col-count">${tasks.length}</span>
+    </div>
+    <div class="kanban-cards" id="kcards-${agentId}-${status}">
+      ${tasks.length ? tasks.map(t => kanbanCard(agentId, t, status)).join('') : `<div style="padding:.8rem;color:var(--muted);font-size:.75rem;text-align:center">Drop tasks here</div>`}
+    </div>
+    ${status === 'queue' ? `<div class="kanban-add">
+      <input type="text" id="kadd-${agentId}" placeholder="Add to queue..." onkeydown="if(event.key==='Enter')kanbanAdd('${agentId}')"/>
+      <button onclick="kanbanAdd('${agentId}')">+</button>
+    </div>` : ''}
+  </div>`;
+}
+
+function kanbanCard(agentId, task, status) {
+  return `<div class="kanban-card ${status==='done'?'done-card':''}" id="kcard-${task.id}"
+      draggable="true"
+      ondragstart="onDragStart(event,'${agentId}','${task.id}')"
+      ondragend="onDragEnd(event)">
+    <span class="drag-handle">⠿</span>
+    <span class="kanban-card-text" id="ktxt-${task.id}">${esc(task.text)}</span>
+    <div class="kanban-card-edit" id="kedit-${task.id}">
+      <input type="text" value="${esc(task.text)}" onkeydown="if(event.key==='Enter')saveTaskEdit('${agentId}','${task.id}');if(event.key==='Escape')cancelEdit('${task.id}')"/>
+      <button class="edit-save" onclick="saveTaskEdit('${agentId}','${task.id}')">✓</button>
+    </div>
+    <div class="kanban-card-actions">
+      <button class="kbtn" onclick="startEdit('${task.id}')" title="Edit">✏️</button>
+      <button class="kbtn del" onclick="deleteTask(event,'${agentId}','${task.id}')" title="Delete">🗑️</button>
+    </div>
+  </div>`;
+}
+
+function skillTag(agentId, skill) {
+  return `<span class="skill-tag-edit">
+    ${esc(skill)}
+    <span class="rm" onclick="removeSkill('${agentId}','${esc(skill)}')">✕</span>
+  </span>`;
+}
+
+function agentNoteHtml(agentId, n) {
+  const d = new Date(n.createdAt);
+  return `<div class="agent-note-item" id="anote-${n.id}">
+    <div class="agent-note-meta">
+      <span>${d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} ${d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}</span>
+      <span class="agent-note-del" onclick="deleteNote(event,'${agentId}','${n.id}')">✕ Delete</span>
+    </div>
+    <div class="agent-note-text">${esc(n.text)}</div>
+  </div>`;
+}
+
+// ── Drag & Drop ────────────────────────────────────────────
+function onDragStart(e, agentId, taskId) {
+  dragState = { agentId, taskId };
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => { const c = document.getElementById(`kcard-${taskId}`); if(c) c.classList.add('dragging'); }, 0);
+}
+function onDragEnd(e) { e.target.classList.remove('dragging'); }
+function onDragOver(e, status) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); e.dataTransfer.dropEffect = 'move'; }
+function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+async function onDrop(e, agentId, status) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragState.taskId || dragState.agentId !== agentId) return;
+  await fetch(`/api/tasks/${agentId}/${dragState.taskId}`, {
+    method: 'PATCH', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ status })
+  });
+  dragState = {};
+  await loadData();
+  renderAgentPage(agentId);
+}
+
+// ── Task Inline Edit ───────────────────────────────────────
+function startEdit(taskId) {
+  document.getElementById(`ktxt-${taskId}`).style.display = 'none';
+  document.getElementById(`kedit-${taskId}`).classList.add('visible');
+  document.getElementById(`kedit-${taskId}`).querySelector('input').focus();
+}
+function cancelEdit(taskId) {
+  document.getElementById(`ktxt-${taskId}`).style.display = '';
+  document.getElementById(`kedit-${taskId}`).classList.remove('visible');
+}
+async function saveTaskEdit(agentId, taskId) {
+  const input = document.getElementById(`kedit-${taskId}`).querySelector('input');
+  const text = input.value.trim();
+  if (!text) return cancelEdit(taskId);
+  await fetch(`/api/tasks/${agentId}/${taskId}`, {
+    method: 'PATCH', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ text })
+  });
+  await loadData();
+  renderAgentPage(agentId);
+}
+
+// ── Task Actions ───────────────────────────────────────────
+async function quickToggle(e, agentId, taskId, currentStatus) {
+  e.stopPropagation();
+  const newStatus = (currentStatus === 'done') ? 'queue' : 'done';
+  // Optimistic update — flip it in memory immediately, re-render, then sync
+  const task = appData.agents[agentId]?.tasks.find(t => t.id === taskId);
+  if (task) { task.status = newStatus; task.done = newStatus === 'done'; }
+  renderHomePage();
+  // Sync to server in background
+  fetch(`/api/tasks/${agentId}/${taskId}`, {
+    method: 'PATCH', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ status: newStatus })
+  });
+}
+async function quickAdd(agentId) {
+  const input = document.getElementById(`qi-${agentId}`);
+  const text = input.value.trim();
+  if (!text) return;
+  await fetch(`/api/tasks/${agentId}`, {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ text })
+  });
+  input.value = '';
+  await loadData(); renderHomePage();
+}
+async function kanbanAdd(agentId) {
+  const input = document.getElementById(`kadd-${agentId}`);
+  const text = input.value.trim();
+  if (!text) return;
+  await fetch(`/api/tasks/${agentId}`, {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ text })
+  });
+  input.value = '';
+  await loadData(); renderAgentPage(agentId);
+}
+async function deleteTask(e, agentId, taskId) {
+  e.stopPropagation();
+  if (!confirm('Delete this task?')) return;
+  await fetch(`/api/tasks/${agentId}/${taskId}`, { method: 'DELETE' });
+  await loadData();
+  const onAgent = window.location.hash.startsWith('#/agent/');
+  onAgent ? renderAgentPage(agentId) : renderHomePage();
+}
+
+// ── Skills ─────────────────────────────────────────────────
+async function saveSkills(agentId) {
+  const tags = [...document.querySelectorAll(`#skills-editor-${agentId} .skill-tag-edit`)].map(el => el.textContent.replace('✕','').trim()).filter(Boolean);
+  await fetch(`/api/skills/${agentId}`, {
+    method: 'PATCH', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ skills: tags })
+  });
+  const saved = document.getElementById(`skill-saved-${agentId}`);
+  if (saved) { saved.classList.add('show'); setTimeout(() => saved.classList.remove('show'), 2000); }
+  await loadData();
+}
+function addSkill(agentId) {
+  const input = document.getElementById(`skill-input-${agentId}`);
+  const val = input.value.trim();
+  if (!val) return;
+  const editor = document.getElementById(`skills-editor-${agentId}`);
+  const addForm = editor.querySelector('.add-skill-form');
+  const tag = document.createElement('span');
+  tag.className = 'skill-tag-edit';
+  tag.innerHTML = `${esc(val)}<span class="rm" onclick="removeSkill('${agentId}','${esc(val)}')">✕</span>`;
+  editor.insertBefore(tag, addForm);
+  input.value = '';
+  saveSkills(agentId);
+}
+function removeSkill(agentId, skill) {
+  const tags = [...document.querySelectorAll(`#skills-editor-${agentId} .skill-tag-edit`)];
+  const tag = tags.find(el => el.textContent.replace('✕','').trim() === skill);
+  if (tag) tag.remove();
+  saveSkills(agentId);
+}
+
+// ── Notes ──────────────────────────────────────────────────
+function toggleNotes(agentId) {
+  document.getElementById(`ns-${agentId}`)?.classList.toggle('open');
+}
+async function quickNote(agentId) {
+  const ta = document.getElementById(`ni-${agentId}`);
+  const text = ta.value.trim();
+  if (!text) return;
+  await fetch(`/api/notes/${agentId}`, {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ text })
+  });
+  ta.value = '';
+  await loadData(); renderHomePage();
+  document.getElementById(`ns-${agentId}`)?.classList.add('open');
+}
+async function addAgentNote(agentId) {
+  const ta = document.getElementById(`agent-note-input-${agentId}`);
+  const text = ta.value.trim();
+  if (!text) return;
+  await fetch(`/api/notes/${agentId}`, {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ text })
+  });
+  ta.value = '';
+  await loadData(); renderAgentPage(agentId);
+}
+async function deleteNote(e, agentId, noteId) {
+  e.stopPropagation();
+  if (!confirm('Delete this note?')) return;
+  await fetch(`/api/notes/${agentId}/${noteId}`, { method: 'DELETE' });
+  await loadData();
+  const onAgent = window.location.hash.startsWith('#/agent/');
+  onAgent ? renderAgentPage(agentId) : renderHomePage();
+}
+
+// ── Budget ─────────────────────────────────────────────────
+async function loadBudget() {
+  const b = await (await fetch('/api/budget')).json();
+  const amountEl = document.getElementById('credit-amount');
+  const updEl = document.getElementById('credit-updated');
+  if (b.balance !== null && b.balance !== undefined) {
+    amountEl.className = b.balance < 5 ? '' : '';
+    amountEl.style.color = b.balance < 5 ? '#ff6b6b' : '#00ff88';
+    amountEl.style.textShadow = b.balance < 5 ? '0 0 12px rgba(255,107,107,.4)' : '0 0 12px rgba(0,255,136,.4)';
+    amountEl.textContent = `$${b.balance.toFixed(2)}`;
+    if (b.lastUpdated) {
+      const d = new Date(b.lastUpdated);
+      updEl.textContent = `Updated ${d.toLocaleDateString()} ${d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`;
+    }
+  } else {
+    amountEl.className = 'unset'; amountEl.textContent = '+ Set Balance';
+    amountEl.style.color = ''; amountEl.style.textShadow = '';
+  }
+}
+function openCreditEdit() {
+  document.getElementById('credit-amount').style.display = 'none';
+  document.getElementById('credit-edit-form').classList.add('visible');
+  document.getElementById('credit-input').focus();
+}
+function closeCreditEdit() {
+  document.getElementById('credit-edit-form').classList.remove('visible');
+  document.getElementById('credit-amount').style.display = '';
+  document.getElementById('credit-input').value = '';
+}
+async function saveBudget() {
+  const val = document.getElementById('credit-input').value;
+  if (!val || isNaN(parseFloat(val))) return;
+  await fetch('/api/budget', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ balance: parseFloat(val) }) });
+  closeCreditEdit(); await loadBudget();
+}
+
+// ── Utils ──────────────────────────────────────────────────
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Go ─────────────────────────────────────────────────────
+init();
+// Background refresh every 30s — only re-renders if user isn't mid-interaction
+setInterval(async () => {
+  await loadData();
+  // Only silently refresh home page; don't interrupt agent page interactions
+  if (!window.location.hash.startsWith('#/agent/')) renderHomePage();
+}, 30000);
+setInterval(loadBudget, 60000);
+</script>
+</body>
+</html>

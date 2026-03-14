@@ -1,0 +1,436 @@
+{
+  "lastUpdated": "2026-03-14",
+  "agents": {
+    "orbit": {
+      "name": "Orbit",
+      "title": "Core Architect",
+      "emoji": "🛸",
+      "skills": [
+        "Assistant",
+        "Admin",
+        "Dev"
+      ],
+      "tasks": [
+        {
+          "id": "orbit-1",
+          "text": "Get the authentication part in clawd to our Mac mini",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "orbit-2",
+          "text": "Enable all tools sessions visible to all so agents can talk to each other",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "orbit-3",
+          "text": "How to connect the AI agents together",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "orbit-4",
+          "text": "Get access to a chat like Telegram/Slack/Google Chats or another chat",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "orbit-5",
+          "text": "Make a GitHub page for a tool",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "orbit-6",
+          "text": "Add to the GitHub page for resume on what I am doing",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "orbit-7",
+          "text": "Make tokens for each Agent",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "orbit-8",
+          "text": "Use Discord for your agent chat",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "orbit-9",
+          "text": "Use Discord as the chat to connect you to your phone",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "orbit-10",
+          "text": "Set up voices with each one of your agents",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "orbit-11",
+          "text": "Hook up a web page for all of my agents",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "orbit-12",
+          "text": "Get Access to Google Drive",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "orbit-13",
+          "text": "Connect my GitHub",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "orbit-14",
+          "text": "Make tool in git with all my agents",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "orbit-1773502934141",
+          "text": "this is a test",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "orbit-15",
+          "text": "Build Mission Control local dashboard",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "orbit-16",
+          "text": "Agent kanban boards with drag-and-drop",
+          "done": false,
+          "status": "done"
+        },
+        {
+          "id": "orbit-17",
+          "text": "Notes system synced to agent workspaces",
+          "done": true,
+          "status": "done"
+        }
+      ]
+    },
+    "greenlantern": {
+      "name": "Green Lantern",
+      "title": "Hal Jordan | Creativity",
+      "emoji": "🟢",
+      "skills": [
+        "Imagination",
+        "Theories",
+        "Storytelling",
+        "Sci-Fi & Fantasy Expert"
+      ],
+      "tasks": [
+        {
+          "id": "gl-1",
+          "text": "Get Into Blender",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "gl-2",
+          "text": "Notion setup",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "gl-3",
+          "text": "Last Star story",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "gl-4",
+          "text": "Build the spaceship (Hex) in Blender",
+          "done": false,
+          "status": "queue"
+        }
+      ]
+    },
+    "rick": {
+      "name": "Rick",
+      "title": "Rick Sanchez | DevOps & SysAdmin",
+      "emoji": "🔬",
+      "skills": [
+        "DevOps",
+        "SysAdmin",
+        "Rick being Rick"
+      ],
+      "tasks": [
+        {
+          "id": "rick-1",
+          "text": "Set up Agent in OpenClaw",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "rick-2",
+          "text": "Hook up Moxie",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rick-3",
+          "text": "Run Ollama on a Pi 5 — dedicated local AI box, always on, no Mac mini resources eaten",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rick-4",
+          "text": "OpenClaw node — pair a Pi as a node, give agents eyes (camera), ears (mic), physical presence in a room",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rick-5",
+          "text": "Wake word detection — always-listening local trigger ('Hey Rick') without cloud",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rick-6",
+          "text": "Moxie's brain — run the OpenMoxie server ON a Pi (dedicated, stays on 24/7)",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rick-7",
+          "text": "Robot controller — Pi as the brain for a custom robot body",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rick-8",
+          "text": "Home automation hub — run Home Assistant locally, control lights/sensors/locks with agents",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rick-9",
+          "text": "Pi as Moxie's voice in other rooms — speaker + mic in different rooms, same AI brain",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rick-10",
+          "text": "Surveillance + AI — Frigate + Ollama",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rick-1773503618752",
+          "text": "look into open router for API tokens management",
+          "done": false,
+          "status": "queue"
+        }
+      ]
+    },
+    "quigon": {
+      "name": "Qui-Gon",
+      "title": "Qui-Gon Jinn | Wellness",
+      "emoji": "🧘",
+      "skills": [
+        "Mind",
+        "Calm",
+        "Mindfulness",
+        "Mental Health",
+        "Jedi Philosophy"
+      ],
+      "tasks": [
+        {
+          "id": "qg-1",
+          "text": "Set up Agent in OpenClaw",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "qg-2",
+          "text": "Meditation",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "qg-3",
+          "text": "Mental Health",
+          "done": false,
+          "status": "queue"
+        }
+      ]
+    },
+    "beast": {
+      "name": "Beast",
+      "title": "Hank McCoy | Learning",
+      "emoji": "📚",
+      "skills": [
+        "Learning",
+        "Certifications",
+        "Dev",
+        "Book Library / Database"
+      ],
+      "tasks": [
+        {
+          "id": "beast-1",
+          "text": "Set up Agent in OpenClaw",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "beast-2",
+          "text": "Book library on what books I have and read already — Need a Database (GitHub)",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "beast-3",
+          "text": "Diagrams of everything",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "beast-4",
+          "text": "Learning new AI stacks",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "beast-5",
+          "text": "AWS certification",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "beast-6",
+          "text": "PMP certification",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "beast-7",
+          "text": "ITIL certification",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "beast-8",
+          "text": "Beast library (our library)",
+          "done": false,
+          "status": "queue"
+        }
+      ]
+    },
+    "baymax": {
+      "name": "Baymax",
+      "title": "Baymax | Health",
+      "emoji": "🤖",
+      "skills": [
+        "Health",
+        "Nutrition",
+        "Sleep",
+        "Hydration",
+        "Fitness"
+      ],
+      "tasks": [
+        {
+          "id": "bay-1",
+          "text": "Set up Agent in OpenClaw",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "bay-2",
+          "text": "Healthy food",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "bay-3",
+          "text": "Working out",
+          "done": false,
+          "status": "queue"
+        }
+      ]
+    },
+    "thanos": {
+      "name": "Thanos",
+      "title": "Thanos | Work",
+      "emoji": "👊",
+      "skills": [
+        "Productivity",
+        "Project Management",
+        "Deadlines",
+        "Execution"
+      ],
+      "tasks": [
+        {
+          "id": "thanos-1",
+          "text": "Set up Agent in OpenClaw",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "thanos-2",
+          "text": "Bring in all the projects that I have",
+          "done": false,
+          "status": "queue"
+        }
+      ]
+    },
+    "tonystark": {
+      "name": "Tony Stark",
+      "title": "Tony Stark | Entrepreneurship & Investing",
+      "emoji": "💰",
+      "skills": [
+        "Business",
+        "Investing",
+        "Markets",
+        "Strategy",
+        "Dev",
+        "Wallet Management"
+      ],
+      "tasks": [
+        {
+          "id": "tony-1",
+          "text": "Set up Agent in OpenClaw",
+          "done": true,
+          "status": "done"
+        },
+        {
+          "id": "tony-2",
+          "text": "Connect to a broker",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "tony-3",
+          "text": "Initial voices for each agent",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "tonystark-1773528879655",
+          "text": "Set up cron job to monitor Anthropic credit balance and alert Jesse when running low",
+          "done": false,
+          "status": "queue"
+        }
+      ],
+      "notes": [
+        {
+          "id": "note-1773528885807",
+          "text": "Jesse ran out of Anthropic credits on Mar 14 2026 and lost access to all agents. He had to get a new API key manually — total pain. Auto-reload is now enabled on Anthropic (reloads to $55 when balance hits $5). Current balance: $52.77.\n\nTask: Build a cron job that reads the dashboard budget.json, checks the balance, and sends Jesse a Slack/webchat alert when balance drops below $15. Also keep the dashboard credit widget updated. This is your domain — wallet management is Tony Stark territory.",
+          "createdAt": "2026-03-14T22:54:45.807Z"
+        }
+      ]
+    }
+  }
+}
