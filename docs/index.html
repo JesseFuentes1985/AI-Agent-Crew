@@ -13,17 +13,18 @@
     body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
 
     /* NAV */
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 2rem; border-bottom: 1px solid var(--border);
-    }
-    .nav-title { font-size: 1.4rem; font-weight: 700; color: var(--accent); text-shadow: 0 0 20px rgba(0,212,255,.4); }
-    .nav-sub { font-size: .8rem; color: var(--muted); margin-top: .15rem; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 100; }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .nav-title { font-size: 1.3rem; font-weight: 700; color: var(--accent); text-shadow: 0 0 20px rgba(0,212,255,.4); cursor: pointer; }
+    .nav-sub { font-size: .72rem; color: var(--muted); margin-top: .1rem; }
+    .back-btn { background: rgba(255,255,255,.05); border: 1px solid var(--border); color: var(--muted); font-size: .8rem; padding: .35rem .8rem; border-radius: 6px; cursor: pointer; transition: all .15s; display: none; }
+    .back-btn:hover { color: var(--text); border-color: var(--muted); }
+    .back-btn.visible { display: flex; align-items: center; gap: .4rem; }
     #stats-bar { display: flex; gap: 1.5rem; font-size: .82rem; color: var(--muted); }
     #stats-bar span { color: var(--text); font-weight: 600; }
 
     /* TABS */
-    .tabs { display: flex; gap: .5rem; padding: .8rem 2rem 0; border-bottom: 1px solid var(--border); }
+    .home-tabs { display: flex; gap: .5rem; padding: .8rem 2rem 0; border-bottom: 1px solid var(--border); }
     .tab { padding: .45rem 1rem; font-size: .8rem; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; }
     .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
     .tab:hover:not(.active) { color: var(--text); }
@@ -32,17 +33,18 @@
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; padding: 1.5rem 2rem; }
 
     /* CARD */
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color .2s, box-shadow .2s; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color .2s, box-shadow .2s; cursor: pointer; }
     .card:hover { border-color: var(--accent); box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 12%, transparent); }
-
     .card-header { padding: 1rem 1.2rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: .8rem; }
     .agent-avatar { width: 52px; height: 52px; min-width: 52px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 35%, transparent); }
     .agent-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
     .avatar-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: var(--border); }
     .agent-name { font-size: 1rem; font-weight: 700; color: var(--accent); }
     .agent-title { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
+    .view-btn { font-size: .72rem; color: var(--muted); background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 5px; padding: .25rem .6rem; white-space: nowrap; transition: all .15s; }
+    .card:hover .view-btn { color: var(--accent); border-color: var(--accent); }
 
-    .skills { display: flex; flex-wrap: wrap; gap: .35rem; padding: .7rem 1.2rem; border-bottom: 1px solid var(--border); min-height: 40px; }
+    .skills { display: flex; flex-wrap: wrap; gap: .35rem; padding: .7rem 1.2rem; border-bottom: 1px solid var(--border); min-height: 38px; }
     .skill-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); color: var(--accent); font-size: .65rem; font-weight: 600; letter-spacing: .04em; padding: .18rem .5rem; border-radius: 20px; text-transform: uppercase; }
 
     .progress-wrap { padding: .6rem 1.2rem; border-bottom: 1px solid var(--border); }
@@ -51,29 +53,65 @@
     .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; box-shadow: 0 0 6px color-mix(in srgb, var(--accent) 60%, transparent); }
 
+    .task-list { padding: .4rem 0; max-height: 200px; overflow-y: auto; }
+    .task-list::-webkit-scrollbar { width: 3px; }
+    .task-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .task-item { display: flex; align-items: flex-start; gap: .6rem; padding: .45rem 1.2rem; }
+    .task-check { width: 15px; height: 15px; min-width: 15px; border-radius: 4px; border: 1.5px solid var(--muted); margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+    .task-item.done .task-check { background: var(--accent); border-color: var(--accent); }
+    .task-check svg { display: none; }
+    .task-item.done .task-check svg { display: block; }
+    .task-text { font-size: .8rem; color: var(--text); line-height: 1.4; flex: 1; }
+    .task-item.done .task-text { color: var(--muted); }
+
+    /* AGENT PAGE */
+    .agent-page { padding: 0 2rem 3rem; }
+    .agent-hero { display: flex; align-items: center; gap: 1.2rem; padding: 1.5rem 0 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .agent-hero-avatar { width: 80px; height: 80px; min-width: 80px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 40%, transparent); }
+    .agent-hero-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .agent-hero-info h1 { font-size: 1.7rem; font-weight: 700; color: var(--accent); }
+    .agent-hero-info p { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
+    .agent-hero-stats { margin-left: auto; display: flex; gap: 1.5rem; font-size: .82rem; color: var(--muted); text-align: center; }
+    .hero-stat span { display: block; font-size: 1.5rem; font-weight: 700; color: var(--text); }
+    .hero-stat.progress-stat span { color: var(--accent); }
+
     /* KANBAN */
-    .kanban-section { padding: .8rem 1.2rem; }
-    .kanban-section-title { font-size: .68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .6rem; }
-    .kanban-mini { display: grid; grid-template-columns: repeat(3,1fr); gap: .5rem; }
-    .km-col { background: rgba(255,255,255,.02); border: 1px solid var(--border); border-radius: 7px; padding: .5rem; }
-    .km-col-header { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .4rem; display: flex; justify-content: space-between; }
-    .km-col-header .cnt { background: var(--border); border-radius: 8px; padding: .05rem .35rem; color: var(--muted); }
-    .km-queue .km-col-header    { color: var(--muted); }
-    .km-progress .km-col-header { color: #ff9f43; }
-    .km-done .km-col-header     { color: #00ff88; }
-    .km-task { font-size: .72rem; color: var(--text); line-height: 1.35; padding: .25rem .1rem; border-bottom: 1px solid rgba(255,255,255,.04); }
-    .km-task:last-child { border-bottom: none; }
-    .km-task.done { color: var(--muted); }
-    .km-empty { font-size: .7rem; color: var(--muted); font-style: italic; padding: .2rem 0; }
+    .kanban-wrap { margin-bottom: 1.5rem; }
+    .kanban-wrap h2 { font-size: .8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; }
+    .kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .kanban-col { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; display: flex; flex-direction: column; min-height: 200px; }
+    .kanban-col-header { padding: .7rem 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .col-title { font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .col-count { background: var(--border); color: var(--muted); border-radius: 10px; padding: .1rem .5rem; font-size: .68rem; font-weight: 600; }
+    .col-queue .col-title    { color: var(--muted); }
+    .col-progress .col-title { color: #ff9f43; }
+    .col-done .col-title     { color: #00ff88; }
+    .kanban-cards { flex: 1; padding: .5rem; display: flex; flex-direction: column; gap: .4rem; overflow-y: auto; max-height: 380px; }
+    .kanban-cards::-webkit-scrollbar { width: 3px; }
+    .kanban-cards::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .kanban-card { background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 7px; padding: .6rem .75rem; }
+    .kanban-card-text { font-size: .82rem; line-height: 1.4; color: var(--text); word-break: break-word; }
+    .kanban-card.done-card .kanban-card-text { color: var(--muted); }
+    .k-empty { font-size: .75rem; color: var(--muted); text-align: center; padding: 1rem; font-style: italic; }
+
+    /* SKILLS */
+    .section-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 1.2rem; }
+    .section-title { font-size: .75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; }
+    .skills-display { display: flex; flex-wrap: wrap; gap: .4rem; }
+
+    /* READONLY BADGE */
+    .readonly-badge { display: inline-flex; align-items: center; gap: .3rem; background: rgba(255,159,67,.08); border: 1px solid rgba(255,159,67,.25); color: #ff9f43; font-size: .68rem; font-weight: 600; padding: .2rem .55rem; border-radius: 20px; }
 
     /* FOOTER */
     footer { text-align: center; padding: 2rem; color: var(--muted); font-size: .75rem; border-top: 1px solid var(--border); margin-top: 1rem; }
     footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
 
     .loading { text-align: center; padding: 4rem; color: var(--muted); }
-    .last-updated { font-size: .72rem; color: var(--muted); }
 
+    @media (max-width: 900px) {
+      .kanban { grid-template-columns: 1fr; }
+      .agent-hero-stats { margin-left: 0; }
+    }
     @media (max-width: 600px) {
       .grid { grid-template-columns: 1fr; padding: 1rem; }
       nav { flex-direction: column; align-items: flex-start; gap: .5rem; }
@@ -83,9 +121,12 @@
 <body>
 
 <nav>
-  <div>
-    <div class="nav-title">🛸 AI Agent Crew</div>
-    <div class="nav-sub">Jesse's personal AI crew — Mission Control</div>
+  <div class="nav-left">
+    <div>
+      <div class="nav-title" onclick="goHome()">🛸 AI Agent Crew</div>
+      <div class="nav-sub">Jesse's personal AI crew — Mission Control</div>
+    </div>
+    <button class="back-btn" id="back-btn" onclick="goHome()">← All Agents</button>
   </div>
   <div id="stats-bar">
     <div>Agents <span id="stat-agents">—</span></div>
@@ -94,16 +135,14 @@
   </div>
 </nav>
 
-<div class="tabs">
-  <div class="tab active" onclick="setFilter('all')">All Agents</div>
-  <div class="tab" onclick="setFilter('pending')">Has Pending</div>
-  <div class="tab" onclick="setFilter('done')">Completed</div>
-</div>
-
-<div id="grid" class="grid"><div class="loading">Loading crew...</div></div>
+<div id="app"><div class="loading">Loading crew...</div></div>
 
 <footer>
-  <p>Built with ❤️ by <a href="https://github.com/JesseFuentes1985/AI-Agent-Crew" target="_blank">Jesse Fuentes</a> &nbsp;·&nbsp; Powered by OpenClaw &nbsp;·&nbsp; <span id="last-updated"></span></p>
+  <p>
+    <a href="https://github.com/JesseFuentes1985/AI-Agent-Crew" target="_blank">GitHub Repo</a>
+    &nbsp;·&nbsp; Powered by OpenClaw &nbsp;·&nbsp;
+    <span id="last-updated"></span>
+  </p>
 </footer>
 
 <script>
@@ -129,34 +168,56 @@ async function init() {
   try {
     const res = await fetch(DATA_URL + '?t=' + Date.now());
     appData = await res.json();
-    render();
+    updateStats();
+    window.addEventListener('hashchange', route);
+    route();
   } catch(e) {
-    document.getElementById('grid').innerHTML = '<div class="loading">Failed to load data. Make sure the repo is public.</div>';
+    document.getElementById('app').innerHTML = '<div class="loading">⚠️ Could not load data. Make sure the repo is public and agent-tasks.json exists.</div>';
   }
 }
 
-function setFilter(f) {
-  currentFilter = f;
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['all','pending','done'][i] === f));
-  render();
-}
-
-function render() {
-  let agents = Object.entries(appData.agents);
-
+function updateStats() {
   let total = 0, done = 0;
-  agents.forEach(([,a]) => a.tasks.forEach(t => { total++; if (t.status==='done'||t.done) done++; }));
+  const agents = Object.values(appData.agents);
+  agents.forEach(a => a.tasks.forEach(t => { total++; if (t.status==='done'||t.done) done++; }));
   document.getElementById('stat-agents').textContent = agents.length;
   document.getElementById('stat-total').textContent = total;
   document.getElementById('stat-done').textContent = done;
   document.getElementById('last-updated').textContent = 'Updated ' + appData.lastUpdated;
+}
 
-  if (currentFilter === 'pending') agents = agents.filter(([,a]) => a.tasks.some(t => t.status!=='done' && !t.done));
-  if (currentFilter === 'done')    agents = agents.filter(([,a]) => a.tasks.every(t => t.status==='done' || t.done));
+function route() {
+  const hash = window.location.hash;
+  if (hash.startsWith('#/agent/')) {
+    renderAgentPage(hash.replace('#/agent/',''));
+  } else {
+    renderHomePage();
+  }
+}
 
-  document.getElementById('grid').innerHTML = agents.length
-    ? agents.map(([id,a]) => renderCard(id,a)).join('')
-    : '<div class="loading">No agents match this filter.</div>';
+function goHome() { window.location.hash = ''; }
+
+// ── HOME ────────────────────────────────────────────────────
+function renderHomePage() {
+  document.getElementById('back-btn').classList.remove('visible');
+  let agents = Object.entries(appData.agents);
+  if (currentFilter === 'pending') agents = agents.filter(([,a]) => a.tasks.some(t => t.status!=='done'&&!t.done));
+  if (currentFilter === 'done')    agents = agents.filter(([,a]) => a.tasks.every(t => t.status==='done'||t.done));
+
+  document.getElementById('app').innerHTML = `
+    <div class="home-tabs">
+      ${['all','pending','done'].map((f,i) =>
+        `<div class="tab ${currentFilter===f?'active':''}" onclick="setFilter('${f}')">${['All Agents','Has Pending','Completed'][i]}</div>`
+      ).join('')}
+    </div>
+    <div class="grid">
+      ${agents.length ? agents.map(([id,a]) => renderCard(id,a)).join('') : '<div class="loading">No agents match.</div>'}
+    </div>`;
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  renderHomePage();
 }
 
 function renderCard(id, agent) {
@@ -164,28 +225,18 @@ function renderCard(id, agent) {
   const tasks = agent.tasks || [];
   const doneCount = tasks.filter(t => t.status==='done'||t.done).length;
   const pct = tasks.length ? Math.round((doneCount/tasks.length)*100) : 0;
+  const sorted = [...tasks].sort((a,b) => (a.status==='done'||a.done) - (b.status==='done'||b.done));
 
-  const queue    = tasks.filter(t => t.status==='queue'    || (!t.status && !t.done));
-  const progress = tasks.filter(t => t.status==='progress');
-  const done     = tasks.filter(t => t.status==='done'     || (!t.status && t.done));
-
-  const kmCol = (cls, label, items) => `
-    <div class="km-col ${cls}">
-      <div class="km-col-header"><span>${label}</span><span class="cnt">${items.length}</span></div>
-      ${items.length ? items.map(t=>`<div class="km-task ${t.status==='done'||t.done?'done':''}">${esc(t.text)}</div>`).join('') : '<div class="km-empty">empty</div>'}
-    </div>`;
-
-  return `<div class="card" style="--accent:${color}">
+  return `<div class="card" style="--accent:${color}" onclick="window.location.hash='#/agent/${id}'">
     <div class="card-header">
       <div class="agent-avatar">
-        ${AVATARS[id]
-          ? `<img src="${AVATARS[id]}" alt="${agent.name}" style="${AVATAR_POS[id]?`object-position:${AVATAR_POS[id]}`:''}" />`
-          : `<div class="avatar-fallback">${agent.emoji}</div>`}
+        ${AVATARS[id] ? `<img src="${AVATARS[id]}" alt="${agent.name}" style="${AVATAR_POS[id]?`object-position:${AVATAR_POS[id]}`:''}" />` : `<div class="avatar-fallback">${agent.emoji}</div>`}
       </div>
-      <div>
+      <div style="flex:1">
         <div class="agent-name">${agent.name} ${agent.emoji}</div>
         <div class="agent-title">${agent.title}</div>
       </div>
+      <div class="view-btn">Board →</div>
     </div>
     <div class="skills">
       ${(agent.skills||[]).map(s=>`<span class="skill-tag">${esc(s)}</span>`).join('') || `<span style="color:var(--muted);font-size:.75rem">No skills listed</span>`}
@@ -194,13 +245,96 @@ function renderCard(id, agent) {
       <div class="progress-label"><span>Progress</span><span>${doneCount}/${tasks.length} (${pct}%)</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
     </div>
-    <div class="kanban-section">
-      <div class="kanban-section-title">Task Board</div>
-      <div class="kanban-mini">
-        ${kmCol('km-queue',    '📋 Queue',    queue)}
-        ${kmCol('km-progress', '🔄 Progress', progress)}
-        ${kmCol('km-done',     '✅ Done',     done)}
+    <div class="task-list">
+      ${sorted.length ? sorted.slice(0,6).map(t => {
+        const isDone = t.status==='done'||t.done;
+        return `<div class="task-item ${isDone?'done':''}">
+          <div class="task-check"><svg width="9" height="7" viewBox="0 0 9 7"><path d="M1 3.5L3 5.5L8 1" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="task-text">${esc(t.text)}</span>
+        </div>`;
+      }).join('') + (sorted.length > 6 ? `<div style="padding:.4rem 1.2rem;color:var(--muted);font-size:.72rem">+${sorted.length-6} more — click to view all</div>` : '')
+      : `<div style="padding:.7rem 1.2rem;color:var(--muted);font-size:.78rem">No tasks yet.</div>`}
+    </div>
+  </div>`;
+}
+
+// ── AGENT PAGE ──────────────────────────────────────────────
+function renderAgentPage(id) {
+  const agent = appData.agents[id];
+  if (!agent) { goHome(); return; }
+
+  const color = COLORS[id] || '#888';
+  const tasks = agent.tasks || [];
+  const queue    = tasks.filter(t => t.status==='queue'    || (!t.status && !t.done));
+  const progress = tasks.filter(t => t.status==='progress');
+  const done     = tasks.filter(t => t.status==='done'     || (!t.status && t.done));
+  const notes    = agent.notes || [];
+
+  document.getElementById('back-btn').classList.add('visible');
+
+  document.getElementById('app').innerHTML = `
+  <div class="agent-page" style="--accent:${color}">
+
+    <div class="agent-hero">
+      <div class="agent-hero-avatar">
+        ${AVATARS[id] ? `<img src="${AVATARS[id]}" alt="${agent.name}" style="${AVATAR_POS[id]?`object-position:${AVATAR_POS[id]}`:''}" />` : `<div class="avatar-fallback">${agent.emoji}</div>`}
       </div>
+      <div class="agent-hero-info">
+        <h1>${agent.name} ${agent.emoji}</h1>
+        <p>${agent.title}</p>
+      </div>
+      <div class="agent-hero-stats">
+        <div class="hero-stat"><span>${queue.length}</span>In Queue</div>
+        <div class="hero-stat progress-stat"><span>${progress.length}</span>In Progress</div>
+        <div class="hero-stat"><span>${done.length}</span>Done</div>
+      </div>
+    </div>
+
+    <div class="kanban-wrap">
+      <h2>📋 Task Board <span class="readonly-badge">👁 View Only</span></h2>
+      <div class="kanban">
+        ${kanbanCol('col-queue',    '📋 In Queue',    queue)}
+        ${kanbanCol('col-progress', '🔄 In Progress', progress)}
+        ${kanbanCol('col-done',     '✅ Done',        done)}
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">🧠 Skills</div>
+      <div class="skills-display">
+        ${(agent.skills||[]).map(s=>`<span class="skill-tag">${esc(s)}</span>`).join('') || `<span style="color:var(--muted);font-size:.82rem">No skills listed</span>`}
+      </div>
+    </div>
+
+    ${notes.length ? `
+    <div class="section-block">
+      <div class="section-title">📝 Notes (${notes.length})</div>
+      ${notes.map(n => {
+        const d = new Date(n.createdAt);
+        return `<div style="margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--border);">
+          <div style="font-size:.65rem;color:var(--muted);margin-bottom:.25rem">
+            ${d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} ${d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}
+          </div>
+          <div style="font-size:.82rem;color:var(--text);line-height:1.5;white-space:pre-wrap">${esc(n.text)}</div>
+        </div>`;
+      }).join('')}
+    </div>` : ''}
+
+  </div>`;
+}
+
+function kanbanCol(cls, label, tasks) {
+  return `<div class="kanban-col ${cls}">
+    <div class="kanban-col-header">
+      <span class="col-title">${label}</span>
+      <span class="col-count">${tasks.length}</span>
+    </div>
+    <div class="kanban-cards">
+      ${tasks.length ? tasks.map(t => `
+        <div class="kanban-card ${t.status==='done'||t.done?'done-card':''}">
+          <div class="kanban-card-text">${esc(t.text)}</div>
+        </div>`).join('')
+      : `<div class="k-empty">Empty</div>`}
     </div>
   </div>`;
 }
