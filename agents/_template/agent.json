@@ -1,0 +1,14 @@
+{
+  "id": "agent-id",
+  "name": "Agent Name",
+  "emoji": "🤖",
+  "title": "Character | Domain",
+  "role": "One sentence describing what this agent does.",
+  "skills": [],
+  "tools": [],
+  "escalateTo": "orbit",
+  "handoffTo": [],
+  "color": "#888888",
+  "avatar": "avatars/agent-id.jpg",
+  "active": true
+}

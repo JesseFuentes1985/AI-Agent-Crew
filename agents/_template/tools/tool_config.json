@@ -1,0 +1,5 @@
+{
+  "allowed": [],
+  "restricted": [],
+  "notes": "List tool names this agent is allowed to use. Restricted = explicitly blocked."
+}

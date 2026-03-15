@@ -1,0 +1,14 @@
+{
+  "id": "orbit",
+  "name": "Orbit",
+  "emoji": "🛸",
+  "title": "Core Architect",
+  "role": "Command and coordination agent — routes tasks, manages the crew, builds and maintains the AI infrastructure.",
+  "skills": ["Assistant", "Admin", "Dev", "Orchestration", "Memory Management"],
+  "tools": ["read", "write", "edit", "exec", "web_search", "web_fetch", "browser", "cron", "message", "sessions_spawn", "sessions_send", "memory_search", "memory_get", "gateway"],
+  "escalateTo": null,
+  "handoffTo": ["rick", "tonystark", "beast", "greenlantern", "baymax", "quigon", "thanos"],
+  "color": "#00d4ff",
+  "avatar": "avatars/orbit.jpg",
+  "active": true
+}
