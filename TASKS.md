@@ -1,12 +1,13 @@
 # Task Board — Orbit
 
-> Synced from Mission Control | 2026-03-14T22:57:48.684Z
+> Synced from Mission Control | 2026-03-15T05:19:41.466Z
 
 ## Skills
 
 - Assistant
 - Admin
 - Dev
+- Assistant
 
 ---
 

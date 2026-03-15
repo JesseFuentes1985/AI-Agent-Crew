@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-14",
+  "lastUpdated": "2026-03-15",
   "agents": {
     "orbit": {
       "name": "Orbit",
@@ -8,7 +8,8 @@
       "skills": [
         "Assistant",
         "Admin",
-        "Dev"
+        "Dev",
+        "Assistant"
       ],
       "tasks": [
         {
@@ -165,7 +166,24 @@
       "skills": [
         "DevOps",
         "SysAdmin",
-        "Rick being Rick"
+        "Raspberry Pi",
+        "Docker",
+        "Home Automation",
+        "Networking",
+        "Linux",
+        "Ollama",
+        "CI/CD",
+        "Ethical Hacking",
+        "Penetration Testing",
+        "Network Security",
+        "Exploit Dev",
+        "OSINT",
+        "Reverse Engineering",
+        "Cryptography",
+        "CTF",
+        "Web Security",
+        "Forensics",
+        "Wireless Security"
       ],
       "tasks": [
         {
