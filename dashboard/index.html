@@ -186,7 +186,7 @@
     /* Skills editor */
     .section-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 1.2rem; }
     .section-title { font-size: .75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; display: flex; align-items: center; justify-content: space-between; }
-    .skills-editor { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+    .skills-editor { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-bottom: .8rem; }
     .skill-tag-edit { background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); color: var(--accent); font-size: .68rem; font-weight: 600; letter-spacing: .04em; padding: .2rem .5rem; border-radius: 20px; text-transform: uppercase; display: flex; align-items: center; gap: .3rem; }
     .skill-tag-edit .rm { cursor: pointer; opacity: .6; font-size: .7rem; }
     .skill-tag-edit .rm:hover { opacity: 1; color: #ff6b6b; }
@@ -197,6 +197,26 @@
     .add-skill-form button:hover { border-color: var(--accent); color: var(--accent); }
     .skill-saved { font-size: .7rem; color: #00ff88; opacity: 0; transition: opacity .3s; }
     .skill-saved.show { opacity: 1; }
+
+    /* Skill file cards */
+    .skill-files { display: flex; flex-direction: column; gap: .5rem; border-top: 1px solid var(--border); padding-top: .8rem; margin-top: .4rem; }
+    .skill-file-card { border: 1px solid var(--border); border-radius: 7px; overflow: hidden; transition: border-color .2s; }
+    .skill-file-card:hover { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+    .skill-file-header { display: flex; align-items: center; justify-content: space-between; padding: .55rem .8rem; cursor: pointer; background: rgba(255,255,255,.02); user-select: none; }
+    .skill-file-header:hover { background: rgba(255,255,255,.05); }
+    .skill-file-name { font-size: .78rem; font-weight: 600; color: var(--accent); }
+    .skill-file-chevron { font-size: .65rem; color: var(--muted); transition: transform .2s; }
+    .skill-file-card.open .skill-file-chevron { transform: rotate(90deg); }
+    .skill-file-body { display: none; padding: .7rem .9rem; border-top: 1px solid var(--border); background: rgba(0,0,0,.2); }
+    .skill-file-card.open .skill-file-body { display: block; }
+    .skill-file-content { font-size: .78rem; color: var(--text); line-height: 1.65; white-space: pre-wrap; font-family: inherit; }
+    .skill-file-content h1, .skill-file-content h2 { color: var(--accent); font-size: .82rem; margin: .6rem 0 .3rem; }
+    .skill-file-content h3 { color: var(--text); font-size: .78rem; margin: .5rem 0 .25rem; }
+    .skill-file-content code { background: rgba(255,255,255,.06); border-radius: 3px; padding: .1rem .3rem; font-size: .75rem; }
+    .skill-file-content pre { background: rgba(0,0,0,.3); border-radius: 5px; padding: .6rem .8rem; overflow-x: auto; margin: .4rem 0; }
+    .skill-file-content ul, .skill-file-content ol { padding-left: 1.2rem; margin: .3rem 0; }
+    .skill-file-content li { margin: .15rem 0; }
+    .skill-files-loading { font-size: .75rem; color: var(--muted); padding: .4rem 0; }
 
     /* Notes on agent page */
     .agent-notes-list { display: flex; flex-direction: column; gap: .6rem; }
@@ -426,6 +446,7 @@ function renderAgentPage(id) {
   const notes = agent.notes || [];
 
   document.getElementById('back-btn').classList.add('visible');
+  const currentId = id;
 
   document.getElementById('app').innerHTML = `
   <div class="agent-page" style="--accent:${color}">
@@ -466,6 +487,9 @@ function renderAgentPage(id) {
           <button onclick="addSkill('${id}')">+ Add</button>
         </div>
       </div>
+      <div class="skill-files" id="skill-files-${id}">
+        <div class="skill-files-loading">Loading skill files...</div>
+      </div>
     </div>
 
     <div class="section-block">
@@ -481,6 +505,9 @@ function renderAgentPage(id) {
     </div>
 
   </div>`;
+
+  // Load skill files after DOM is ready
+  loadSkillFiles(currentId);
 }
 
 function renderKanbanCol(agentId, status, label, tasks, color) {
@@ -626,6 +653,68 @@ async function deleteTask(e, agentId, taskId) {
   await loadData();
   const onAgent = window.location.hash.startsWith('#/agent/');
   onAgent ? renderAgentPage(agentId) : renderHomePage();
+}
+
+// ── Skill Files ────────────────────────────────────────────
+async function loadSkillFiles(agentId) {
+  const container = document.getElementById(`skill-files-${agentId}`);
+  if (!container) return;
+  try {
+    const res = await fetch(`/api/agent/${agentId}/skills`);
+    const skills = await res.json();
+    if (!skills.length) {
+      container.innerHTML = `<div class="skill-files-loading">No skill files found. Add .md files to agents/${agentId}/skills/</div>`;
+      return;
+    }
+    container.innerHTML = skills.map((s, i) => `
+      <div class="skill-file-card" id="sfc-${agentId}-${i}">
+        <div class="skill-file-header" onclick="toggleSkillFile('${agentId}',${i})">
+          <span class="skill-file-name">📄 ${esc(s.name)}</span>
+          <span class="skill-file-chevron">▶</span>
+        </div>
+        <div class="skill-file-body">
+          <div class="skill-file-content">${renderMarkdown(s.content)}</div>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    container.innerHTML = `<div class="skill-files-loading">Could not load skill files.</div>`;
+  }
+}
+
+function toggleSkillFile(agentId, index) {
+  const card = document.getElementById(`sfc-${agentId}-${index}`);
+  if (card) card.classList.toggle('open');
+}
+
+function renderMarkdown(md) {
+  return md
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    // Code blocks first
+    .replace(/```[\w]*\n([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+    // Inline code
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    // Headers
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    // Bold
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // Tables (simple)
+    .replace(/^\|(.+)\|$/gm, (match) => {
+      if (match.includes('---')) return '';
+      const cells = match.split('|').filter(c => c.trim());
+      return '<tr>' + cells.map(c => `<td style="padding:.2rem .5rem;border:1px solid var(--border)">${c.trim()}</td>`).join('') + '</tr>';
+    })
+    // Lists
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>')
+    // Wrap li in ul
+    .replace(/(<li>.*<\/li>\n?)+/g, s => `<ul>${s}</ul>`)
+    // Horizontal rule
+    .replace(/^---$/gm, '<hr style="border-color:var(--border);margin:.5rem 0">')
+    // Line breaks
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '\n');
 }
 
 // ── Skills ─────────────────────────────────────────────────

@@ -210,6 +210,28 @@ app.delete('/api/notes/:agentId/:noteId', (req, res) => {
   res.json({ success: true });
 });
 
+// Agent skill files
+app.get('/api/agent/:agentId/skills', (req, res) => {
+  const { agentId } = req.params;
+  const skillsDir = path.join(WORKSPACE_ROOT, 'workspace-main', 'agents', agentId, 'skills');
+  if (!fs.existsSync(skillsDir)) return res.json([]);
+  const files = fs.readdirSync(skillsDir).filter(f => f.endsWith('.md'));
+  const skills = files.map(file => {
+    const name = file.replace('.md', '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    const content = fs.readFileSync(path.join(skillsDir, file), 'utf8');
+    return { file, name, content };
+  });
+  res.json(skills);
+});
+
+// Agent system prompt
+app.get('/api/agent/:agentId/system-prompt', (req, res) => {
+  const { agentId } = req.params;
+  const promptPath = path.join(WORKSPACE_ROOT, 'workspace-main', 'agents', agentId, 'system_prompt.md');
+  if (!fs.existsSync(promptPath)) return res.json({ content: null });
+  res.json({ content: fs.readFileSync(promptPath, 'utf8') });
+});
+
 // Budget
 app.get('/api/budget', (req, res) => res.json(readBudget()));
 

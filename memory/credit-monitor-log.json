@@ -1,7 +1,6 @@
 {
-  "lastChecked": "2026-03-14T23:30:00.000Z",
+  "lastChecked": "2026-03-15T04:18:00.000Z",
   "balance": 52.77,
   "alertSent": false,
-  "lastAlertSent": null,
-  "note": "Monitor initialized. Balance healthy at $52.77."
+  "lastAlertSent": null
 }
