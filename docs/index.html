@@ -46,6 +46,9 @@
 
     .skills { display: flex; flex-wrap: wrap; gap: .35rem; padding: .7rem 1.2rem; border-bottom: 1px solid var(--border); min-height: 38px; }
     .skill-tag { background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); color: var(--accent); font-size: .65rem; font-weight: 600; letter-spacing: .04em; padding: .18rem .5rem; border-radius: 20px; text-transform: uppercase; }
+    .skill-tag.hidden { display: none; }
+    .skills-more { background: rgba(255,255,255,.06); border: 1px solid var(--border); color: var(--muted); font-size: .65rem; font-weight: 700; padding: .18rem .55rem; border-radius: 20px; cursor: pointer; transition: all .15s; }
+    .skills-more:hover { color: var(--text); border-color: var(--muted); }
 
     .progress-wrap { padding: .6rem 1.2rem; border-bottom: 1px solid var(--border); }
     .progress-label { display: flex; justify-content: space-between; font-size: .72rem; color: var(--muted); margin-bottom: .35rem; }
@@ -239,7 +242,7 @@ function renderCard(id, agent) {
       <div class="view-btn">Board →</div>
     </div>
     <div class="skills">
-      ${(agent.skills||[]).map(s=>`<span class="skill-tag">${esc(s)}</span>`).join('') || `<span style="color:var(--muted);font-size:.75rem">No skills listed</span>`}
+      ${(()=>{const skills=agent.skills||[];if(!skills.length)return`<span style="color:var(--muted);font-size:.75rem">No skills listed</span>`;const MAX=5;const tags=skills.map((s,i)=>`<span class="skill-tag${i>=MAX?' hidden':''}">${esc(s)}</span>`).join('');const more=skills.length>MAX?`<span class="skills-more" onclick="this.previousSibling&&[...this.parentElement.querySelectorAll('.skill-tag.hidden')].forEach(t=>t.classList.remove('hidden'))&&(this.style.display='none')">+${skills.length-MAX} more</span>`:'';return tags+more;})()}
     </div>
     <div class="progress-wrap">
       <div class="progress-label"><span>Progress</span><span>${doneCount}/${tasks.length} (${pct}%)</span></div>
