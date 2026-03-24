@@ -284,6 +284,7 @@ const AVATARS = {
   thanos:'avatars/thanos.jpg', tonystark:'avatars/tonystark.jpg'
 };
 const AVATAR_POS = { tonystark:'center 25%' };
+const DETAIL_AVATARS = { orbit:'avatars/orbit-spin.gif' };
 
 // ── State ──────────────────────────────────────────────────
 let appData = null;
@@ -453,7 +454,7 @@ function renderAgentPage(id) {
 
     <div class="agent-hero">
       <div class="agent-hero-avatar">
-        ${AVATARS[id] ? `<img src="${AVATARS[id]}" alt="${agent.name}" style="${AVATAR_POS[id]?`object-position:${AVATAR_POS[id]}`:''}" />` : `<div class="avatar-fallback">${agent.emoji}</div>`}
+        ${(DETAIL_AVATARS[id]||AVATARS[id]) ? `<img src="${DETAIL_AVATARS[id]||AVATARS[id]}" alt="${agent.name}" style="${AVATAR_POS[id]?`object-position:${AVATAR_POS[id]}`:''}" />` : `<div class="avatar-fallback">${agent.emoji}</div>`}
       </div>
       <div class="agent-hero-info">
         <h1>${agent.name} ${agent.emoji}</h1>
