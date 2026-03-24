@@ -23,6 +23,13 @@
     #stats-bar { display: flex; gap: 1.5rem; font-size: .82rem; color: var(--muted); }
     #stats-bar span { color: var(--text); font-weight: 600; }
 
+    /* CREDIT WIDGET */
+    #credit-widget { display: flex; flex-direction: column; align-items: flex-end; gap: .15rem; }
+    #credit-label { font-size: .62rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    #credit-amount { font-size: 1.1rem; font-weight: 700; color: #00ff88; text-shadow: 0 0 12px rgba(0,255,136,.4); }
+    #credit-amount.low { color: #ff6b6b; text-shadow: 0 0 12px rgba(255,107,107,.4); }
+    #credit-updated { font-size: .58rem; color: var(--muted); }
+
     /* TABS */
     .home-tabs { display: flex; gap: .5rem; padding: .8rem 2rem 0; border-bottom: 1px solid var(--border); }
     .tab { padding: .45rem 1rem; font-size: .8rem; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; }
@@ -136,6 +143,11 @@
     <div>Tasks <span id="stat-total">—</span></div>
     <div>Done <span id="stat-done">—</span></div>
   </div>
+  <div id="credit-widget">
+    <div id="credit-label">⚡ Anthropic Credits</div>
+    <div id="credit-amount">—</div>
+    <div id="credit-updated"></div>
+  </div>
 </nav>
 
 <div id="app"><div class="loading">Loading crew...</div></div>
@@ -150,6 +162,22 @@
 
 <script>
 const DATA_URL = 'https://raw.githubusercontent.com/JesseFuentes1985/AI-Agent-Crew/main/agent-tasks.json';
+const BUDGET_URL = 'https://raw.githubusercontent.com/JesseFuentes1985/AI-Agent-Crew/main/dashboard/budget.json';
+
+async function loadCredits() {
+  try {
+    const res = await fetch(BUDGET_URL + '?t=' + Date.now());
+    const b = await res.json();
+    const el = document.getElementById('credit-amount');
+    const upd = document.getElementById('credit-updated');
+    if (b.balance !== null && b.balance !== undefined) {
+      el.textContent = '$' + parseFloat(b.balance).toFixed(2);
+      el.className = parseFloat(b.balance) < 5 ? 'low' : '';
+    } else { el.textContent = '—'; }
+    const ts = b.updatedAt || b.lastUpdated;
+    if (ts) upd.textContent = 'as of ' + new Date(ts).toLocaleDateString();
+  } catch(e) { document.getElementById('credit-amount').textContent = '—'; }
+}
 
 const COLORS = {
   orbit:'#00d4ff', greenlantern:'#00ff88', rick:'#39ff14',
@@ -168,6 +196,7 @@ let appData = null;
 let currentFilter = 'all';
 
 async function init() {
+  loadCredits();
   try {
     const res = await fetch(DATA_URL + '?t=' + Date.now());
     appData = await res.json();
