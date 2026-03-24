@@ -4,7 +4,7 @@
     "orbit": {
       "name": "Orbit",
       "title": "Core Architect",
-      "emoji": "🛸",
+      "emoji": "\ud83d\udef8",
       "skills": [
         "Assistant",
         "Admin",
@@ -125,7 +125,7 @@
     "greenlantern": {
       "name": "Green Lantern",
       "title": "Hal Jordan | Creativity",
-      "emoji": "🟢",
+      "emoji": "\ud83d\udfe2",
       "skills": [
         "Imagination",
         "Storytelling",
@@ -186,7 +186,7 @@
     "rick": {
       "name": "Rick",
       "title": "Rick Sanchez | DevOps & SysAdmin",
-      "emoji": "🔬",
+      "emoji": "\ud83d\udd2c",
       "skills": [
         "DevOps",
         "SysAdmin",
@@ -224,49 +224,49 @@
         },
         {
           "id": "rick-3",
-          "text": "Run Ollama on a Pi 5 — dedicated local AI box, always on, no Mac mini resources eaten",
+          "text": "Run Ollama on a Pi 5 \u2014 dedicated local AI box, always on, no Mac mini resources eaten",
           "done": false,
           "status": "queue"
         },
         {
           "id": "rick-4",
-          "text": "OpenClaw node — pair a Pi as a node, give agents eyes (camera), ears (mic), physical presence in a room",
+          "text": "OpenClaw node \u2014 pair a Pi as a node, give agents eyes (camera), ears (mic), physical presence in a room",
           "done": false,
           "status": "queue"
         },
         {
           "id": "rick-5",
-          "text": "Wake word detection — always-listening local trigger ('Hey Rick') without cloud",
+          "text": "Wake word detection \u2014 always-listening local trigger ('Hey Rick') without cloud",
           "done": false,
           "status": "queue"
         },
         {
           "id": "rick-6",
-          "text": "Moxie's brain — run the OpenMoxie server ON a Pi (dedicated, stays on 24/7)",
+          "text": "Moxie's brain \u2014 run the OpenMoxie server ON a Pi (dedicated, stays on 24/7)",
           "done": false,
           "status": "queue"
         },
         {
           "id": "rick-7",
-          "text": "Robot controller — Pi as the brain for a custom robot body",
+          "text": "Robot controller \u2014 Pi as the brain for a custom robot body",
           "done": false,
           "status": "queue"
         },
         {
           "id": "rick-8",
-          "text": "Home automation hub — run Home Assistant locally, control lights/sensors/locks with agents",
+          "text": "Home automation hub \u2014 run Home Assistant locally, control lights/sensors/locks with agents",
           "done": false,
           "status": "queue"
         },
         {
           "id": "rick-9",
-          "text": "Pi as Moxie's voice in other rooms — speaker + mic in different rooms, same AI brain",
+          "text": "Pi as Moxie's voice in other rooms \u2014 speaker + mic in different rooms, same AI brain",
           "done": false,
           "status": "queue"
         },
         {
           "id": "rick-10",
-          "text": "Surveillance + AI — Frigate + Ollama",
+          "text": "Surveillance + AI \u2014 Frigate + Ollama",
           "done": false,
           "status": "queue"
         },
@@ -281,7 +281,7 @@
     "quigon": {
       "name": "Qui-Gon",
       "title": "Qui-Gon Jinn | Wellness",
-      "emoji": "🧘",
+      "emoji": "\ud83e\uddd8",
       "skills": [
         "Mind",
         "Calm",
@@ -313,7 +313,7 @@
     "beast": {
       "name": "Beast",
       "title": "Hank McCoy | Learning",
-      "emoji": "📚",
+      "emoji": "\ud83d\udcda",
       "skills": [
         "Learning",
         "Certifications",
@@ -329,7 +329,7 @@
         },
         {
           "id": "beast-2",
-          "text": "Book library on what books I have and read already — Need a Database (GitHub)",
+          "text": "Book library on what books I have and read already \u2014 Need a Database (GitHub)",
           "done": false,
           "status": "queue"
         },
@@ -374,13 +374,64 @@
     "baymax": {
       "name": "Baymax",
       "title": "Baymax | Health",
-      "emoji": "🤖",
+      "emoji": "\ud83e\udd16",
       "skills": [
         "Health",
         "Nutrition",
+        "Fitness",
         "Sleep",
         "Hydration",
-        "Fitness"
+        "Drug Info Lookup",
+        "Interaction Checking",
+        "Dosage Guidelines",
+        "Side Effect Awareness",
+        "Macro Breakdown",
+        "Meal Suggestions",
+        "Dietary Restrictions",
+        "Hydration Tracking",
+        "Workout Planning",
+        "Recovery Tracking",
+        "Injury Prevention",
+        "Stretching & Mobility",
+        "Sleep Tracking",
+        "Sleep Hygiene",
+        "Circadian Rhythm",
+        "Fatigue Detection",
+        "Weight Tracking",
+        "BP Tracking",
+        "Step Tracking",
+        "Calorie Tracking",
+        "Trend Analysis",
+        "Habit Tracking",
+        "Goal Progress Reports",
+        "Adaptive Learning",
+        "Preference Storage",
+        "Context Awareness",
+        "Chronic Condition Tracking",
+        "Allergy Awareness",
+        "Family History",
+        "Risk Profiling",
+        "Medication Reminders",
+        "Workout Reminders",
+        "Hydration Nudges",
+        "Appointment Alerts",
+        "Medical Research",
+        "Study Summaries",
+        "Evidence-Based Info",
+        "Doctor Finder",
+        "Appointment Prep",
+        "Post-Visit Summaries",
+        "Lab Value Reading",
+        "Abnormal Range Flagging",
+        "Plain Language Explanations",
+        "Natural Conversation",
+        "Tone Adaptation",
+        "Daily Check-ins",
+        "Apple Health",
+        "Fitbit",
+        "Whoop",
+        "Smart Scale",
+        "Heart Rate Monitor"
       ],
       "tasks": [
         {
@@ -406,7 +457,7 @@
     "thanos": {
       "name": "Thanos",
       "title": "Thanos | Work",
-      "emoji": "👊",
+      "emoji": "\ud83d\udc4a",
       "skills": [
         "Productivity",
         "Project Management",
@@ -431,7 +482,7 @@
     "tonystark": {
       "name": "Tony Stark",
       "title": "Tony Stark | Entrepreneurship & Investing",
-      "emoji": "💰",
+      "emoji": "\ud83d\udcb0",
       "skills": [
         "Business",
         "Investing",
@@ -469,7 +520,7 @@
       "notes": [
         {
           "id": "note-1773528885807",
-          "text": "Jesse ran out of Anthropic credits on Mar 14 2026 and lost access to all agents. He had to get a new API key manually — total pain. Auto-reload is now enabled on Anthropic (reloads to $55 when balance hits $5). Current balance: $52.77.\n\nTask: Build a cron job that reads the dashboard budget.json, checks the balance, and sends Jesse a Slack/webchat alert when balance drops below $15. Also keep the dashboard credit widget updated. This is your domain — wallet management is Tony Stark territory.",
+          "text": "Jesse ran out of Anthropic credits on Mar 14 2026 and lost access to all agents. He had to get a new API key manually \u2014 total pain. Auto-reload is now enabled on Anthropic (reloads to $55 when balance hits $5). Current balance: $52.77.\n\nTask: Build a cron job that reads the dashboard budget.json, checks the balance, and sends Jesse a Slack/webchat alert when balance drops below $15. Also keep the dashboard credit widget updated. This is your domain \u2014 wallet management is Tony Stark territory.",
           "createdAt": "2026-03-14T22:54:45.807Z"
         }
       ]
