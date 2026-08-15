@@ -93,6 +93,23 @@
     .col-name { font-weight: 600; }
     .col-path { color: var(--muted); font-size: .78rem; font-family: monospace; }
     .col-note { color: var(--muted); font-size: .8rem; }
+
+    /* ── AGENT DROPDOWNS ── */
+    .agent-drop { border: 1px solid var(--border); border-radius: 12px; margin-bottom: .75rem; overflow: hidden; background: var(--surface); }
+    .agent-drop[open] { border-color: rgba(0,212,255,.2); }
+    .agent-drop-hdr { display: flex; align-items: center; gap: .75rem; padding: .9rem 1.25rem; cursor: pointer; list-style: none; user-select: none; transition: background .15s; }
+    .agent-drop-hdr::-webkit-details-marker { display: none; }
+    .agent-drop-hdr:hover { background: rgba(255,255,255,.03); }
+    .agent-drop[open] .agent-drop-hdr { background: rgba(0,212,255,.04); border-bottom: 1px solid rgba(0,212,255,.12); }
+    .agent-drop-emoji { font-size: 1.3rem; width: 2rem; text-align: center; }
+    .agent-drop-name { font-weight: 700; font-size: .95rem; color: var(--text); }
+    .agent-drop-title { font-size: .78rem; color: var(--muted); flex: 1; }
+    .agent-drop-count { font-size: .7rem; background: rgba(255,255,255,.06); color: var(--muted); border: 1px solid var(--border); padding: .15rem .6rem; border-radius: 20px; white-space: nowrap; }
+    .agent-drop[open] .agent-drop-count { background: rgba(0,212,255,.1); color: var(--accent); border-color: rgba(0,212,255,.25); }
+    .agent-drop-chev { color: var(--muted); font-size: 1.1rem; transition: transform .2s; }
+    .agent-drop[open] .agent-drop-chev { transform: rotate(90deg); color: var(--accent); }
+    .agent-drop-body { padding: 0 1.25rem 1rem; }
+    .agent-drop-body table { margin-top: .75rem; }
     .col-muted { color: var(--border); font-size: .8rem; text-align:center; }
         .col-size { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
 
@@ -511,146 +528,187 @@
 
     <!-- ══ TODO ══ -->
     <div class="section" id="section-todo">
-      <div class="section-title">✅ Things To Do</div>
+      <div class="section-title">✅ Things To Do <span class="count">by agent</span></div>
+      <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.25rem;line-height:1.6;">
+        This is a reference of what each agent still needs set up. The real system lives in OpenClaw on the Mac mini — this page just reflects it.
+      </p>
 
-      <div class="card">
-        <div class="card-label">🔴 High Priority</div>
+      <!-- DONE card at top -->
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-label" style="color:var(--green)">✅ Done</div>
         <table>
           <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
           <tbody>
-
-            <tr>
-              <td class="col-name">Wire mem0 into agent workflows</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Agents should auto-store/recall via mem0</td>
-            </tr>
-            <tr>
-              <td class="col-name">Get Firecrawl API key</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Free at firecrawl.dev — needed for JS-heavy scraping</td>
-            </tr>
-            <tr>
-              <td class="col-name">Get Zep API key</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Free at getzep.com — unlocks cloud memory</td>
-            </tr>
+            <tr><td class="col-name">Fixed RAG (ChromaDB 1.5.9)</td><td class="col-note">Orbit</td><td class="col-note">Python 3.14 compatible — 166 vectors intact</td></tr>
+            <tr><td class="col-name">GitHub CLI authenticated</td><td class="col-note">Orbit</td><td class="col-note">JesseFuentes1985 — repo, read:org, gist scopes</td></tr>
+            <tr><td class="col-name">Slack connected</td><td class="col-note">Orbit</td><td class="col-note">Socket Mode — clawbot workspace</td></tr>
+            <tr><td class="col-name">Open WebUI running</td><td class="col-note">Orbit</td><td class="col-note">localhost:8080 — Ollama in browser</td></tr>
+            <tr><td class="col-name">All 8 agents active</td><td class="col-note">Orbit</td><td class="col-note">Cross-agent messaging enabled</td></tr>
+            <tr><td class="col-name">Anthropic credits auto-reload</td><td class="col-note">Tony Stark</td><td class="col-note">Reloads to $55 when balance hits $5</td></tr>
+            <tr><td class="col-name">All 14 repos cloned</td><td class="col-note">Orbit</td><td class="col-note">workspace-main/repos/ + open-webui installed</td></tr>
+            <tr><td class="col-name">GitHub Pages dashboard live</td><td class="col-note">Orbit</td><td class="col-note">jessefuentes1985.github.io/AI-Agent-Crew</td></tr>
           </tbody>
         </table>
       </div>
 
-      <div class="card" style="border-color:rgba(108,99,255,.4);">
-        <div class="card-label" style="color:#a8a3ff;">🎙️ ElevenLabs — Agent Voices</div>
-        <p style="color:var(--muted);font-size:.85rem;margin-bottom:1rem;line-height:1.6;">Each agent needs a unique voice. ElevenLabs is the plan — get an API key, assign a voice ID per agent, wire it into OpenClaw TTS. Tony Stark owns this.</p>
-        <table>
-          <thead><tr><th>Step</th><th>Owner</th><th>Status</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="col-name">1. Get ElevenLabs API key</td>
-              <td class="col-note">Jesse</td>
-              <td><span class="badge badge-red">Not Started</span></td>
-            </tr>
-            <tr>
-              <td class="col-name">2. Pick voice for each of 8 agents</td>
-              <td class="col-note">Tony Stark</td>
-              <td><span class="badge badge-red">Not Started</span></td>
-            </tr>
-            <tr>
-              <td class="col-name">3. Wire ElevenLabs into OpenClaw TTS config</td>
-              <td class="col-note">Orbit</td>
-              <td><span class="badge badge-red">Not Started</span></td>
-            </tr>
-            <tr>
-              <td class="col-name">4. Test each agent voice in session</td>
-              <td class="col-note">Jesse</td>
-              <td><span class="badge badge-red">Not Started</span></td>
-            </tr>
-          </tbody>
-        </table>
-        <div style="margin-top:.75rem;font-size:.78rem;color:var(--muted);">🔗 <a href="https://elevenlabs.io" target="_blank" style="color:var(--accent)">elevenlabs.io</a> — free tier: 10k chars/month · Docs: <a href="https://elevenlabs.io/docs" target="_blank" style="color:var(--accent)">elevenlabs.io/docs</a></div>
-      </div>
+      <!-- AGENT DROPDOWNS -->
 
-      <div class="card">
-        <div class="card-label">🟡 Medium Priority</div>
-        <table>
-          <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="col-name">Add MEMORY.md to 4 agents</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Qui-Gon, Beast, Baymax, Thanos are missing it</td>
-            </tr>
-            <tr>
-              <td class="col-name">Install Docker</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Needed for self-hosted Firecrawl + Zep</td>
-            </tr>
-            <tr>
-              <td class="col-name">Fix Flowise (OOM)</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Try --max-old-space-size or build from source</td>
-            </tr>
-            <tr>
-              <td class="col-name">Notion MCP setup</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">developers.notion.com/docs/mcp</td>
-            </tr>
-            <tr>
-              <td class="col-name">Pi 5 setup</td>
-              <td class="col-note">Rick</td>
-              <td class="col-note">Ollama + OpenClaw node + wake word + Moxie robot</td>
-            </tr>
-            <tr>
-              <td class="col-name">Blender MCP + Build The Hex</td>
-              <td class="col-note">Green Lantern</td>
-              <td class="col-note">github.com/ahujasid/blender-mcp — Last Star project</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <!-- ORBIT -->
+      <details class="agent-drop" open>
+        <summary class="agent-drop-hdr">
+          <span class="agent-drop-emoji">🛸</span>
+          <span class="agent-drop-name">Orbit</span>
+          <span class="agent-drop-title">Core Architect · System & Admin</span>
+          <span class="agent-drop-count">10 open</span>
+          <span class="agent-drop-chev">›</span>
+        </summary>
+        <div class="agent-drop-body">
+          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
+            <tr><td class="col-name">Fix memory search</td><td><span class="badge badge-red">High</span></td><td class="col-note">Install llama-cpp plugin: <code>openclaw plugins install @openclaw/llama-cpp-provider</code></td></tr>
+            <tr><td class="col-name">Wire mem0 into agent workflows</td><td><span class="badge badge-red">High</span></td><td class="col-note">Agents should auto-store/recall facts via mem0</td></tr>
+            <tr><td class="col-name">Get Firecrawl API key</td><td><span class="badge badge-red">High</span></td><td class="col-note">Free at firecrawl.dev — needed for JS-heavy scraping</td></tr>
+            <tr><td class="col-name">Get Zep API key</td><td><span class="badge badge-red">High</span></td><td class="col-note">Free at getzep.com — unlocks cloud memory</td></tr>
+            <tr><td class="col-name">Add MEMORY.md to 4 agents</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Qui-Gon, Beast, Baymax, Thanos are missing it</td></tr>
+            <tr><td class="col-name">Install Docker</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Needed for self-hosted Firecrawl + Zep</td></tr>
+            <tr><td class="col-name">Open WebUI LaunchAgent</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Auto-start on login — dies if terminal closes</td></tr>
+            <tr><td class="col-name">Wire LangGraph into workflows</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Stateful multi-step agent orchestration</td></tr>
+            <tr><td class="col-name">Add mem0 seed memories (all 8)</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Give each agent starting memory context</td></tr>
+            <tr><td class="col-name">Re-ingest RAG DB</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">After new files added, run <code>rag ingest</code></td></tr>
+            <tr><td class="col-name">Run /graphify on workspace</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Map codebase/docs into knowledge graph</td></tr>
+            <tr><td class="col-name">Disable mem0 PostHog telemetry</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Noisy errors in logs — find config flag to disable</td></tr>
+            <tr><td class="col-name">Get Telegram + Google Chat access</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Slack done ✅ — these two still pending</td></tr>
+            <tr><td class="col-name">Get Google Drive access</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Via gog skill — needs OAuth setup</td></tr>
+            <tr><td class="col-name">Notion MCP setup</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">developers.notion.com/docs/mcp</td></tr>
+          </tbody></table>
+        </div>
+      </details>
 
-      <div class="card">
-        <div class="card-label">✅ Done</div>
-        <table>
-          <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="col-name">Fixed RAG (ChromaDB)</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Upgraded to 1.5.9 — Python 3.14 compatible, 166 vectors intact</td>
-            </tr>
-            <tr>
-                            <td class="col-name">GitHub CLI authenticated</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">JesseFuentes1985 — repo, read:org, gist scopes</td>
-            </tr>
-            <tr>
-              <td class="col-name">Slack connected</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Socket Mode — clawbot workspace</td>
-            </tr>
-            <tr>
-              <td class="col-name">Open WebUI running</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">localhost:8080 — talk to Ollama in browser</td>
-            </tr>
-            <tr>
-              <td class="col-name">All 8 agents active</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Cross-agent messaging enabled</td>
-            </tr>
-            <tr>
-              <td class="col-name">Anthropic auto-reload</td>
-              <td class="col-note">Tony Stark</td>
-              <td class="col-note">Reloads to $55 when balance hits $5</td>
-            </tr>
-            <tr>
-              <td class="col-name">All 14 repos cloned</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">workspace-main/repos/ — 13 cloned + open-webui installed</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <!-- TONY STARK -->
+      <details class="agent-drop">
+        <summary class="agent-drop-hdr">
+          <span class="agent-drop-emoji">💰</span>
+          <span class="agent-drop-name">Tony Stark</span>
+          <span class="agent-drop-title">Business & Investing</span>
+          <span class="agent-drop-count">2 open</span>
+          <span class="agent-drop-chev">›</span>
+        </summary>
+        <div class="agent-drop-body">
+          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
+            <tr><td class="col-name">ElevenLabs — assign agent voices</td><td><span class="badge badge-red">High</span></td><td class="col-note">Pick voice ID per agent from elevenlabs.io Voice Library once API key is in</td></tr>
+            <tr><td class="col-name">Connect to a broker</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Hook into brokerage API for investing/markets track</td></tr>
+          </tbody></table>
+        </div>
+      </details>
+
+      <!-- RICK -->
+      <details class="agent-drop">
+        <summary class="agent-drop-hdr">
+          <span class="agent-drop-emoji">🔬</span>
+          <span class="agent-drop-name">Rick</span>
+          <span class="agent-drop-title">Rick Sanchez · DevOps & SysAdmin</span>
+          <span class="agent-drop-count">6 open</span>
+          <span class="agent-drop-chev">›</span>
+        </summary>
+        <div class="agent-drop-body">
+          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
+            <tr><td class="col-name">Pi 5 setup</td><td><span class="badge badge-red">High</span></td><td class="col-note">Ollama + OpenClaw node + wake word detection + dedicated AI box</td></tr>
+            <tr><td class="col-name">Hook up Moxie robot</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">OpenMoxie server on Pi — robot controller + voice in other rooms</td></tr>
+            <tr><td class="col-name">DB-GPT — create LaunchAgent</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Currently dies when terminal closes — needs auto-start (port 5670)</td></tr>
+            <tr><td class="col-name">Home Assistant hub</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Lights, sensors, locks</td></tr>
+            <tr><td class="col-name">Surveillance + AI</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Frigate + Ollama on Pi</td></tr>
+            <tr><td class="col-name">Look into OpenRouter</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">For API token management across providers</td></tr>
+          </tbody></table>
+        </div>
+      </details>
+
+      <!-- BEAST -->
+      <details class="agent-drop">
+        <summary class="agent-drop-hdr">
+          <span class="agent-drop-emoji">📚</span>
+          <span class="agent-drop-name">Beast</span>
+          <span class="agent-drop-title">Hank McCoy · Learning & Certs</span>
+          <span class="agent-drop-count">5 open</span>
+          <span class="agent-drop-chev">›</span>
+        </summary>
+        <div class="agent-drop-body">
+          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
+            <tr><td class="col-name">Book library database</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Build on GitHub — catalog Jesse's book collection</td></tr>
+            <tr><td class="col-name">AWS certification track</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Plan study path + resources</td></tr>
+            <tr><td class="col-name">PMP certification track</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Plan study path + resources</td></tr>
+            <tr><td class="col-name">ITIL certification track</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Plan study path + resources</td></tr>
+            <tr><td class="col-name">Diagrams of everything</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Architecture, agent flows, system maps</td></tr>
+          </tbody></table>
+        </div>
+      </details>
+
+      <!-- GREEN LANTERN -->
+      <details class="agent-drop">
+        <summary class="agent-drop-hdr">
+          <span class="agent-drop-emoji">🟢</span>
+          <span class="agent-drop-name">Green Lantern</span>
+          <span class="agent-drop-title">Hal Jordan · Creativity & Last Star</span>
+          <span class="agent-drop-count">3 open</span>
+          <span class="agent-drop-chev">›</span>
+        </summary>
+        <div class="agent-drop-body">
+          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
+            <tr><td class="col-name">Last Star — story & world building</td><td><span class="badge badge-red">High</span></td><td class="col-note">Sci-fi universe — lore in Notion, characters on Eraser.io (Jesse copies manually)</td></tr>
+            <tr><td class="col-name">Blender MCP setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">github.com/ahujasid/blender-mcp</td></tr>
+            <tr><td class="col-name">Build The Hex in Blender</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Freighter/gunship from Last Star — GLB → 360° web viewer</td></tr>
+          </tbody></table>
+        </div>
+      </details>
+
+      <!-- THANOS -->
+      <details class="agent-drop">
+        <summary class="agent-drop-hdr">
+          <span class="agent-drop-emoji">👊</span>
+          <span class="agent-drop-name">Thanos</span>
+          <span class="agent-drop-title">Productivity & Project Management</span>
+          <span class="agent-drop-count">1 open</span>
+          <span class="agent-drop-chev">›</span>
+        </summary>
+        <div class="agent-drop-body">
+          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
+            <tr><td class="col-name">Import all projects</td><td><span class="badge badge-red">High</span></td><td class="col-note">Bring Jesse's active projects into Thanos for tracking + deadlines</td></tr>
+          </tbody></table>
+        </div>
+      </details>
+
+      <!-- BAYMAX -->
+      <details class="agent-drop">
+        <summary class="agent-drop-hdr">
+          <span class="agent-drop-emoji">🤖</span>
+          <span class="agent-drop-name">Baymax</span>
+          <span class="agent-drop-title">Health Guardian</span>
+          <span class="agent-drop-count">2 open</span>
+          <span class="agent-drop-chev">›</span>
+        </summary>
+        <div class="agent-drop-body">
+          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
+            <tr><td class="col-name">Healthy food tracking setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Log meals, nutrition goals</td></tr>
+            <tr><td class="col-name">Workout tracking setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Log workouts, progress</td></tr>
+          </tbody></table>
+        </div>
+      </details>
+
+      <!-- QUI-GON -->
+      <details class="agent-drop">
+        <summary class="agent-drop-hdr">
+          <span class="agent-drop-emoji">🧘</span>
+          <span class="agent-drop-name">Qui-Gon</span>
+          <span class="agent-drop-title">Qui-Gon Jinn · Wellness & Mind</span>
+          <span class="agent-drop-count">2 open</span>
+          <span class="agent-drop-chev">›</span>
+        </summary>
+        <div class="agent-drop-body">
+          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
+            <tr><td class="col-name">Meditation workflow</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Guided sessions, reminders, streak tracking</td></tr>
+            <tr><td class="col-name">Mental health support setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Check-ins, mood tracking, Jedi philosophy prompts</td></tr>
+          </tbody></table>
+        </div>
+      </details>
+
     </div>
 
 
