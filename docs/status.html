@@ -125,7 +125,7 @@
 
     /* ── ALERT BOX ── */
     .alert { display: flex; gap: .75rem; align-items: flex-start; padding: .9rem 1.2rem; border-radius: 10px; margin-bottom: 1.25rem; font-size: .85rem; }
-    .alert-warn { background: rgba(245,200,66,.08); border: 1px solid rgba(245,200,66,.2); color: var(--yellow); }
+    .alert-ok { background: rgba(245,200,66,.08); border: 1px solid rgba(245,200,66,.2); color: var(--yellow); }
     .alert-icon { font-size: 1.1rem; flex-shrink: 0; }
     .alert-text { color: var(--text); }
     .alert-text strong { color: var(--yellow); }
@@ -190,7 +190,7 @@
       <div class="status-dot-row"><span class="dot dot-green"></span> Ollama · 6 models</div>
       <div class="status-dot-row"><span class="dot dot-green"></span> mem0 · Qdrant</div>
       <div class="status-dot-row"><span class="dot dot-red"></span> DB-GPT · 5670</div>
-      <div class="status-dot-row"><span class="dot dot-yellow"></span> RAG · ChromaDB</div>
+      <div class="status-dot-row"><span class="dot dot-green"></span> RAG · ChromaDB</div>
     </div>
   </aside>
 
@@ -220,7 +220,7 @@
         <div class="stat-card">
           <div class="stat-label">RAG DB</div>
           <div class="stat-value yellow">3.4 MB</div>
-          <div class="stat-sub">ChromaDB ⚠️ broken</div>
+          <div class="stat-sub">ChromaDB 1.5.9 ✅</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">mem0 (Qdrant)</div>
@@ -249,7 +249,7 @@
               <td class="col-name">RAG Database (ChromaDB)</td>
               <td class="col-path">~/.openclaw/rag/db/</td>
               <td class="col-size">3.4 MB</td>
-              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Broken</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Working</span></td>
             </tr>
             <tr>
               <td class="col-name">mem0 Vector DB (Qdrant)</td>
@@ -272,10 +272,10 @@
     <div class="section" id="section-rag">
       <div class="section-title">🔍 RAG &amp; Memory Systems</div>
 
-      <div class="alert alert-warn">
+      <div class="alert alert-ok">
         <span class="alert-icon">⚠️</span>
         <div class="alert-text">
-          <strong>ChromaDB is broken on Python 3.14.</strong> Pydantic v1 is incompatible — crashes on import. Fix: move ChromaDB to <code>.venv-crew</code> (Python 3.11). Until then, RAG search and daily sync are down.
+          <strong>Move to .venv-crew (Python 3.11) or pin older ChromaDB — DONE 166 vectors in the knowledge collection.
         </div>
       </div>
 
@@ -285,13 +285,13 @@
           <tbody>
             <tr>
               <td class="col-name">ChromaDB (Python 3.14)</td>
-              <td><span class="badge badge-down"><span class="dot dot-red"></span>Broken</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Working</span></td>
               <td class="col-note">Pydantic v1 incompatible — crashes on import</td>
             </tr>
             <tr>
               <td class="col-name">RAG Daily Sync Cron</td>
-              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Affected</span></td>
-              <td class="col-note">Cron runs but ChromaDB can't load — nothing being indexed</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Working</span></td>
+              <td class="col-note">Daily sync runs and indexes — 166 vectors</td>
             </tr>
             <tr>
               <td class="col-name">mem0 (Qdrant)</td>
@@ -498,11 +498,7 @@
         <table>
           <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr>
-              <td class="col-name">Fix RAG (ChromaDB broken)</td>
-              <td class="col-note">Orbit</td>
-              <td class="col-note">Move to .venv-crew (Python 3.11) or pin older ChromaDB</td>
-            </tr>
+
             <tr>
               <td class="col-name">Wire mem0 into agent workflows</td>
               <td class="col-note">Orbit</td>
@@ -572,7 +568,12 @@
           <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
           <tbody>
             <tr>
-              <td class="col-name">GitHub CLI authenticated</td>
+              <td class="col-name">Fixed RAG (ChromaDB)</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Upgraded to 1.5.9 — Python 3.14 compatible, 166 vectors intact</td>
+            </tr>
+            <tr>
+                            <td class="col-name">GitHub CLI authenticated</td>
               <td class="col-note">Orbit</td>
               <td class="col-note">JesseFuentes1985 — repo, read:org, gist scopes</td>
             </tr>
