@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🛸 System Status — AI Crew</title>
+  <style>
+    :root {
+      --bg: #08080f; --surface: #0f0f1a; --border: #1e1e35;
+      --text: #e0e0f0; --muted: #6b6b90; --accent: #00d4ff;
+      --green: #00ff88; --yellow: #f5c842; --red: #ff6b6b;
+      --sidebar-w: 220px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* ── TOP NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .85rem 1.5rem; border-bottom: 1px solid var(--border);
+      background: var(--bg); z-index: 100; flex-shrink: 0;
+    }
+    .nav-left { display: flex; align-items: center; gap: .75rem; }
+    .nav-title { font-size: 1.1rem; font-weight: 700; color: var(--accent); text-shadow: 0 0 20px rgba(0,212,255,.4); }
+    .nav-badge { font-size: .65rem; background: rgba(0,212,255,.1); color: var(--accent); border: 1px solid rgba(0,212,255,.25); padding: .15rem .55rem; border-radius: 20px; }
+    .nav-right a { color: var(--muted); font-size: .82rem; text-decoration: none; transition: color .15s; }
+    .nav-right a:hover { color: var(--accent); }
+
+    /* ── BODY LAYOUT ── */
+    .app-body { display: flex; flex: 1; overflow: hidden; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      background: var(--surface); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow-y: auto; padding: 1rem 0;
+    }
+    .sidebar-label {
+      font-size: .62rem; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .1em;
+      padding: .4rem 1.2rem .4rem; margin-bottom: .25rem;
+    }
+    .sidebar-item {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .6rem 1.2rem; cursor: pointer;
+      font-size: .85rem; color: var(--muted);
+      border-left: 2px solid transparent;
+      transition: all .15s; user-select: none;
+    }
+    .sidebar-item:hover { color: var(--text); background: rgba(255,255,255,.03); }
+    .sidebar-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(0,212,255,.06); font-weight: 600; }
+    .sidebar-item .icon { font-size: 1rem; width: 1.3rem; text-align: center; }
+    .sidebar-item .badge {
+      margin-left: auto; font-size: .65rem; background: rgba(255,255,255,.06);
+      color: var(--muted); padding: .1rem .45rem; border-radius: 10px;
+    }
+    .sidebar-item.active .badge { background: rgba(0,212,255,.12); color: var(--accent); }
+    .sidebar-divider { border: none; border-top: 1px solid var(--border); margin: .5rem 0; }
+
+    .sidebar-status { padding: .6rem 1.2rem; margin-top: auto; }
+    .status-dot-row { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: var(--muted); padding: .2rem 0; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dot-green  { background: var(--green); box-shadow: 0 0 5px var(--green); }
+    .dot-yellow { background: var(--yellow); box-shadow: 0 0 5px var(--yellow); }
+    .dot-red    { background: var(--red); box-shadow: 0 0 5px var(--red); }
+    .dot-grey   { background: var(--muted); }
+
+    /* ── MAIN CONTENT ── */
+    .main { flex: 1; overflow-y: auto; padding: 1.75rem 2rem; }
+
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn .18s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem; display: flex; align-items: center; gap: .6rem; }
+    .section-title .count { font-size: .72rem; color: var(--muted); background: rgba(255,255,255,.05); padding: .2rem .7rem; border-radius: 20px; font-weight: 400; }
+
+    /* ── CARDS ── */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
+    .card-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); padding: .8rem 1.4rem .3rem; }
+
+    /* ── TABLE ── */
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left; font-size: .7rem; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .08em;
+      padding: .65rem 1.4rem; border-bottom: 1px solid var(--border);
+    }
+    td { padding: .75rem 1.4rem; font-size: .875rem; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    .col-name { font-weight: 600; }
+    .col-path { color: var(--muted); font-size: .78rem; font-family: monospace; }
+    .col-note { color: var(--muted); font-size: .8rem; }
+    .col-size { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
+
+    /* ── BADGES ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .78rem; font-weight: 600; padding: .22rem .65rem;
+      border-radius: 20px; white-space: nowrap;
+    }
+    .badge-ok     { background: rgba(0,255,136,.12); color: var(--green); border: 1px solid rgba(0,255,136,.25); }
+    .badge-warn   { background: rgba(245,200,66,.12); color: var(--yellow); border: 1px solid rgba(245,200,66,.25); }
+    .badge-down   { background: rgba(255,107,107,.12); color: var(--red); border: 1px solid rgba(255,107,107,.25); }
+    .badge-pause  { background: rgba(107,107,144,.12); color: var(--muted); border: 1px solid rgba(107,107,144,.25); }
+    .badge-done   { background: rgba(0,212,255,.08); color: var(--accent); border: 1px solid rgba(0,212,255,.2); }
+
+    /* ── PRIORITY TAGS (todo) ── */
+    .pri { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: .18rem .55rem; border-radius: 4px; white-space: nowrap; }
+    .pri-high   { background: rgba(255,107,107,.15); color: var(--red); }
+    .pri-medium { background: rgba(245,200,66,.15); color: var(--yellow); }
+    .pri-low    { background: rgba(0,255,136,.1); color: var(--green); }
+    .pri-done   { background: rgba(0,212,255,.08); color: var(--accent); }
+
+    /* ── STAT CARDS (storage overview) ── */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; }
+    .stat-label { font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: .4rem; }
+    .stat-value { font-size: 1.4rem; font-weight: 700; color: var(--text); }
+    .stat-sub   { font-size: .72rem; color: var(--muted); margin-top: .2rem; }
+    .stat-value.green { color: var(--green); }
+    .stat-value.yellow { color: var(--yellow); }
+
+    /* ── ALERT BOX ── */
+    .alert { display: flex; gap: .75rem; align-items: flex-start; padding: .9rem 1.2rem; border-radius: 10px; margin-bottom: 1.25rem; font-size: .85rem; }
+    .alert-warn { background: rgba(245,200,66,.08); border: 1px solid rgba(245,200,66,.2); color: var(--yellow); }
+    .alert-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .alert-text { color: var(--text); }
+    .alert-text strong { color: var(--yellow); }
+
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav>
+  <div class="nav-left">
+    <div class="nav-title">🛸 AI Crew</div>
+    <span class="nav-badge">System Status</span>
+  </div>
+  <div class="nav-right">
+    <a href="index.html">← Back to Crew</a>
+  </div>
+</nav>
+
+<!-- APP BODY -->
+<div class="app-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Overview</div>
+    <div class="sidebar-item active" data-section="storage">
+      <span class="icon">💾</span> Memory &amp; Storage
+    </div>
+    <div class="sidebar-item" data-section="rag">
+      <span class="icon">🔍</span> RAG Status
+      <span class="badge">⚠️</span>
+    </div>
+
+    <hr class="sidebar-divider"/>
+    <div class="sidebar-label">Crew</div>
+    <div class="sidebar-item" data-section="agents">
+      <span class="icon">👥</span> AI Agents
+      <span class="badge">8</span>
+    </div>
+
+    <hr class="sidebar-divider"/>
+    <div class="sidebar-label">Stack</div>
+    <div class="sidebar-item" data-section="repos">
+      <span class="icon">📦</span> Repos
+      <span class="badge">14</span>
+    </div>
+
+    <hr class="sidebar-divider"/>
+    <div class="sidebar-label">Work</div>
+    <div class="sidebar-item" data-section="todo">
+      <span class="icon">✅</span> To Do
+    </div>
+
+    <!-- Live status dots at bottom -->
+    <hr class="sidebar-divider" style="margin-top:auto"/>
+    <div class="sidebar-status">
+      <div class="sidebar-label" style="padding-left:0">Live</div>
+      <div class="status-dot-row"><span class="dot dot-green"></span> Open WebUI · 8080</div>
+      <div class="status-dot-row"><span class="dot dot-green"></span> Ollama · 6 models</div>
+      <div class="status-dot-row"><span class="dot dot-green"></span> mem0 · Qdrant</div>
+      <div class="status-dot-row"><span class="dot dot-red"></span> DB-GPT · 5670</div>
+      <div class="status-dot-row"><span class="dot dot-yellow"></span> RAG · ChromaDB</div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ══ STORAGE ══ -->
+    <div class="section active" id="section-storage">
+      <div class="section-title">💾 Memory &amp; Storage</div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Free Disk</div>
+          <div class="stat-value green">56 GB</div>
+          <div class="stat-sub">of 228 GB total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">OpenClaw Total</div>
+          <div class="stat-value">10 GB</div>
+          <div class="stat-sub">~/.openclaw/</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Orbit Workspace</div>
+          <div class="stat-value">5.9 GB</div>
+          <div class="stat-sub">repos + venvs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">RAG DB</div>
+          <div class="stat-value yellow">3.4 MB</div>
+          <div class="stat-sub">ChromaDB ⚠️ broken</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">mem0 (Qdrant)</div>
+          <div class="stat-value green">648 KB</div>
+          <div class="stat-sub">per-agent memories</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead><tr><th>What</th><th>Path</th><th>Size</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="col-name">Everything (OpenClaw)</td>
+              <td class="col-path">~/.openclaw/</td>
+              <td class="col-size">10 GB</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Good</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">Orbit's Workspace</td>
+              <td class="col-path">~/.openclaw/workspace-main/</td>
+              <td class="col-size">5.9 GB</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Good</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">RAG Database (ChromaDB)</td>
+              <td class="col-path">~/.openclaw/rag/db/</td>
+              <td class="col-size">3.4 MB</td>
+              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Broken</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">mem0 Vector DB (Qdrant)</td>
+              <td class="col-path">~/.openclaw/mem0_db/</td>
+              <td class="col-size">648 KB</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Good</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">Mac Free Disk</td>
+              <td class="col-path">/ (228 GB total)</td>
+              <td class="col-size"><strong>56 GB</strong></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Plenty</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ RAG ══ -->
+    <div class="section" id="section-rag">
+      <div class="section-title">🔍 RAG &amp; Memory Systems</div>
+
+      <div class="alert alert-warn">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-text">
+          <strong>ChromaDB is broken on Python 3.14.</strong> Pydantic v1 is incompatible — crashes on import. Fix: move ChromaDB to <code>.venv-crew</code> (Python 3.11). Until then, RAG search and daily sync are down.
+        </div>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead><tr><th>System</th><th>Status</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="col-name">ChromaDB (Python 3.14)</td>
+              <td><span class="badge badge-down"><span class="dot dot-red"></span>Broken</span></td>
+              <td class="col-note">Pydantic v1 incompatible — crashes on import</td>
+            </tr>
+            <tr>
+              <td class="col-name">RAG Daily Sync Cron</td>
+              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Affected</span></td>
+              <td class="col-note">Cron runs but ChromaDB can't load — nothing being indexed</td>
+            </tr>
+            <tr>
+              <td class="col-name">mem0 (Qdrant)</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Working</span></td>
+              <td class="col-note">Separate from RAG — per-agent memories via Ollama</td>
+            </tr>
+            <tr>
+              <td class="col-name">nomic-embed-text (Ollama)</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Running</span></td>
+              <td class="col-note">768-dim embeddings — powering mem0</td>
+            </tr>
+            <tr>
+              <td class="col-name">MEMORY.md (Built-in)</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+              <td class="col-note">Orbit reads/writes every session</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ AGENTS ══ -->
+    <div class="section" id="section-agents">
+      <div class="section-title">👥 AI Agents &amp; Folders <span class="count">8 agents</span></div>
+
+      <div class="card">
+        <table>
+          <thead><tr><th>Agent</th><th>ID</th><th>Folder</th><th>MEMORY.md</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="col-name">🛸 Orbit</td>
+              <td class="col-path">main</td>
+              <td class="col-path">workspace-main/</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🟢 Green Lantern</td>
+              <td class="col-path">greenlantern</td>
+              <td class="col-path">workspace-greenlantern/</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🔬 Rick</td>
+              <td class="col-path">rick</td>
+              <td class="col-path">workspace-rick/</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">💰 Tony Stark</td>
+              <td class="col-path">tonystark</td>
+              <td class="col-path">workspace-tonystark/</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🧘 Qui-Gon</td>
+              <td class="col-path">quigon</td>
+              <td class="col-path">workspace-quigon/</td>
+              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">📚 Beast</td>
+              <td class="col-path">beast</td>
+              <td class="col-path">workspace-beast/</td>
+              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🤖 Baymax</td>
+              <td class="col-path">baymax</td>
+              <td class="col-path">workspace-baymax/</td>
+              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">👊 Thanos</td>
+              <td class="col-path">thanos</td>
+              <td class="col-path">workspace-thanos/</td>
+              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ REPOS ══ -->
+    <div class="section" id="section-repos">
+      <div class="section-title">📦 Repos <span class="count">14 total</span></div>
+
+      <div class="card">
+        <div class="card-label">Installed &amp; Working</div>
+        <table>
+          <thead><tr><th>Status</th><th>Repo</th><th>Size</th><th>What It Does</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">mem0</td>
+              <td class="col-size">99 MB</td>
+              <td class="col-note">Per-agent memory — stores/recalls facts via Qdrant + Ollama</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">litellm</td>
+              <td class="col-size">215 MB</td>
+              <td class="col-note">Token counting, cost tracking, 100+ LLM support</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">firecrawl</td>
+              <td class="col-size">227 MB</td>
+              <td class="col-note">Web scraper — any URL → Markdown. Needs API key for cloud.</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">newspaper</td>
+              <td class="col-size">34 MB</td>
+              <td class="col-note">Lightweight article scraper — fully local, no API key</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">graphify</td>
+              <td class="col-size">20 MB</td>
+              <td class="col-note">Knowledge graph builder — maps any codebase or docs</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">langgraph</td>
+              <td class="col-size">18 MB</td>
+              <td class="col-note">Stateful multi-step agent workflows</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">zep</td>
+              <td class="col-size">440 MB</td>
+              <td class="col-note">Agent memory SDK — needs API key for cloud features</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">paul</td>
+              <td class="col-size">1.3 MB</td>
+              <td class="col-note">Plan-Apply-Unify Loop — structured dev workflow</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">crewAI</td>
+              <td class="col-size">496 MB</td>
+              <td class="col-note">Multi-agent orchestration — running on Python 3.11</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">openai-agents-python</td>
+              <td class="col-size">32 MB</td>
+              <td class="col-note">OpenAI Agents SDK — tools, handoffs, guardrails</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
+              <td class="col-name">aider</td>
+              <td class="col-size">140 MB</td>
+              <td class="col-note">AI pair programmer — edits code directly in your repo</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Running</span></td>
+              <td class="col-name">open-webui</td>
+              <td class="col-size">—</td>
+              <td class="col-note">Chat UI for Ollama — live at <strong>localhost:8080</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Needs Attention</div>
+        <table>
+          <thead><tr><th>Status</th><th>Repo</th><th>Size</th><th>What It Does</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-down"><span class="dot dot-red"></span>Down</span></td>
+              <td class="col-name">DB-GPT</td>
+              <td class="col-size">1.7 GB</td>
+              <td class="col-note">AI SQL assistant — was at localhost:5670, currently down</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-pause"><span class="dot dot-grey"></span>Paused</span></td>
+              <td class="col-name">Flowise</td>
+              <td class="col-size">70 MB</td>
+              <td class="col-note">Visual LLM flow builder — npm OOM during install, needs retry</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ TODO ══ -->
+    <div class="section" id="section-todo">
+      <div class="section-title">✅ Things To Do</div>
+
+      <div class="card">
+        <div class="card-label">🔴 High Priority</div>
+        <table>
+          <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="col-name">Fix RAG (ChromaDB broken)</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Move to .venv-crew (Python 3.11) or pin older ChromaDB</td>
+            </tr>
+            <tr>
+              <td class="col-name">Wire mem0 into agent workflows</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Agents should auto-store/recall via mem0</td>
+            </tr>
+            <tr>
+              <td class="col-name">Get Firecrawl API key</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Free at firecrawl.dev — needed for JS-heavy scraping</td>
+            </tr>
+            <tr>
+              <td class="col-name">Get Zep API key</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Free at getzep.com — unlocks cloud memory</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-label">🟡 Medium Priority</div>
+        <table>
+          <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="col-name">Add MEMORY.md to 4 agents</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Qui-Gon, Beast, Baymax, Thanos are missing it</td>
+            </tr>
+            <tr>
+              <td class="col-name">Install Docker</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Needed for self-hosted Firecrawl + Zep</td>
+            </tr>
+            <tr>
+              <td class="col-name">Fix Flowise (OOM)</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Try --max-old-space-size or build from source</td>
+            </tr>
+            <tr>
+              <td class="col-name">Notion MCP setup</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">developers.notion.com/docs/mcp</td>
+            </tr>
+            <tr>
+              <td class="col-name">Set up agent voices</td>
+              <td class="col-note">Tony Stark</td>
+              <td class="col-note">ElevenLabs or local TTS for each agent</td>
+            </tr>
+            <tr>
+              <td class="col-name">Pi 5 setup</td>
+              <td class="col-note">Rick</td>
+              <td class="col-note">Ollama + OpenClaw node + wake word + Moxie robot</td>
+            </tr>
+            <tr>
+              <td class="col-name">Blender MCP + Build The Hex</td>
+              <td class="col-note">Green Lantern</td>
+              <td class="col-note">github.com/ahujasid/blender-mcp — Last Star project</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-label">✅ Done</div>
+        <table>
+          <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="col-name">GitHub CLI authenticated</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">JesseFuentes1985 — repo, read:org, gist scopes</td>
+            </tr>
+            <tr>
+              <td class="col-name">Slack connected</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Socket Mode — clawbot workspace</td>
+            </tr>
+            <tr>
+              <td class="col-name">Open WebUI running</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">localhost:8080 — talk to Ollama in browser</td>
+            </tr>
+            <tr>
+              <td class="col-name">All 8 agents active</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">Cross-agent messaging enabled</td>
+            </tr>
+            <tr>
+              <td class="col-name">Anthropic auto-reload</td>
+              <td class="col-note">Tony Stark</td>
+              <td class="col-note">Reloads to $55 when balance hits $5</td>
+            </tr>
+            <tr>
+              <td class="col-name">All 14 repos cloned</td>
+              <td class="col-note">Orbit</td>
+              <td class="col-note">workspace-main/repos/ — 13 cloned + open-webui installed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const items = document.querySelectorAll('.sidebar-item');
+  const sections = document.querySelectorAll('.section');
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const target = item.dataset.section;
+
+      items.forEach(i => i.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+
+      item.classList.add('active');
+      document.getElementById('section-' + target).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
