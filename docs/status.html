@@ -93,7 +93,8 @@
     .col-name { font-weight: 600; }
     .col-path { color: var(--muted); font-size: .78rem; font-family: monospace; }
     .col-note { color: var(--muted); font-size: .8rem; }
-    .col-size { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
+    .col-muted { color: var(--border); font-size: .8rem; text-align:center; }
+        .col-size { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
 
     /* ── BADGES ── */
     .badge {
@@ -180,6 +181,12 @@
     <div class="sidebar-label">Work</div>
     <div class="sidebar-item" data-section="todo">
       <span class="icon">✅</span> To Do
+    </div>
+
+    <hr class="sidebar-divider"/>
+    <div class="sidebar-label">Docs</div>
+    <div class="sidebar-item" data-section="raci">
+      <span class="icon">📋</span> RACI &amp; Fix Log
     </div>
 
     <!-- Live status dots at bottom -->
@@ -601,6 +608,196 @@
               <td class="col-name">All 14 repos cloned</td>
               <td class="col-note">Orbit</td>
               <td class="col-note">workspace-main/repos/ — 13 cloned + open-webui installed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- ══ RACI + FIX LOG ══ -->
+    <div class="section" id="section-raci">
+      <div class="section-title">📋 RACI &amp; Fix Log</div>
+
+      <!-- RACI -->
+      <div class="card" style="margin-bottom:1.25rem">
+        <div class="card-label">RACI Matrix — Who owns what</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Domain / System</th>
+              <th>🛸 Orbit</th>
+              <th>🔬 Rick</th>
+              <th>💰 Tony</th>
+              <th>🟢 G.L.</th>
+              <th>📚 Beast</th>
+              <th>🤖 Baymax</th>
+              <th>🧘 Qui-Gon</th>
+              <th>👊 Thanos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-name">OpenClaw / Gateway</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Agent Config &amp; Crew</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">RAG / ChromaDB</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">mem0 / Qdrant</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Servers / Infra / Pi / Docker</td>
+              <td><span class="badge badge-pause">I</span></td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Ollama &amp; Local Models</td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Home Automation / Moxie</td>
+              <td><span class="badge badge-pause">I</span></td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Business / Investing / Markets</td>
+              <td><span class="badge badge-pause">I</span></td>
+              <td class="col-muted">—</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-ok">C</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">API Credits &amp; Cost Monitoring</td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td class="col-muted">—</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-pause">I</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">Last Star — Story &amp; Lore</td>
+              <td><span class="badge badge-pause">I</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">The Hex — Blender / 3D</td>
+              <td><span class="badge badge-pause">I</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Learning / Certs (AWS, PMP, ITIL)</td>
+              <td><span class="badge badge-pause">I</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Book Library / DB</td>
+              <td><span class="badge badge-pause">I</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Health / Nutrition / Sleep</td>
+              <td><span class="badge badge-pause">I</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Mental Health / Mindfulness</td>
+              <td><span class="badge badge-pause">I</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td>
+            </tr>
+            <tr>
+              <td class="col-name">Projects &amp; Deadlines</td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-done">A/R</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">GitHub Pages Dashboard</td>
+              <td><span class="badge badge-done">A/R</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-pause">I</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- RACI Legend -->
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+        <span class="badge badge-done">A/R</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">Accountable + Responsible — owns it &amp; does it</span>
+        <span class="badge badge-ok">C</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">Consulted — input before decisions</span>
+        <span class="badge badge-pause">I</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">Informed — kept in the loop</span>
+        <span style="font-size:.8rem;color:var(--muted);align-self:center;">— = not involved</span>
+      </div>
+
+      <!-- FIX LOG -->
+      <div class="section-title" style="font-size:1rem;margin-top:.5rem;">🔧 Fix Log</div>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>What Broke</th>
+              <th>Root Cause</th>
+              <th>Fix Applied</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-size" style="white-space:nowrap">2026-08-15</td>
+              <td class="col-name">ChromaDB / RAG</td>
+              <td class="col-note">ChromaDB 1.1.1 imports <code>pydantic.v1</code> compat layer — Python 3.14 removed it entirely</td>
+              <td class="col-note">Upgraded ChromaDB to 1.5.9 in <code>.venv</code> (Python 3.14). Uses Pydantic v2 natively.</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="col-size" style="white-space:nowrap">2026-08-14</td>
+              <td class="col-name">GitHub CLI auth</td>
+              <td class="col-note">Token pipe (<code>echo TOKEN | gh auth login</code>) missing <code>read:org</code> scope</td>
+              <td class="col-note">Re-authed via device OAuth flow — all scopes granted: <code>repo</code>, <code>read:org</code>, <code>gist</code></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="col-size" style="white-space:nowrap">2026-03-14</td>
+              <td class="col-name">Anthropic credits hit $0</td>
+              <td class="col-note">No auto-reload configured — balance drained completely, all API calls failed</td>
+              <td class="col-note">Set up auto-reload: reloads to $55 when balance hits $5</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Fixed</span></td>
             </tr>
           </tbody>
         </table>
