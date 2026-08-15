@@ -115,6 +115,19 @@
     .pri-low    { background: rgba(0,255,136,.1); color: var(--green); }
     .pri-done   { background: rgba(0,212,255,.08); color: var(--accent); }
 
+
+    /* ── INCIDENT CARDS ── */
+    .incident-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
+    .incident-header { padding: .85rem 1.4rem; border-bottom: 1px solid var(--border); background: rgba(255,255,255,.02); }
+    .incident-meta { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+    .incident-date { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .incident-system { font-size: .85rem; font-weight: 700; color: var(--text); }
+    .incident-body { padding: 0; }
+    .incident-row { padding: 1rem 1.4rem; border-bottom: 1px solid rgba(255,255,255,.04); display: grid; grid-template-columns: 130px 1fr; gap: 1rem; align-items: start; }
+    .incident-label { font-size: .78rem; font-weight: 700; color: var(--muted); padding-top: .1rem; white-space: nowrap; }
+    .incident-text { font-size: .85rem; color: var(--text); line-height: 1.6; }
+    .incident-text code { background: rgba(0,212,255,.08); color: var(--accent); padding: .1rem .35rem; border-radius: 4px; font-size: .82em; }
+
     /* ── STAT CARDS (storage overview) ── */
     .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
     .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; }
@@ -765,43 +778,105 @@
       </div>
 
       <!-- FIX LOG -->
-      <div class="section-title" style="font-size:1rem;margin-top:.5rem;">🔧 Fix Log</div>
-      <div class="card">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>What Broke</th>
-              <th>Root Cause</th>
-              <th>Fix Applied</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="col-size" style="white-space:nowrap">2026-08-15</td>
-              <td class="col-name">ChromaDB / RAG</td>
-              <td class="col-note">ChromaDB 1.1.1 imports <code>pydantic.v1</code> compat layer — Python 3.14 removed it entirely</td>
-              <td class="col-note">Upgraded ChromaDB to 1.5.9 in <code>.venv</code> (Python 3.14). Uses Pydantic v2 natively.</td>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Fixed</span></td>
-            </tr>
-            <tr>
-              <td class="col-size" style="white-space:nowrap">2026-08-14</td>
-              <td class="col-name">GitHub CLI auth</td>
-              <td class="col-note">Token pipe (<code>echo TOKEN | gh auth login</code>) missing <code>read:org</code> scope</td>
-              <td class="col-note">Re-authed via device OAuth flow — all scopes granted: <code>repo</code>, <code>read:org</code>, <code>gist</code></td>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Fixed</span></td>
-            </tr>
-            <tr>
-              <td class="col-size" style="white-space:nowrap">2026-03-14</td>
-              <td class="col-name">Anthropic credits hit $0</td>
-              <td class="col-note">No auto-reload configured — balance drained completely, all API calls failed</td>
-              <td class="col-note">Set up auto-reload: reloads to $55 when balance hits $5</td>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Fixed</span></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="section-title" style="font-size:1rem;margin-top:.25rem;margin-bottom:1rem;">🔧 Incident &amp; Fix Log</div>
+
+      <!-- INCIDENT CARD -->
+      <div class="incident-card">
+        <div class="incident-header">
+          <div class="incident-meta">
+            <span class="badge badge-ok"><span class="dot dot-green"></span>Resolved</span>
+            <span class="incident-date">2026-08-15</span>
+            <span class="incident-system">RAG / ChromaDB</span>
+          </div>
+        </div>
+        <div class="incident-body">
+          <div class="incident-row">
+            <div class="incident-label">⚠️ Issue</div>
+            <div class="incident-text">RAG database completely offline. ChromaDB 1.1.1 crashed on every import with a <code>ModuleNotFoundError</code> for <code>pydantic.v1</code>. The daily sync cron was running but nothing was being indexed. 166 vectors sitting in the DB, unreachable.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔍 Root Cause</div>
+            <div class="incident-text">ChromaDB 1.1.1 uses <code>from pydantic.v1 import BaseSettings</code> — the Pydantic v1 compatibility shim. Python 3.14 removed support for that shim entirely. The moment you tried to <code>import chromadb</code>, Python threw and the whole RAG stack went down with it.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔧 Fix</div>
+            <div class="incident-text">Upgraded ChromaDB from <code>1.1.1 → 1.5.9</code> in the <code>.venv</code> (Python 3.14) environment. Version 1.5.9 uses Pydantic v2 natively — no compat shim. Zero data loss: all 166 vectors confirmed intact after upgrade.<br/><code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">.venv/bin/pip install --upgrade chromadb</code></div>
+          </div>
+          <div class="incident-row" style="border-bottom:none">
+            <div class="incident-label">✅ How to Test</div>
+            <div class="incident-text">
+              Run this in terminal — if it prints the vector count, RAG is healthy:<br/>
+              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">cd ~/.openclaw/workspace-main<br/>.venv/bin/python -c "import chromadb; c = chromadb.PersistentClient(path='~/.openclaw/rag/db'); print(c.get_collection('knowledge').count())"</code>
+              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected output: <strong>166</strong></span>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- INCIDENT CARD -->
+      <div class="incident-card">
+        <div class="incident-header">
+          <div class="incident-meta">
+            <span class="badge badge-ok"><span class="dot dot-green"></span>Resolved</span>
+            <span class="incident-date">2026-08-14</span>
+            <span class="incident-system">GitHub CLI / gh auth</span>
+          </div>
+        </div>
+        <div class="incident-body">
+          <div class="incident-row">
+            <div class="incident-label">⚠️ Issue</div>
+            <div class="incident-text">GitHub CLI authenticated but <code>gh</code> commands that touch org data failed with <em>"missing required scope: read:org"</em>. Could not push to repos or access org-level info.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔍 Root Cause</div>
+            <div class="incident-text">Token was piped in via <code>echo TOKEN | gh auth login --with-token</code>. That method only grants the scopes baked into the token at creation time. The token was missing <code>read:org</code>.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔧 Fix</div>
+            <div class="incident-text">Re-authenticated via the interactive device OAuth flow instead of token pipe. Selected all required scopes during the browser flow.<br/><code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">gh auth login</code><br/>Scopes granted: <code>repo</code>, <code>read:org</code>, <code>gist</code>. Then wired <code>gh</code> into git HTTPS with <code>gh auth setup-git</code>.</div>
+          </div>
+          <div class="incident-row" style="border-bottom:none">
+            <div class="incident-label">✅ How to Test</div>
+            <div class="incident-text">
+              <code style="display:block;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">gh auth status</code>
+              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: account JesseFuentes1985, scopes include repo, read:org, gist</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INCIDENT CARD -->
+      <div class="incident-card">
+        <div class="incident-header">
+          <div class="incident-meta">
+            <span class="badge badge-ok"><span class="dot dot-green"></span>Resolved</span>
+            <span class="incident-date">2026-03-14</span>
+            <span class="incident-system">Anthropic API Credits</span>
+          </div>
+        </div>
+        <div class="incident-body">
+          <div class="incident-row">
+            <div class="incident-label">⚠️ Issue</div>
+            <div class="incident-text">All Anthropic API calls started returning <code>402 Payment Required</code>. Every agent running on Claude went completely offline. Full outage.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔍 Root Cause</div>
+            <div class="incident-text">No auto-reload was configured on the Anthropic account. Balance drained to $0 with no warning threshold set. API keys remain valid but all calls are blocked when balance hits zero.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔧 Fix</div>
+            <div class="incident-text">Manually reloaded credits. Configured auto-reload in the Anthropic console: triggers at <strong>$5 balance</strong>, reloads to <strong>$55</strong>. Never hits zero again.</div>
+          </div>
+          <div class="incident-row" style="border-bottom:none">
+            <div class="incident-label">✅ How to Test</div>
+            <div class="incident-text">
+              <code style="display:block;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">curl https://api.anthropic.com/v1/messages -H "x-api-key: $ANTHROPIC_API_KEY" -H "anthropic-version: 2023-06-01" -H "content-type: application/json" -d '{"model":"claude-haiku-4-5","max_tokens":10,"messages":[{"role":"user","content":"ping"}]}'</code>
+              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: JSON response with <code>content</code> field, no 402 error</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </main>
