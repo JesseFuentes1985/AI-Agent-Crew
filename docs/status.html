@@ -780,6 +780,87 @@
       <!-- FIX LOG -->
       <div class="section-title" style="font-size:1rem;margin-top:.25rem;margin-bottom:1rem;">🔧 Incident &amp; Fix Log</div>
 
+      <!-- OPEN INCIDENTS -->
+      <div class="incident-card" style="border-color:rgba(255,107,107,.25)">
+        <div class="incident-header" style="background:rgba(255,107,107,.05);border-color:rgba(255,107,107,.2)">
+          <div class="incident-meta">
+            <span class="badge badge-down"><span class="dot dot-red"></span>Open</span>
+            <span class="incident-date">2026-08-15</span>
+            <span class="incident-system">DB-GPT</span>
+          </div>
+        </div>
+        <div class="incident-body">
+          <div class="incident-row">
+            <div class="incident-label">⚠️ Issue</div>
+            <div class="incident-text">DB-GPT is down. Was running at <code>localhost:5670</code> — AI SQL assistant for querying local data. Process is not running, port is closed, UI unreachable.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔍 Root Cause</div>
+            <div class="incident-text">Service was not daemonized — it was started manually in a terminal session and that session ended. No LaunchAgent or persistent process manager configured, so it doesn't survive restarts or session exits.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔧 Fix Needed</div>
+            <div class="incident-text">
+              Two steps:<br/>
+              <strong>1. Restart it now</strong> — spin it back up manually:<br/>
+              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">cd ~/.openclaw/workspace-main/repos/DB-GPT<br/>python dbgpt/app/dbgpt_server.py --port 5670</code>
+              <strong style="display:block;margin-top:.75rem">2. Make it permanent</strong> — create a LaunchAgent so it starts on login and stays running. (Owner: Rick)
+            </div>
+          </div>
+          <div class="incident-row" style="border-bottom:none">
+            <div class="incident-label">✅ How to Test</div>
+            <div class="incident-text">
+              <code style="display:block;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">curl -s http://localhost:5670 | head -5</code>
+              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: HTML response. Or open <strong>http://localhost:5670</strong> in browser — should load the DB-GPT UI.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPEN INCIDENTS -->
+      <div class="incident-card" style="border-color:rgba(245,200,66,.25)">
+        <div class="incident-header" style="background:rgba(245,200,66,.05);border-color:rgba(245,200,66,.2)">
+          <div class="incident-meta">
+            <span class="badge badge-warn"><span class="dot dot-yellow"></span>Open</span>
+            <span class="incident-date">2026-08-13</span>
+            <span class="incident-system">Flowise</span>
+          </div>
+        </div>
+        <div class="incident-body">
+          <div class="incident-row">
+            <div class="incident-label">⚠️ Issue</div>
+            <div class="incident-text">Flowise install is incomplete. Visual LLM flow builder — never came up. <code>npm install</code> ran out of memory (OOM killed) mid-install. Repo is cloned but the package is unusable.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔍 Root Cause</div>
+            <div class="incident-text">Flowise has a very large dependency tree. The default Node.js heap size (~1.5 GB) isn't enough to install it on a machine under memory pressure. OOM killer terminated the process before packages finished writing.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔧 Fix Needed</div>
+            <div class="incident-text">
+              Try install with expanded heap limit:<br/>
+              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">cd ~/.openclaw/workspace-main/repos/Flowise<br/>npm cache clean --force<br/>NODE_OPTIONS="--max-old-space-size=4096" npm install</code>
+              If that still OOMs, run it in a Docker container instead (requires Docker to be installed first — Owner: Rick).
+            </div>
+          </div>
+          <div class="incident-row" style="border-bottom:none">
+            <div class="incident-label">✅ How to Test</div>
+            <div class="incident-text">
+              After install completes:<br/>
+              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">cd ~/.openclaw/workspace-main/repos/Flowise<br/>npx flowise start</code>
+              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: "Flowise is running on port 3000" — open <strong>http://localhost:3000</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIVIDER between open and resolved -->
+      <div style="display:flex;align-items:center;gap:.75rem;margin:.25rem 0 1.25rem">
+        <hr style="flex:1;border:none;border-top:1px solid var(--border)"/>
+        <span style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap">Resolved</span>
+        <hr style="flex:1;border:none;border-top:1px solid var(--border)"/>
+      </div>
+
       <!-- INCIDENT CARD -->
       <div class="incident-card">
         <div class="incident-header">
