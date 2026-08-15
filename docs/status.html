@@ -538,6 +538,37 @@
         </table>
       </div>
 
+      <div class="card" style="border-color:rgba(108,99,255,.4);">
+        <div class="card-label" style="color:#a8a3ff;">🎙️ ElevenLabs — Agent Voices</div>
+        <p style="color:var(--muted);font-size:.85rem;margin-bottom:1rem;line-height:1.6;">Each agent needs a unique voice. ElevenLabs is the plan — get an API key, assign a voice ID per agent, wire it into OpenClaw TTS. Tony Stark owns this.</p>
+        <table>
+          <thead><tr><th>Step</th><th>Owner</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="col-name">1. Get ElevenLabs API key</td>
+              <td class="col-note">Jesse</td>
+              <td><span class="badge badge-red">Not Started</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">2. Pick voice for each of 8 agents</td>
+              <td class="col-note">Tony Stark</td>
+              <td><span class="badge badge-red">Not Started</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">3. Wire ElevenLabs into OpenClaw TTS config</td>
+              <td class="col-note">Orbit</td>
+              <td><span class="badge badge-red">Not Started</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">4. Test each agent voice in session</td>
+              <td class="col-note">Jesse</td>
+              <td><span class="badge badge-red">Not Started</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:.75rem;font-size:.78rem;color:var(--muted);">🔗 <a href="https://elevenlabs.io" target="_blank" style="color:var(--accent)">elevenlabs.io</a> — free tier: 10k chars/month · Docs: <a href="https://elevenlabs.io/docs" target="_blank" style="color:var(--accent)">elevenlabs.io/docs</a></div>
+      </div>
+
       <div class="card">
         <div class="card-label">🟡 Medium Priority</div>
         <table>
@@ -562,11 +593,6 @@
               <td class="col-name">Notion MCP setup</td>
               <td class="col-note">Orbit</td>
               <td class="col-note">developers.notion.com/docs/mcp</td>
-            </tr>
-            <tr>
-              <td class="col-name">Set up agent voices</td>
-              <td class="col-note">Tony Stark</td>
-              <td class="col-note">ElevenLabs or local TTS for each agent</td>
             </tr>
             <tr>
               <td class="col-name">Pi 5 setup</td>
@@ -849,6 +875,43 @@
               After install completes:<br/>
               <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">cd ~/.openclaw/workspace-main/repos/Flowise<br/>npx flowise start</code>
               <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: "Flowise is running on port 3000" — open <strong>http://localhost:3000</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="incident-card" style="border-color:rgba(108,99,255,.35)">
+        <div class="incident-header" style="background:rgba(108,99,255,.06);border-color:rgba(108,99,255,.25)">
+          <div class="incident-meta">
+            <span class="badge badge-warn" style="background:rgba(108,99,255,.15);color:#a8a3ff;border-color:rgba(108,99,255,.4)"><span class="dot" style="background:#a8a3ff;box-shadow:0 0 6px #a8a3ff"></span>Not Started</span>
+            <span class="incident-date">2026-08-15</span>
+            <span class="incident-system">ElevenLabs — Agent Voices</span>
+          </div>
+        </div>
+        <div class="incident-body">
+          <div class="incident-row">
+            <div class="incident-label">⚠️ Issue</div>
+            <div class="incident-text">No agent has a voice. ElevenLabs integration was planned from day one but never started. All 8 agents respond in text only — no TTS personality.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔍 Root Cause</div>
+            <div class="incident-text">No ElevenLabs API key. No voice IDs assigned per agent. OpenClaw TTS config not wired. Tony Stark owns this track but setup hasn't begun.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">🔧 Fix Needed</div>
+            <div class="incident-text">
+              <strong>Step 1 — Get API key (Jesse):</strong> Sign up at <a href="https://elevenlabs.io" target="_blank" style="color:var(--accent)">elevenlabs.io</a> — free tier: 10k chars/month.<br/><br/>
+              <strong>Step 2 — Pick voices (Tony Stark):</strong> Browse the Voice Library, assign one voice ID per agent. Save IDs here in the log.<br/><br/>
+              <strong>Step 3 — Wire into OpenClaw (Orbit):</strong> Add ElevenLabs provider to OpenClaw TTS config with the API key.<br/><br/>
+              <strong>Step 4 — Test each agent (Jesse):</strong> Send a message to each agent and confirm their voice plays back.
+            </div>
+          </div>
+          <div class="incident-row" style="border-bottom:none">
+            <div class="incident-label">✅ How to Test</div>
+            <div class="incident-text">
+              Once wired in, ask any agent something out loud and confirm unique voice responds.<br/>
+              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">curl https://api.elevenlabs.io/v1/voices \<br/>  -H "xi-api-key: YOUR_KEY" | jq '.voices[].name'</code>
+              <span style="color:#a8a3ff;font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: list of available voice names you can assign to each agent</span>
             </div>
           </div>
         </div>
