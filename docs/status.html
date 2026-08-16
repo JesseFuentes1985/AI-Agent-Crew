@@ -354,7 +354,7 @@
 
     <!-- ══ AGENTS ══ -->
     <div class="section" id="section-agents">
-      <div class="section-title">👥 AI Agents &amp; Folders <span class="count">8 agents</span></div>
+      <div class="section-title">👥 AI Agents &amp; Folders <span class="count">9 agents</span></div>
 
       <div class="card">
         <table>
@@ -414,6 +414,13 @@
               <td class="col-path">thanos</td>
               <td class="col-path">workspace-thanos/</td>
               <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🔮 Vision</td>
+              <td class="col-path">vision</td>
+              <td class="col-path">workspace-vision/</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
           </tbody>
@@ -617,7 +624,7 @@
             <tr><td class="col-name">GitHub CLI authenticated</td><td class="col-note">Orbit</td><td class="col-note">JesseFuentes1985 — repo, read:org, gist scopes</td></tr>
             <tr><td class="col-name">Slack connected</td><td class="col-note">Orbit</td><td class="col-note">Socket Mode — clawbot workspace</td></tr>
             <tr><td class="col-name">Open WebUI running</td><td class="col-note">Orbit</td><td class="col-note">localhost:8080 — Ollama in browser</td></tr>
-            <tr><td class="col-name">All 8 agents active</td><td class="col-note">Orbit</td><td class="col-note">Cross-agent messaging enabled</td></tr>
+            <tr><td class="col-name">All 9 agents active</td><td class="col-note">Orbit</td><td class="col-note">Cross-agent messaging enabled — Vision added 2026-08-16</td></tr>
             <tr><td class="col-name">Anthropic credits auto-reload</td><td class="col-note">Tony Stark</td><td class="col-note">Reloads to $55 when balance hits $5</td></tr>
             <tr><td class="col-name">All 14 repos cloned</td><td class="col-note">Orbit</td><td class="col-note">workspace-main/repos/ + open-webui installed</td></tr>
             <tr><td class="col-name">GitHub Pages dashboard live</td><td class="col-note">Orbit</td><td class="col-note">jessefuentes1985.github.io/AI-Agent-Crew</td></tr>
@@ -779,6 +786,27 @@
           <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
             <tr><td class="col-name">Meditation workflow</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Guided sessions, reminders, streak tracking</td></tr>
             <tr><td class="col-name">Mental health support setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Check-ins, mood tracking, Jedi philosophy prompts</td></tr>
+          </tbody></table>
+        </div>
+      </details>
+
+      <!-- Vision -->
+      <details class="agent-drop">
+        <summary class="agent-drop-head">
+          <span class="agent-drop-emoji">🔮</span>
+          <span class="agent-drop-name">Vision</span>
+          <span class="agent-drop-title">Data & Memory · RAG / Qdrant / Vector Search</span>
+          <span class="agent-drop-count">6 open</span>
+          <span class="agent-drop-chev">›</span>
+        </summary>
+        <div class="agent-drop-body">
+          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
+            <tr><td class="col-name">Fix rag-daily-sync (7 errors)</td><td><span class="badge badge-red">High</span></td><td class="col-note">7 consecutive cron failures — root cause unknown, needs investigation</td></tr>
+            <tr><td class="col-name">Wire mem0 into agent workflows</td><td><span class="badge badge-red">High</span></td><td class="col-note">Auto-store/recall facts on session end for all 9 agents</td></tr>
+            <tr><td class="col-name">Seed memories for 8 remaining agents</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Orbit has 39 points; Baymax/Beast/etc. have zero memories in Qdrant</td></tr>
+            <tr><td class="col-name">Run graphify on workspace-main</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Build knowledge graph of the codebase + docs</td></tr>
+            <tr><td class="col-name">Make agentmemory persistent (LaunchAgent)</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Currently must be started manually each reboot</td></tr>
+            <tr><td class="col-name">Re-ingest RAG after new files added</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Run <code>openclaw rag ingest</code> to pick up new docs</td></tr>
           </tbody></table>
         </div>
       </details>
