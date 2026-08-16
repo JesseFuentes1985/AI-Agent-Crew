@@ -938,6 +938,63 @@
       <!-- FIX LOG -->
       <div class="section-title" style="font-size:1rem;margin-top:.25rem;margin-bottom:1rem;">🔧 Incident &amp; Fix Log</div>
 
+      <!-- RESOLVED INCIDENTS (most recent first) -->
+      <div class="incident-card" style="border-color:rgba(0,255,136,.25)">
+        <div class="incident-header" style="background:rgba(0,255,136,.05);border-color:rgba(0,255,136,.2)">
+          <div class="incident-meta">
+            <span class="badge badge-ok"><span class="dot dot-green"></span>Resolved</span>
+            <span class="incident-date">2026-08-16</span>
+            <span class="incident-system">Security — node Desktop Access</span>
+          </div>
+        </div>
+        <div class="incident-body">
+          <div class="incident-row">
+            <span class="incident-label">What happened</span>
+            <div class="incident-text">macOS prompted <code>node</code> (Homebrew Node.js, which runs OpenClaw) for access to Desktop files. Jesse clicked Allow accidentally. Node had no business accessing the Desktop — OpenClaw only needs its own workspace at <code>~/.openclaw/</code>.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">Root cause</div>
+            <div class="incident-text">Homebrew's node binary is ad-hoc signed (no TeamID), so macOS lumps all its child processes together under one TCC entry. Any exec command run via OpenClaw could have triggered the prompt.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">Fix</div>
+            <div class="incident-text">Revoke via <strong>System Settings → Privacy &amp; Security → Files and Folders → node → Desktop Folder OFF</strong>. OpenClaw functions normally — zero Desktop access needed.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">Prevention</div>
+            <div class="incident-text">Default answer for any unexpected macOS privacy prompt from <code>node</code>: <strong>Don't Allow</strong>. Document any legit permission grants here.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="incident-card" style="border-color:rgba(0,255,136,.25)">
+        <div class="incident-header" style="background:rgba(0,255,136,.05);border-color:rgba(0,255,136,.2)">
+          <div class="incident-meta">
+            <span class="badge badge-ok"><span class="dot dot-green"></span>Resolved</span>
+            <span class="incident-date">2026-08-16</span>
+            <span class="incident-system">Session — [chat.history omitted: message too large]</span>
+          </div>
+        </div>
+        <div class="incident-body">
+          <div class="incident-row">
+            <span class="incident-label">What happened</span>
+            <div class="incident-text">After a long working session (heavy exec, screenshots, git pushes, file reads), the webchat UI showed <code>[chat.history omitted: message too large]</code>. The active session JSONL transcript grew unbounded — no rotation was configured.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">Root cause</div>
+            <div class="incident-text"><code>truncateAfterCompaction</code> was not set. Without it, the JSONL transcript file grows forever. The webchat client hit the payload size limit trying to attach recent history to an outgoing message.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">Fix</div>
+            <div class="incident-text">Added to <code>~/.openclaw/openclaw.json</code> under <code>agents.defaults.compaction</code>:<br/><code>"truncateAfterCompaction": true</code> — rotates transcript after compaction so active file stays lean.<br/><code>"maxActiveTranscriptBytes": "10mb"</code> — force-compacts at 10 MB regardless of token pressure. Gateway restarted to apply.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">Test</div>
+            <div class="incident-text">Next compaction event will rotate the transcript. Ongoing sessions should no longer hit the message-too-large limit.</div>
+          </div>
+        </div>
+      </div>
+
       <!-- OPEN INCIDENTS -->
       <div class="incident-card" style="border-color:rgba(255,107,107,.25)">
         <div class="incident-header" style="background:rgba(255,107,107,.05);border-color:rgba(255,107,107,.2)">
