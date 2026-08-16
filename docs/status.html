@@ -421,105 +421,174 @@
 
     <!-- ══ REPOS ══ -->
     <div class="section" id="section-repos">
-      <div class="section-title">📦 Repos <span class="count">14 total</span></div>
+      <div class="section-title">📦 Repos <span class="count">22 total</span></div>
+      <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.25rem;line-height:1.6;">
+        All repos live in <code>~/.openclaw/workspace-main/repos/</code>. The column "How We Use It in OpenClaw" is the important one — this is how each tool connects to the real system on the Mac mini.
+      </p>
 
-      <div class="card">
-        <div class="card-label">Installed &amp; Working</div>
+      <!-- ACTIVE / IN USE -->
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-label" style="color:var(--green)">🟢 Active — Wired into OpenClaw</div>
         <table>
-          <thead><tr><th>Status</th><th>Repo</th><th>Size</th><th>What It Does</th></tr></thead>
+          <thead><tr><th>Repo</th><th>What It Is</th><th>How We Use It in OpenClaw</th><th>Owner</th></tr></thead>
           <tbody>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">mem0</td>
-              <td class="col-size">99 MB</td>
-              <td class="col-note">Per-agent memory — stores/recalls facts via Qdrant + Ollama</td>
+              <td class="col-note">Per-agent memory store</td>
+              <td class="col-note">Orbit calls <code>memory_store.py</code> to save/recall facts per agent via Qdrant + nomic-embed-text</td>
+              <td class="col-note">Orbit</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">litellm</td>
-              <td class="col-size">215 MB</td>
-              <td class="col-note">Token counting, cost tracking, 100+ LLM support</td>
+              <td class="col-note">Token counter + cost tracker for 100+ LLMs</td>
+              <td class="col-note">Used via <code>token_tracker.py</code> to estimate cost before/after agent runs</td>
+              <td class="col-note">Tony Stark</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">firecrawl</td>
-              <td class="col-size">227 MB</td>
-              <td class="col-note">Web scraper — any URL → Markdown. Needs API key for cloud.</td>
+              <td class="col-note">JS-heavy web scraper → clean Markdown</td>
+              <td class="col-note">Orbit calls <code>scrape.py</code> — firecrawl is the fallback when newspaper fails on SPAs</td>
+              <td class="col-note">Orbit</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">newspaper</td>
-              <td class="col-size">34 MB</td>
-              <td class="col-note">Lightweight article scraper — fully local, no API key</td>
+              <td class="col-note">Lightweight article scraper, fully local</td>
+              <td class="col-note">Primary in <code>scrape.py</code> — no API key needed, fast for standard articles</td>
+              <td class="col-note">Orbit</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">graphify</td>
-              <td class="col-size">20 MB</td>
-              <td class="col-note">Knowledge graph builder — maps any codebase or docs</td>
+              <td class="col-note">Knowledge graph builder for codebases/docs</td>
+              <td class="col-note">OpenClaw graphify skill installed — run <code>/graphify</code> to map any repo into a queryable graph</td>
+              <td class="col-note">Beast</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">langgraph</td>
-              <td class="col-size">18 MB</td>
-              <td class="col-note">Stateful multi-step agent workflows</td>
+              <td class="col-note">Stateful multi-step agent orchestration</td>
+              <td class="col-note">Not wired yet — cloned and ready to build stateful agent flows (Beast/Thanos)</td>
+              <td class="col-note">Orbit</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">zep</td>
-              <td class="col-size">440 MB</td>
-              <td class="col-note">Agent memory SDK — needs API key for cloud features</td>
+              <td class="col-note">Agent memory SDK with cloud long-term memory</td>
+              <td class="col-note">Installed in .venv (Python 3.14) — needs Zep API key to activate cloud features</td>
+              <td class="col-note">Orbit</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">paul</td>
-              <td class="col-size">1.3 MB</td>
-              <td class="col-note">Plan-Apply-Unify Loop — structured dev workflow</td>
+              <td class="col-note">Plan-Apply-Unify Loop for structured dev</td>
+              <td class="col-note">Dev workflow wrapper — plan a change, apply it, unify with existing code</td>
+              <td class="col-note">Orbit</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">crewAI</td>
-              <td class="col-size">496 MB</td>
-              <td class="col-note">Multi-agent orchestration — running on Python 3.11</td>
+              <td class="col-note">Multi-agent crew orchestration</td>
+              <td class="col-note">Runs on Python 3.11 (.venv-crew) — build crews of specialized agents for complex tasks</td>
+              <td class="col-note">Thanos</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">openai-agents-python</td>
-              <td class="col-size">32 MB</td>
-              <td class="col-note">OpenAI Agents SDK — tools, handoffs, guardrails</td>
+              <td class="col-note">OpenAI Agents SDK (tools, handoffs, guardrails)</td>
+              <td class="col-note">Installed in .venv (Python 3.14) — complement to crewAI for OpenAI-native agent flows</td>
+              <td class="col-note">Orbit</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>In Use</span></td>
               <td class="col-name">aider</td>
-              <td class="col-size">140 MB</td>
-              <td class="col-note">AI pair programmer — edits code directly in your repo</td>
+              <td class="col-note">AI pair programmer that edits code in your repo</td>
+              <td class="col-note">Runs from .venv-crew — Beast uses it for code review + auto-edits in any repo</td>
+              <td class="col-note">Beast</td>
             </tr>
             <tr>
-              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Running</span></td>
               <td class="col-name">open-webui</td>
-              <td class="col-size">—</td>
-              <td class="col-note">Chat UI for Ollama — live at <strong>localhost:8080</strong></td>
+              <td class="col-note">Chat UI for Ollama models</td>
+              <td class="col-note">Running at <strong>localhost:8080</strong> — lets Jesse chat with any Ollama model in browser</td>
+              <td class="col-note">Orbit</td>
+            </tr>
+            <tr>
+              <td class="col-name">mcporter</td>
+              <td class="col-note">CLI to discover + call MCP servers</td>
+              <td class="col-note">OpenClaw mcporter skill installed — Orbit uses it to connect any MCP tool to the agent crew</td>
+              <td class="col-note">Orbit</td>
+            </tr>
+            <tr>
+              <td class="col-name">gogcli</td>
+              <td class="col-note">Google Workspace CLI (Gmail, Calendar, Drive, Docs, Sheets)</td>
+              <td class="col-note">OpenClaw gog skill installed. Also exposes <code>gog mcp</code> stdio MCP server — agents can read Gmail, manage calendar, search Drive, interact with all Google Workspace without browser automation</td>
+              <td class="col-note">Orbit</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="card">
-        <div class="card-label">Needs Attention</div>
+      <!-- CLONED — READY TO WIRE -->
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-label" style="color:var(--yellow)">🟡 Cloned — Needs Wiring into OpenClaw</div>
         <table>
-          <thead><tr><th>Status</th><th>Repo</th><th>Size</th><th>What It Does</th></tr></thead>
+          <thead><tr><th>Repo</th><th>What It Is</th><th>How We'll Use It in OpenClaw</th><th>Owner</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="col-name">yt-dlp</td>
+              <td class="col-note">Video/audio downloader — YouTube + 1000s of sites</td>
+              <td class="col-note">Orbit calls via <code>exec</code> — download video/audio for Beast (learning), Green Lantern (Last Star research), or any agent needing media</td>
+              <td class="col-note">Beast</td>
+            </tr>
+            <tr>
+              <td class="col-name">agentmemory</td>
+              <td class="col-note">Persistent memory for coding agents via MCP — explicitly supports OpenClaw</td>
+              <td class="col-note">Native OpenClaw plugin — installs 12 lifecycle hooks, 17 skills, and 54 MCP tools (<code>memory_smart_search</code>, <code>memory_save</code>, etc.) so agents auto-remember decisions across sessions without manual prompting</td>
+              <td class="col-note">Orbit</td>
+            </tr>
+            <tr>
+              <td class="col-name">Peekaboo</td>
+              <td class="col-note">macOS screen capture + accessibility + UI automation CLI + MCP</td>
+              <td class="col-note">Part of openclaw GitHub org — exposes stdio MCP server so agents can take screenshots, inspect UI elements, click + type in any macOS app. Rick wires it in. Requires macOS 15+.</td>
+              <td class="col-note">Rick</td>
+            </tr>
+            <tr>
+              <td class="col-name">clawhub</td>
+              <td class="col-note">OpenClaw public skill registry — browse, publish, search skills</td>
+              <td class="col-note">Powers <code>openclaw skills install &lt;slug&gt;</code> directly — the official skill registry. Search before building. Orbit can publish crew skills here. Use <code>clawhub</code> CLI to manage full skill lifecycle.</td>
+              <td class="col-note">Orbit</td>
+            </tr>
+            <tr>
+              <td class="col-name">awesome-openclaw-skills</td>
+              <td class="col-note">Curated list of 5300+ community OpenClaw skills by category</td>
+              <td class="col-note">5400+ skills, all installable via <code>openclaw skills install &lt;slug&gt;</code>. Check this before building anything new — someone probably already made it. Security scanned via VirusTotal partnership.</td>
+              <td class="col-note">Orbit</td>
+            </tr>
+            <tr>
+              <td class="col-name">paperclip</td>
+              <td class="col-note">Open-source multi-agent orchestration UI — goals, org charts, budgets</td>
+              <td class="col-note">OpenClaw registers as an HTTP/webhook agent in Paperclip's org chart — Paperclip handles goal alignment + budget enforcement across agent teams. Evaluate for Thanos's project track.</td>
+              <td class="col-note">Thanos</td>
+            </tr>
+            <tr>
+              <td class="col-name">openclaw-dashboard</td>
+              <td class="col-note">Real-time Node.js dashboard for OpenClaw — sessions, costs, memory, cron, health</td>
+              <td class="col-note">Reads directly from <code>~/.openclaw/agents/&lt;id&gt;/sessions/</code> — live sessions, costs, memory files, cron jobs, logs. Run locally when server is ready; this replaces the GitHub Pages reference with a real control plane</td>
+              <td class="col-note">Rick</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- NEEDS ATTENTION -->
+      <div class="card">
+        <div class="card-label" style="color:var(--red)">🔴 Needs Attention</div>
+        <table>
+          <thead><tr><th>Status</th><th>Repo</th><th>Issue</th><th>Fix</th></tr></thead>
           <tbody>
             <tr>
               <td><span class="badge badge-down"><span class="dot dot-red"></span>Down</span></td>
               <td class="col-name">DB-GPT</td>
-              <td class="col-size">1.7 GB</td>
-              <td class="col-note">AI SQL assistant — was at localhost:5670, currently down</td>
+              <td class="col-note">Process not running — was at localhost:5670, dies when terminal closes</td>
+              <td class="col-note">Rick to create LaunchAgent for auto-start</td>
             </tr>
             <tr>
               <td><span class="badge badge-pause"><span class="dot dot-grey"></span>Paused</span></td>
               <td class="col-name">Flowise</td>
-              <td class="col-size">70 MB</td>
-              <td class="col-note">Visual LLM flow builder — npm OOM during install, needs retry</td>
+              <td class="col-note">npm install OOM killed — package unusable</td>
+              <td class="col-note"><code>NODE_OPTIONS="--max-old-space-size=4096" npm install</code> or Docker</td>
             </tr>
           </tbody>
         </table>

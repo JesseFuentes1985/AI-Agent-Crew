@@ -38,7 +38,7 @@ Full task list per agent: `agent-tasks.json`
 
 ---
 
-## Installed Repos (workspace-main/repos/) — as of 2026-08-13
+## Installed Repos (workspace-main/repos/) — as of 2026-08-15
 
 | Repo | What it does | Status |
 |---|---|---|
@@ -53,8 +53,17 @@ Full task list per agent: `agent-tasks.json`
 | **crewAI** | Multi-agent crews (Python 3.11 .venv-crew) | 🟢 In Use |
 | **openai-agents-python** | OpenAI Agents SDK (Python 3.14 .venv) | 🟢 In Use |
 | **aider** | AI pair programmer CLI (.venv-crew) | 🟢 In Use |
-| **DB-GPT** | AI data assistant / SQL | 🟢 Running at localhost:5670 |
+| **DB-GPT** | AI data assistant / SQL | 🔴 Down (needs LaunchAgent) |
 | **Flowise** | Visual LLM flow builder | ⏸️ Paused (OOM on npm install) |
+| **yt-dlp** | Video/audio downloader (YouTube + 1000s of sites) | 🟡 Cloned — use via exec |
+| **paperclip** | Multi-agent orchestration UI (Node.js + React) | 🟡 Cloned — evaluate for Thanos |
+| **mcporter** | MCP server CLI — discover + call MCP tools | 🟢 In Use (OpenClaw mcporter skill installed) |
+| **agentmemory** | Persistent coding-agent memory via MCP | 🟡 Cloned — complement to mem0 |
+| **Peekaboo** | macOS screen capture + UI automation CLI + MCP | 🟡 Cloned — Rick owns, use via exec/MCP |
+| **clawhub** | OpenClaw public skill registry (browse/publish skills) | 🟡 Cloned — reference + skill discovery |
+| **awesome-openclaw-skills** | Curated list of 5300+ community OpenClaw skills | 🟡 Cloned — skill discovery resource |
+| **gogcli** | Google Workspace CLI (Gmail, Calendar, Drive, Docs, Sheets) | 🟢 In Use (OpenClaw gog skill installed) |
+| **openclaw-dashboard** | Real-time Node.js dashboard for OpenClaw sessions/costs/memory/cron | 🟡 Cloned — run locally when server is ready |
 
 ---
 
