@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>⚙️ Automations — AI Crew</title>
+  <style>
+    :root {
+      --bg: #08080f; --surface: #0f0f1a; --surface2: #13131f; --border: #1e1e35;
+      --text: #e0e0f0; --muted: #6b6b90; --accent: #00d4ff;
+      --green: #00ff88; --yellow: #f5c842; --red: #ff6b6b; --purple: #a78bfa;
+      --sidebar-w: 240px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .85rem 1.5rem; border-bottom: 1px solid var(--border);
+      background: var(--bg); position: sticky; top: 0; z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: .75rem; }
+    .nav-title { font-size: 1.1rem; font-weight: 700; color: var(--accent); text-shadow: 0 0 20px rgba(0,212,255,.4); text-decoration: none; }
+    .nav-badge { font-size: .65rem; background: rgba(0,212,255,.1); color: var(--accent); border: 1px solid rgba(0,212,255,.25); padding: .15rem .55rem; border-radius: 20px; }
+    .nav-right { display: flex; gap: 1.4rem; align-items: center; }
+    .nav-right a { color: var(--muted); font-size: .82rem; text-decoration: none; transition: color .15s; }
+    .nav-right a:hover, .nav-right a.active { color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .layout { display: flex; min-height: calc(100vh - 52px); }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      background: var(--surface); border-right: 1px solid var(--border);
+      position: sticky; top: 52px; height: calc(100vh - 52px);
+      overflow-y: auto; padding: 1.25rem 0;
+    }
+    .sidebar-label { font-size: .62rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; padding: .5rem 1.25rem .25rem; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .45rem 1.25rem; font-size: .83rem; color: var(--muted);
+      text-decoration: none; transition: all .15s; cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+    }
+    .sidebar-link:hover { color: var(--text); background: rgba(255,255,255,.04); }
+    .sidebar-link.active { color: var(--accent); background: rgba(0,212,255,.07); border-left: 2px solid var(--accent); }
+    .sidebar-divider { height: 1px; background: var(--border); margin: .75rem 0; }
+
+    /* ── MAIN ── */
+    main { flex: 1; padding: 2rem 2.5rem; max-width: 960px; }
+
+    /* ── PAGE HEADER ── */
+    .page-header { margin-bottom: 2rem; }
+    .page-header h1 { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: .4rem; }
+    .page-header p { color: var(--muted); font-size: .9rem; line-height: 1.6; max-width: 600px; }
+
+    /* ── SECTION ── */
+    section { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+    section h2 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    section h2 span.icon { font-size: 1.1rem; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+    }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; flex-wrap: wrap; gap: .5rem; }
+    .card-title { font-size: .95rem; font-weight: 700; color: var(--text); }
+    .card-sub { font-size: .78rem; color: var(--muted); margin-top: .15rem; }
+
+    /* ── BADGES ── */
+    .badge { display: inline-flex; align-items: center; gap: .3rem; padding: .2rem .65rem; border-radius: 20px; font-size: .7rem; font-weight: 600; }
+    .badge-green { background: rgba(0,255,136,.1); color: var(--green); border: 1px solid rgba(0,255,136,.25); }
+    .badge-yellow { background: rgba(245,200,66,.1); color: var(--yellow); border: 1px solid rgba(245,200,66,.25); }
+    .badge-red { background: rgba(255,107,107,.1); color: var(--red); border: 1px solid rgba(255,107,107,.25); }
+    .badge-blue { background: rgba(0,212,255,.1); color: var(--accent); border: 1px solid rgba(0,212,255,.25); }
+    .badge-purple { background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
+
+    /* ── META ROW ── */
+    .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: .75rem 0; }
+    .meta-item { }
+    .meta-label { font-size: .67rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .2rem; }
+    .meta-value { font-size: .82rem; color: var(--text); font-family: 'Courier New', monospace; }
+
+    /* ── FLOW DIAGRAM ── */
+    .flow { display: flex; flex-direction: column; gap: 0; margin: 1rem 0; }
+    .flow-step {
+      display: flex; align-items: flex-start; gap: .75rem;
+      padding: .65rem 0;
+      border-left: 2px solid var(--border); padding-left: 1.25rem; margin-left: .5rem;
+      position: relative;
+    }
+    .flow-step:first-child { border-left-color: var(--accent); }
+    .flow-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+      position: absolute; left: -6px; top: .9rem; flex-shrink: 0;
+    }
+    .flow-step:not(:first-child) .flow-dot { background: var(--border); }
+    .flow-text { font-size: .84rem; color: var(--text); line-height: 1.5; }
+    .flow-text code { background: rgba(0,212,255,.08); color: var(--accent); padding: .1rem .35rem; border-radius: 4px; font-size: .8rem; }
+    .flow-text .muted { color: var(--muted); font-size: .78rem; display: block; margin-top: .15rem; }
+
+    /* ── CODE BLOCK ── */
+    pre {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1rem 1.25rem; margin: .75rem 0;
+      overflow-x: auto; font-size: .8rem; line-height: 1.6;
+      color: var(--text); font-family: 'Courier New', monospace;
+    }
+    code.inline { background: rgba(0,212,255,.08); color: var(--accent); padding: .1rem .35rem; border-radius: 4px; font-size: .82rem; font-family: 'Courier New', monospace; }
+
+    /* ── TABLE ── */
+    table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+    th { text-align: left; color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; padding: .5rem .75rem; border-bottom: 1px solid var(--border); }
+    td { padding: .65rem .75rem; border-bottom: 1px solid rgba(30,30,53,.6); color: var(--text); }
+    tr:last-child td { border-bottom: none; }
+    td code { background: rgba(0,212,255,.08); color: var(--accent); padding: .1rem .35rem; border-radius: 4px; font-size: .77rem; font-family: 'Courier New', monospace; }
+
+    /* ── GATE BOX ── */
+    .gate-box {
+      background: rgba(0,255,136,.05); border: 1px solid rgba(0,255,136,.2);
+      border-radius: 8px; padding: 1rem 1.25rem; margin: .75rem 0;
+      font-size: .83rem; line-height: 1.6;
+    }
+    .gate-box strong { color: var(--green); }
+
+    /* ── STACK PILLS ── */
+    .pills { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+    .pill {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 6px; padding: .3rem .75rem; font-size: .76rem; color: var(--muted);
+      font-family: 'Courier New', monospace;
+    }
+    .pill.accent { color: var(--accent); border-color: rgba(0,212,255,.25); background: rgba(0,212,255,.06); }
+
+    /* ── UPDATED ── */
+    .updated { font-size: .72rem; color: var(--muted); margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-left">
+    <a href="https://jessefuentes1985.github.io/AI-Agent-Crew/" class="nav-title">🛸 AI Crew</a>
+    <span class="nav-badge">Automations</span>
+  </div>
+  <div class="nav-right">
+    <a href="https://jessefuentes1985.github.io/AI-Agent-Crew/">Crew</a>
+    <a href="https://jessefuentes1985.github.io/AI-Agent-Crew/docs/status.html">Status</a>
+    <a href="https://jessefuentes1985.github.io/AI-Agent-Crew/docs/automations.html" class="active">Automations</a>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Cron Jobs</div>
+    <a class="sidebar-link active" href="#session-save">💾 Session Auto-Save</a>
+    <a class="sidebar-link" href="#rag-sync">📚 RAG Daily Sync</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Memory System</div>
+    <a class="sidebar-link" href="#how-it-works">🧠 How It Works</a>
+    <a class="sidebar-link" href="#ollama-stack">🤖 Ollama Stack</a>
+    <a class="sidebar-link" href="#activity-gate">🔒 Activity Gate</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Tools</div>
+    <a class="sidebar-link" href="#scripts">📜 Scripts</a>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main>
+    <div class="page-header">
+      <h1>⚙️ Automations</h1>
+      <p>All scheduled jobs, background pipelines, and automation logic running on Jesse's Mac mini. Everything here is local-first — Ollama handles AI work, no cloud API tokens burned on idle days.</p>
+    </div>
+
+    <!-- ═══ CRON JOBS ═══ -->
+    <section id="session-save">
+      <h2><span class="icon">💾</span> Session Auto-Save</h2>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">session-auto-save</div>
+            <div class="card-sub">Nightly session memory pipeline — activity gated</div>
+          </div>
+          <span class="badge badge-green">● Active</span>
+        </div>
+
+        <div class="meta-row">
+          <div class="meta-item">
+            <div class="meta-label">Schedule</div>
+            <div class="meta-value">0 23 * * * (11:00 PM Pacific)</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Target</div>
+            <div class="meta-value">Main session (Orbit)</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Last Run</div>
+            <div class="meta-value">2026-08-16 ✅</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Token Cost</div>
+            <div class="meta-value">Zero when idle</div>
+          </div>
+        </div>
+
+        <div class="gate-box">
+          <strong>Activity Gate:</strong> Before running anything, checks <code>memory/last-active.txt</code> vs <code>memory/last-save.txt</code>.
+          If Jesse hasn't been active since the last save → <strong style="color:var(--yellow)">skips silently</strong>.
+          If active within 24 hours → <strong>runs the full save pipeline</strong>.
+          3 days offline = 3 nights of skips. Zero waste.
+        </div>
+
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-text">
+              11 PM cron fires → sends system event to Orbit's main session
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-text">
+              Orbit checks <code>last-active.txt</code> vs <code>last-save.txt</code>
+              <span class="muted">Pure file read — no API calls, no Ollama, zero cost</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-text">
+              <code>sessions_history</code> → full session transcript as JSON
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-text">
+              <code>nous-hermes2</code> (Ollama, local) summarizes session + extracts key facts
+              <span class="muted">Runs on Mac mini — no Anthropic tokens spent</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-text">
+              <code>nomic-embed-text</code> (Ollama) converts facts to 768-dim vectors
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-text">
+              Vectors stored in Qdrant (<code>~/.openclaw/mem0_db/</code>) — semantic search forever
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-text">
+              Full transcript saved to <code>memory/sessions/YYYY-MM-DD-label.md</code>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot"></div>
+            <div class="flow-text">
+              <code>memory/last-save.txt</code> updated — gate resets
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rag-sync">
+      <h2><span class="icon">📚</span> RAG Daily Sync</h2>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">rag-daily-sync</div>
+            <div class="card-sub">Re-ingests documents into ChromaDB RAG vector store</div>
+          </div>
+          <span class="badge badge-yellow">⚠ Error</span>
+        </div>
+
+        <div class="meta-row">
+          <div class="meta-item">
+            <div class="meta-label">Schedule</div>
+            <div class="meta-value">0 4 * * * (4:00 AM Pacific)</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Target</div>
+            <div class="meta-value">Isolated agent turn</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Last Status</div>
+            <div class="meta-value">⚠ Ollama model config</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">RAG DB</div>
+            <div class="meta-value">~/.openclaw/rag/db/ (ChromaDB)</div>
+          </div>
+        </div>
+
+        <pre>Last error: Unknown model ollama/mistral
+Fix: Register mistral model in OpenClaw config → models.providers["ollama"].models[]
+Add: { "id": "mistral", "name": "mistral" }</pre>
+      </div>
+    </section>
+
+    <!-- ═══ MEMORY SYSTEM ═══ -->
+    <section id="how-it-works">
+      <h2><span class="icon">🧠</span> How the Memory System Works</h2>
+
+      <div class="card">
+        <p style="font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:1rem;">
+          Orbit wakes up fresh every session. These files <em>are</em> the memory. The session save pipeline feeds conversations into a growing semantic vector store — the more sessions saved, the richer recall gets over time.
+        </p>
+
+        <table>
+          <tr><th>Layer</th><th>What It Is</th><th>Used For</th></tr>
+          <tr><td><code>MEMORY.md</code></td><td>Curated long-term memory</td><td>Core facts, crew, projects, rules</td></tr>
+          <tr><td><code>memory/YYYY-MM-DD.md</code></td><td>Daily raw notes</td><td>Session logs, what happened</td></tr>
+          <tr><td><code>memory/sessions/*.md</code></td><td>Full transcripts</td><td>Verbatim conversation history</td></tr>
+          <tr><td>Qdrant (mem0)</td><td>768-dim vector DB</td><td>Semantic recall across all sessions</td></tr>
+          <tr><td>ChromaDB (RAG)</td><td>Document vector store</td><td>File/doc knowledge base</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section id="ollama-stack">
+      <h2><span class="icon">🤖</span> Ollama Stack</h2>
+
+      <div class="card">
+        <p style="font-size:.83rem;color:var(--muted);margin-bottom:1rem;">All AI work in the session memory pipeline runs locally on the Mac mini — no cloud API tokens spent.</p>
+
+        <table>
+          <tr><th>Model</th><th>Size</th><th>Role in Pipeline</th></tr>
+          <tr><td><code>nous-hermes2</code></td><td>6.1 GB</td><td>Session summarization + fact extraction</td></tr>
+          <tr><td><code>nomic-embed-text</code></td><td>274 MB</td><td>768-dim semantic embeddings → Qdrant</td></tr>
+          <tr><td><code>mistral</code></td><td>4.4 GB</td><td>RAG sync (currently needs config fix)</td></tr>
+          <tr><td><code>codellama</code></td><td>3.8 GB</td><td>Code review, debugging</td></tr>
+          <tr><td><code>llava</code></td><td>4.7 GB</td><td>Image / vision tasks</td></tr>
+          <tr><td><code>phi3</code></td><td>2.2 GB</td><td>Fast lightweight answers</td></tr>
+        </table>
+
+        <div class="pills" style="margin-top:1rem;">
+          <span class="pill accent">Ollama @ localhost:11434</span>
+          <span class="pill">mem0 → Qdrant @ ~/.openclaw/mem0_db</span>
+          <span class="pill">RAG → ChromaDB @ ~/.openclaw/rag/db</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="activity-gate">
+      <h2><span class="icon">🔒</span> Activity Gate Logic</h2>
+
+      <div class="card">
+        <p style="font-size:.83rem;color:var(--muted);margin-bottom:1rem;">Simple two-file system that prevents wasted work when Jesse isn't around.</p>
+
+        <pre>memory/last-active.txt   ← updated at START of every session (Unix timestamp)
+memory/last-save.txt     ← updated AFTER each successful session save
+
+Check: last-active > last-save AND within 24h → SAVE
+       last-active ≤ last-save               → SKIP (silent, zero cost)</pre>
+
+        <table style="margin-top:1rem;">
+          <tr><th>Scenario</th><th>Result</th></tr>
+          <tr><td>Active today, not saved yet</td><td><span class="badge badge-green">Saves</span></td></tr>
+          <tr><td>Already saved after last activity</td><td><span class="badge badge-blue">Skips</span></td></tr>
+          <tr><td>3 days offline</td><td><span class="badge badge-blue">3× Skips — zero cost</span></td></tr>
+          <tr><td>Come back after 3 days</td><td><span class="badge badge-green">Saves on first night back</span></td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section id="scripts">
+      <h2><span class="icon">📜</span> Scripts</h2>
+
+      <div class="card">
+        <table>
+          <tr><th>Script</th><th>What It Does</th></tr>
+          <tr>
+            <td><code>tools/session_saver.py</code></td>
+            <td>Full pipeline: parse session JSON → Ollama summary + facts → mem0 store + transcript file</td>
+          </tr>
+          <tr>
+            <td><code>tools/save_session.sh</code></td>
+            <td>Shell wrapper — pass a session JSON file, label, and agent; calls session_saver.py</td>
+          </tr>
+          <tr>
+            <td><code>tools/memory_store.py</code></td>
+            <td>Raw mem0 interface — add/search/list/seed memories per agent</td>
+          </tr>
+          <tr>
+            <td><code>tools/scrape.py</code></td>
+            <td>URL scraper (newspaper3k first, Firecrawl fallback)</td>
+          </tr>
+          <tr>
+            <td><code>tools/token_tracker.py</code></td>
+            <td>Count tokens + estimate LLM cost via LiteLLM</td>
+          </tr>
+        </table>
+
+        <pre style="margin-top:1rem;"># Manual save
+python3 tools/session_saver.py --file /tmp/session.json --agent orbit --label "my-session"
+
+# Recall from mem0 (semantic search)
+python3 tools/session_saver.py --recall "Last Star ship design" --agent orbit
+
+# Seed core facts into mem0
+python3 tools/memory_store.py seed</pre>
+      </div>
+    </section>
+
+    <p class="updated">Last updated: 2026-08-16 · Source of truth: MEMORY.md on Jesse's Mac mini</p>
+  </main>
+</div>
+
+<script>
+  // Sidebar active state on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.sidebar-link[href^="#"]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.sidebar-link[href="#${e.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => observer.observe(s));
+
+  // Smooth scroll
+  links.forEach(l => l.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(l.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+  }));
+</script>
+</body>
+</html>
