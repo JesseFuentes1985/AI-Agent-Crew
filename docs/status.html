@@ -263,8 +263,8 @@
         </div>
         <div class="stat-card">
           <div class="stat-label">mem0 (Qdrant)</div>
-          <div class="stat-value green">648 KB</div>
-          <div class="stat-sub">per-agent memories</div>
+          <div class="stat-value green">39 pts</div>
+          <div class="stat-sub">Orbit seed memories • v1.19.0</div>
         </div>
       </div>
 
@@ -646,7 +646,7 @@
             <tr><td class="col-name">Install Docker</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Needed for self-hosted Firecrawl + Zep</td></tr>
             <tr><td class="col-name">Open WebUI LaunchAgent</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Auto-start on login — dies if terminal closes</td></tr>
             <tr><td class="col-name">Wire LangGraph into workflows</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Stateful multi-step agent orchestration</td></tr>
-            <tr><td class="col-name">Add mem0 seed memories (all 8)</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Give each agent starting memory context</td></tr>
+            <tr><td class="col-name">Add mem0 seed memories (Orbit)</td><td><span class="badge badge-ok">Done</span></td><td class="col-note">39 points seeded in Qdrant — Orbit crew facts, Jesse prefs, running services. Other agents TBD.</td></tr>
             <tr><td class="col-name">Re-ingest RAG DB</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">After new files added, run <code>rag ingest</code></td></tr>
             <tr><td class="col-name">Run /graphify on workspace</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Map codebase/docs into knowledge graph</td></tr>
             <tr><td class="col-name">Disable mem0 PostHog telemetry</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Noisy errors in logs — find config flag to disable</td></tr>
@@ -991,6 +991,38 @@
           <div class="incident-row">
             <div class="incident-label">Test</div>
             <div class="incident-text">Next compaction event will rotate the transcript. Ongoing sessions should no longer hit the message-too-large limit.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="incident-card" style="border-color:rgba(0,255,136,.25)">
+        <div class="incident-header" style="background:rgba(0,255,136,.05);border-color:rgba(0,255,136,.2)">
+          <div class="incident-meta">
+            <span class="badge badge-ok"><span class="dot dot-green"></span>Resolved</span>
+            <span class="incident-date">2026-08-16</span>
+            <span class="incident-system">mem0 / Qdrant — Collection Migration &amp; LaunchAgent</span>
+          </div>
+        </div>
+        <div class="incident-body">
+          <div class="incident-row">
+            <span class="incident-label">What happened</span>
+            <div class="incident-text">After gateway restart, Qdrant was not running and the mem0 <code>orbit</code> collection was missing. The previous setup used <code>qdrant-client</code> local/embedded mode (SQLite), which is a completely different storage format from the full Qdrant server binary. Data was stored in <code>collection/mem0/storage.sqlite</code> (86 points, SQLite format) but Qdrant v1.19.0 server uses its own binary WAL format — incompatible.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">Root cause</div>
+            <div class="incident-text">Two issues: (1) No Qdrant server binary existed — mem0 was running in embedded local mode with SQLite storage. (2) Qdrant v1.19.0 also renamed its storage dir from <code>collection/</code> (singular) to <code>collections/</code> (plural), compounding the confusion. The LaunchAgent additionally failed due to macOS Gatekeeper blocking the downloaded binary in <code>launchd</code> context (ad-hoc signed, not from Homebrew/App Store).</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">Fix</div>
+            <div class="incident-text">Downloaded Qdrant v1.19.0 binary to <code>/opt/homebrew/bin/qdrant</code>. Re-signed with <code>sudo codesign --force --deep --sign - /opt/homebrew/bin/qdrant</code> to satisfy Gatekeeper. Created LaunchAgent (<code>~/Library/LaunchAgents/ai.qdrant.plist</code>) + kickstart helper to handle macOS speculative-spawn deferral. Migrated 15 seed memories directly into Qdrant server via <code>nomic-embed-text</code> embeddings (skipping the broken LLM extraction step). Collection <code>mem0</code>: 39 points, semantic search verified.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">What are points?</div>
+            <div class="incident-text">A <strong>point</strong> in Qdrant = one memory. Each point stores: a unique ID, a 768-number vector (the semantic embedding of the text), and a payload (the raw text + metadata like <code>user_id</code>, timestamps). 39 points = 39 searchable memories. Search finds by <em>meaning</em>, not exact keywords.</div>
+          </div>
+          <div class="incident-row">
+            <div class="incident-label">Test</div>
+            <div class="incident-text">Semantic search confirmed: query "Vim editor" → returns Jesse's Vim preference at 0.59 score. Query "agent crew members" → returns full 8-agent roster at 0.75. Qdrant auto-starts on login via LaunchAgent + kickstart helper.</div>
           </div>
         </div>
       </div>
