@@ -444,12 +444,7 @@
               <td class="col-note">Used via <code>token_tracker.py</code> to estimate cost before/after agent runs</td>
               <td class="col-note">Tony Stark</td>
             </tr>
-            <tr>
-              <td class="col-name">firecrawl</td>
-              <td class="col-note">JS-heavy web scraper → clean Markdown</td>
-              <td class="col-note">Orbit calls <code>scrape.py</code> — firecrawl is the fallback when newspaper fails on SPAs</td>
-              <td class="col-note">Orbit</td>
-            </tr>
+
             <tr>
               <td class="col-name">newspaper</td>
               <td class="col-note">Lightweight article scraper, fully local</td>
@@ -462,18 +457,8 @@
               <td class="col-note">OpenClaw graphify skill installed — run <code>/graphify</code> to map any repo into a queryable graph</td>
               <td class="col-note">Beast</td>
             </tr>
-            <tr>
-              <td class="col-name">langgraph</td>
-              <td class="col-note">Stateful multi-step agent orchestration</td>
-              <td class="col-note">Not wired yet — cloned and ready to build stateful agent flows (Beast/Thanos)</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">zep</td>
-              <td class="col-note">Agent memory SDK with cloud long-term memory</td>
-              <td class="col-note">Installed in .venv (Python 3.14) — needs Zep API key to activate cloud features</td>
-              <td class="col-note">Orbit</td>
-            </tr>
+
+
             <tr>
               <td class="col-name">paul</td>
               <td class="col-note">Plan-Apply-Unify Loop for structured dev</td>
@@ -578,6 +563,24 @@
         <table>
           <thead><tr><th>Status</th><th>Repo</th><th>Issue</th><th>Fix</th></tr></thead>
           <tbody>
+            <tr>
+              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Needs Key</span></td>
+              <td class="col-name">firecrawl</td>
+              <td class="col-note">Falls back to newspaper without key — JS-heavy sites fail silently</td>
+              <td class="col-note">Get free API key at firecrawl.dev — then <code>FIRECRAWL_API_KEY=... python scrape.py</code></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Needs Key</span></td>
+              <td class="col-name">zep</td>
+              <td class="col-note">Installed in .venv but cloud features inactive without API key</td>
+              <td class="col-note">Free key at getzep.com — then Orbit can use long-term cloud memory</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Not Wired</span></td>
+              <td class="col-name">langgraph</td>
+              <td class="col-note">Installed in .venv but not used in any agent workflow yet</td>
+              <td class="col-note">Design stateful agent flows — Beast/Thanos first candidates</td>
+            </tr>
             <tr>
               <td><span class="badge badge-down"><span class="dot dot-red"></span>Down</span></td>
               <td class="col-name">DB-GPT</td>

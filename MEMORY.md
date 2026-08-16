@@ -253,11 +253,18 @@ Full task list per agent: `agent-tasks.json`
 
 ## Still Needs Doing
 - [x] Fix RAG — ChromaDB upgraded to 1.5.9, Python 3.14 compatible, 166 vectors intact ✅
+- [x] yt-dlp installed in .venv (Python 3.14) ✅
+- [x] agentmemory server running — REST API: localhost:3111, Viewer: localhost:3113 ✅
+- [x] openclaw-dashboard running at localhost:7001 (DASHBOARD_PORT=7001) ✅
+- [ ] Wire agentmemory MCP into OpenClaw via mcporter (54 tools: memory_smart_search, memory_save, etc.)
+- [ ] Build Peekaboo — `swift build` in repos/Peekaboo, then `peekaboo mcp` for Rick's screen automation
+- [ ] Evaluate paperclip for Thanos — `npm install` in repos/paperclip, then run and test
 - [ ] Wire mem0 into agent workflows (auto-store/recall)
 - [ ] Re-ingest RAG DB after new files added
-- [ ] Flowise retry (OOM — try `--max-old-space-size` or build from source)
-- [ ] Get Firecrawl API key (firecrawl.dev, free)
-- [ ] Get Zep API key (getzep.com, free)
+- [ ] Flowise retry (OOM — try `NODE_OPTIONS="--max-old-space-size=4096" npm install` or Docker)
+- [ ] Get Firecrawl API key (firecrawl.dev, free) — currently falls back to newspaper
+- [ ] Get Zep API key (getzep.com, free) — installed but cloud features inactive
+- [ ] Design LangGraph stateful flows — Beast/Thanos first candidates
 - [ ] Run /graphify on workspace
 - [ ] Add MEMORY.md to Qui-Gon, Beast, Baymax, Thanos workspaces
 - [x] `gh auth login` — connect GitHub CLI ✅ (JesseFuentes1985, scopes: repo, read:org, gist)
@@ -269,8 +276,9 @@ Full task list per agent: `agent-tasks.json`
 - [ ] Fix memory search (local GGUF needs llama-cpp plugin: `openclaw plugins install @openclaw/llama-cpp-provider`)
 - [ ] Open WebUI LaunchAgent — auto-start on login
 - [ ] Jesse to copy characters from Eraser.io → Green Lantern → populate Notion
-- [ ] Wire LangGraph into agent workflows
 - [ ] Add mem0 seed memories for all 8 agents
+- [ ] agentmemory: make persistent (LaunchAgent so it survives reboot)
+- [ ] openclaw-dashboard: make persistent (LaunchAgent so it survives reboot)
 
 ---
 
