@@ -91,6 +91,9 @@
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: rgba(255,255,255,.02); }
     .col-name { font-weight: 600; }
+    .agent-name-cell { display: flex; align-items: center; gap: .65rem; }
+    .agent-tbl-av { width: 36px; height: 36px; min-width: 36px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(0,212,255,.35); box-shadow: 0 0 8px rgba(0,212,255,.2); flex-shrink: 0; }
+    .agent-tbl-av img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
     .col-path { color: var(--muted); font-size: .78rem; font-family: monospace; }
     .col-note { color: var(--muted); font-size: .8rem; }
 
@@ -361,63 +364,63 @@
           <thead><tr><th>Agent</th><th>ID</th><th>Folder</th><th>MEMORY.md</th><th>Status</th></tr></thead>
           <tbody>
             <tr>
-              <td class="col-name">🛸 Orbit</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/orbit.jpg" alt="Orbit" onerror="this.parentNode.innerHTML='🛸'"/></div>Orbit</div></td>
               <td class="col-path">main</td>
               <td class="col-path">workspace-main/</td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">🟢 Green Lantern</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/greenlantern.jpg" alt="Green Lantern" onerror="this.parentNode.innerHTML='🟢'"/></div>Green Lantern</div></td>
               <td class="col-path">greenlantern</td>
               <td class="col-path">workspace-greenlantern/</td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">🔬 Rick</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/rick.jpg" alt="Rick" onerror="this.parentNode.innerHTML='🔬'"/></div>Rick</div></td>
               <td class="col-path">rick</td>
               <td class="col-path">workspace-rick/</td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">💰 Tony Stark</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/tonystark.jpg" alt="Tony Stark" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div>Tony Stark</div></td>
               <td class="col-path">tonystark</td>
               <td class="col-path">workspace-tonystark/</td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">🧘 Qui-Gon</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/quigon.jpg" alt="Qui-Gon" onerror="this.parentNode.innerHTML='🧘'"/></div>Qui-Gon</div></td>
               <td class="col-path">quigon</td>
               <td class="col-path">workspace-quigon/</td>
               <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">📚 Beast</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/beast.jpg" alt="Beast" onerror="this.parentNode.innerHTML='📚'"/></div>Beast</div></td>
               <td class="col-path">beast</td>
               <td class="col-path">workspace-beast/</td>
               <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">🤖 Baymax</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/baymax.jpg" alt="Baymax" onerror="this.parentNode.innerHTML='🤖'"/></div>Baymax</div></td>
               <td class="col-path">baymax</td>
               <td class="col-path">workspace-baymax/</td>
               <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">👊 Thanos</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/thanos.jpg" alt="Thanos" onerror="this.parentNode.innerHTML='👊'"/></div>Thanos</div></td>
               <td class="col-path">thanos</td>
               <td class="col-path">workspace-thanos/</td>
               <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">🔮 Vision</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/vision.jpg" alt="Vision" onerror="this.parentNode.innerHTML='🔮'"/></div>Vision</div></td>
               <td class="col-path">vision</td>
               <td class="col-path">workspace-vision/</td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
