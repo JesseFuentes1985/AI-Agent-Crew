@@ -612,210 +612,396 @@
 
     <!-- ══ TODO ══ -->
     <div class="section" id="section-todo">
-      <div class="section-title">✅ Things To Do <span class="count">by agent</span></div>
-      <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.25rem;line-height:1.6;">
-        This is a reference of what each agent still needs set up. The real system lives in OpenClaw on the Mac mini — this page just reflects it.
+      <div class="section-title">✅ Things To Do <span class="count">by priority</span></div>
+      <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.5rem;line-height:1.6;">
+        Tasks organized by priority across all agents. The real system lives in OpenClaw on the Mac mini — this page just reflects it.
       </p>
 
-      <!-- DONE card at top -->
-      <div class="card" style="margin-bottom:1rem">
-        <div class="card-label" style="color:var(--green)">✅ Done</div>
-        <table>
-          <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td class="col-name">Fixed RAG (ChromaDB 1.5.9)</td><td class="col-note">Orbit</td><td class="col-note">Python 3.14 compatible — 166 vectors intact</td></tr>
-            <tr><td class="col-name">GitHub CLI authenticated</td><td class="col-note">Orbit</td><td class="col-note">JesseFuentes1985 — repo, read:org, gist scopes</td></tr>
-            <tr><td class="col-name">Slack connected</td><td class="col-note">Orbit</td><td class="col-note">Socket Mode — clawbot workspace</td></tr>
-            <tr><td class="col-name">Open WebUI running</td><td class="col-note">Orbit</td><td class="col-note">localhost:8080 — Ollama in browser</td></tr>
-            <tr><td class="col-name">All 9 agents active</td><td class="col-note">Orbit</td><td class="col-note">Cross-agent messaging enabled — Vision added 2026-08-16</td></tr>
-            <tr><td class="col-name">Anthropic credits auto-reload</td><td class="col-note">Tony Stark</td><td class="col-note">Reloads to $55 when balance hits $5</td></tr>
-            <tr><td class="col-name">All 14 repos cloned</td><td class="col-note">Orbit</td><td class="col-note">workspace-main/repos/ + open-webui installed</td></tr>
-            <tr><td class="col-name">GitHub Pages dashboard live</td><td class="col-note">Orbit</td><td class="col-note">jessefuentes1985.github.io/AI-Agent-Crew</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <style>
+        .todo-board { display:grid; grid-template-columns:repeat(4,1fr); gap:1.1rem; margin-bottom:2rem; align-items:start; }
+        @media(max-width:1200px){ .todo-board { grid-template-columns:repeat(2,1fr); } }
+        @media(max-width:640px) { .todo-board { grid-template-columns:1fr; } }
+        .todo-col { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+        .todo-col-hdr { padding:.7rem 1rem; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:.55rem; }
+        .todo-col-title { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+        .todo-col-count { font-size:.72rem; background:rgba(255,255,255,.07); border:1px solid var(--border); border-radius:999px; padding:.1rem .5rem; color:var(--muted); margin-left:auto; }
+        .todo-cards { padding:.7rem; display:flex; flex-direction:column; gap:.6rem; }
+        .tcard { border:1px solid rgba(255,255,255,.08); border-radius:9px; padding:.7rem .85rem; background:rgba(255,255,255,.02); }
+        .tcard-meta { display:flex; align-items:center; gap:.5rem; margin-bottom:.4rem; }
+        .tcard-av { width:26px; height:26px; border-radius:50%; overflow:hidden; flex-shrink:0; border:1px solid rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center; font-size:.85rem; }
+        .tcard-av img { width:100%; height:100%; object-fit:cover; }
+        .tcard-who { font-size:.7rem; color:var(--muted); font-weight:600; }
+        .tcard-title { font-size:.82rem; font-weight:600; color:var(--text); line-height:1.35; }
+        .tcard-note { font-size:.75rem; color:var(--muted); line-height:1.5; margin-top:.3rem; }
+        .tcard-note code { background:rgba(0,212,255,.08); color:var(--accent); padding:.1rem .28rem; border-radius:4px; font-size:.8em; }
+        /* column colour themes */
+        .tcol-high .todo-col-hdr { border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.05); }
+        .tcol-high .todo-col-title { color:#ff6b6b; }
+        .tcol-high .tcard { border-color:rgba(255,107,107,.18); }
+        .tcol-med  .todo-col-hdr { border-color:rgba(245,200,66,.35); background:rgba(245,200,66,.05); }
+        .tcol-med  .todo-col-title { color:#f5c842; }
+        .tcol-med  .tcard { border-color:rgba(245,200,66,.15); }
+        .tcol-low  .todo-col-hdr { border-color:rgba(140,130,255,.35); background:rgba(140,130,255,.05); }
+        .tcol-low  .todo-col-title { color:#b0aaff; }
+        .tcol-low  .tcard { border-color:rgba(140,130,255,.15); }
+        .tcol-done .todo-col-hdr { border-color:rgba(0,255,136,.3); background:rgba(0,255,136,.04); }
+        .tcol-done .todo-col-title { color:#00ff88; }
+        .tcol-done .tcard { border-color:rgba(0,255,136,.12); opacity:.65; }
+        .tcol-done .tcard-title { text-decoration:line-through; text-decoration-color:rgba(0,255,136,.4); }
+      </style>
 
-      <!-- AGENT DROPDOWNS -->
+      <div class="todo-board">
 
-      <!-- ORBIT -->
-      <details class="agent-drop" open>
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🛸</span>
-          <span class="agent-drop-name">Orbit</span>
-          <span class="agent-drop-title">Core Architect · System & Admin</span>
-          <span class="agent-drop-count">10 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Fix memory search</td><td><span class="badge badge-red">High</span></td><td class="col-note">Install llama-cpp plugin: <code>openclaw plugins install @openclaw/llama-cpp-provider</code></td></tr>
-            <tr><td class="col-name">Wire mem0 into agent workflows</td><td><span class="badge badge-red">High</span></td><td class="col-note">Agents should auto-store/recall facts via mem0</td></tr>
-            <tr><td class="col-name">Get Firecrawl API key</td><td><span class="badge badge-red">High</span></td><td class="col-note">Free at firecrawl.dev — needed for JS-heavy scraping</td></tr>
-            <tr><td class="col-name">Get Zep API key</td><td><span class="badge badge-red">High</span></td><td class="col-note">Free at getzep.com — unlocks cloud memory</td></tr>
-            <tr><td class="col-name">Add MEMORY.md to 4 agents</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Qui-Gon, Beast, Baymax, Thanos are missing it</td></tr>
-            <tr><td class="col-name">Install Docker</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Needed for self-hosted Firecrawl + Zep</td></tr>
-            <tr><td class="col-name">Open WebUI LaunchAgent</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Auto-start on login — dies if terminal closes</td></tr>
-            <tr><td class="col-name">Wire LangGraph into workflows</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Stateful multi-step agent orchestration</td></tr>
-            <tr><td class="col-name">Add mem0 seed memories (Orbit)</td><td><span class="badge badge-ok">Done</span></td><td class="col-note">39 points seeded in Qdrant — Orbit crew facts, Jesse prefs, running services. Other agents TBD.</td></tr>
-            <tr><td class="col-name">Re-ingest RAG DB</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">After new files added, run <code>rag ingest</code></td></tr>
-            <tr><td class="col-name">Run /graphify on workspace</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Map codebase/docs into knowledge graph</td></tr>
-            <tr><td class="col-name">Disable mem0 PostHog telemetry</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Noisy errors in logs — find config flag to disable</td></tr>
-            <tr><td class="col-name">Get Telegram + Google Chat access</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Slack done ✅ — these two still pending</td></tr>
-            <tr><td class="col-name">Get Google Drive access</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Via gog skill — needs OAuth setup</td></tr>
-            <tr><td class="col-name">Notion MCP setup</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">developers.notion.com/docs/mcp</td></tr>
-          </tbody></table>
+        <!-- ── HIGH PRIORITY ── -->
+        <div class="todo-col tcol-high">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">🔴</span>
+            <span class="todo-col-title">High Priority</span>
+            <span class="todo-col-count">10</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Fix memory search</div>
+              <div class="tcard-note">Install llama-cpp plugin: <code>openclaw plugins install @openclaw/llama-cpp-provider</code></div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Wire mem0 into agent workflows</div>
+              <div class="tcard-note">Agents should auto-store/recall facts via mem0</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Get Firecrawl API key</div>
+              <div class="tcard-note">Free at firecrawl.dev — needed for JS-heavy scraping</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Get Zep API key</div>
+              <div class="tcard-note">Free at getzep.com — unlocks cloud memory</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
+              <div class="tcard-title">ElevenLabs — assign agent voices</div>
+              <div class="tcard-note">Pick voice ID per agent from elevenlabs.io Voice Library once API key is in</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Pi 5 setup</div>
+              <div class="tcard-note">Ollama + OpenClaw node + wake word detection + dedicated AI box</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div><span class="tcard-who">🟢 Green Lantern</span></div>
+              <div class="tcard-title">Last Star — story &amp; world building</div>
+              <div class="tcard-note">Sci-fi universe — lore in Notion, characters on Eraser.io (Jesse copies manually)</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/thanos.jpg" alt="👊" onerror="this.parentNode.innerHTML='👊'"/></div><span class="tcard-who">👊 Thanos</span></div>
+              <div class="tcard-title">Import all projects</div>
+              <div class="tcard-note">Bring Jesse's active projects into Thanos for tracking + deadlines</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Fix rag-daily-sync (7 errors)</div>
+              <div class="tcard-note">7 consecutive cron failures — root cause unknown, needs investigation</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Wire mem0 into agent workflows</div>
+              <div class="tcard-note">Auto-store/recall facts on session end for all 9 agents</div>
+            </div>
+
+          </div>
         </div>
-      </details>
 
-      <!-- TONY STARK -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">💰</span>
-          <span class="agent-drop-name">Tony Stark</span>
-          <span class="agent-drop-title">Business & Investing</span>
-          <span class="agent-drop-count">2 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">ElevenLabs — assign agent voices</td><td><span class="badge badge-red">High</span></td><td class="col-note">Pick voice ID per agent from elevenlabs.io Voice Library once API key is in</td></tr>
-            <tr><td class="col-name">Connect to a broker</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Hook into brokerage API for investing/markets track</td></tr>
-          </tbody></table>
+        <!-- ── MEDIUM PRIORITY ── -->
+        <div class="todo-col tcol-med">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">🟡</span>
+            <span class="todo-col-title">Medium Priority</span>
+            <span class="todo-col-count">24</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Add MEMORY.md to 4 agents</div>
+              <div class="tcard-note">Qui-Gon, Beast, Baymax, Thanos are missing it</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Install Docker</div>
+              <div class="tcard-note">Needed for self-hosted Firecrawl + Zep</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Open WebUI LaunchAgent</div>
+              <div class="tcard-note">Auto-start on login — dies if terminal closes</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Wire LangGraph into workflows</div>
+              <div class="tcard-note">Stateful multi-step agent orchestration</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Re-ingest RAG DB</div>
+              <div class="tcard-note">After new files added, run <code>rag ingest</code></div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
+              <div class="tcard-title">Connect to a broker</div>
+              <div class="tcard-note">Hook into brokerage API for investing/markets track</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Hook up Moxie robot</div>
+              <div class="tcard-note">OpenMoxie server on Pi — robot controller + voice in other rooms</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">DB-GPT — create LaunchAgent</div>
+              <div class="tcard-note">Currently dies when terminal closes — needs auto-start (port 5670)</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Home Assistant hub</div>
+              <div class="tcard-note">Lights, sensors, locks</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Surveillance + AI</div>
+              <div class="tcard-note">Frigate + Ollama on Pi</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">Book library database</div>
+              <div class="tcard-note">Build on GitHub — catalog Jesse's book collection</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">AWS certification track</div>
+              <div class="tcard-note">Plan study path + resources</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">PMP certification track</div>
+              <div class="tcard-note">Plan study path + resources</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">ITIL certification track</div>
+              <div class="tcard-note">Plan study path + resources</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div><span class="tcard-who">🟢 Green Lantern</span></div>
+              <div class="tcard-title">Blender MCP setup</div>
+              <div class="tcard-note">github.com/ahujasid/blender-mcp</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div><span class="tcard-who">🟢 Green Lantern</span></div>
+              <div class="tcard-title">Build The Hex in Blender</div>
+              <div class="tcard-note">Freighter/gunship from Last Star — GLB → 360° web viewer</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/baymax.jpg" alt="🤖" onerror="this.parentNode.innerHTML='🤖'"/></div><span class="tcard-who">🤖 Baymax</span></div>
+              <div class="tcard-title">Healthy food tracking setup</div>
+              <div class="tcard-note">Log meals, nutrition goals</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/baymax.jpg" alt="🤖" onerror="this.parentNode.innerHTML='🤖'"/></div><span class="tcard-who">🤖 Baymax</span></div>
+              <div class="tcard-title">Workout tracking setup</div>
+              <div class="tcard-note">Log workouts, progress</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/quigon.jpg" alt="🧘" onerror="this.parentNode.innerHTML='🧘'"/></div><span class="tcard-who">🧘 Qui-Gon</span></div>
+              <div class="tcard-title">Meditation workflow</div>
+              <div class="tcard-note">Guided sessions, reminders, streak tracking</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/quigon.jpg" alt="🧘" onerror="this.parentNode.innerHTML='🧘'"/></div><span class="tcard-who">🧘 Qui-Gon</span></div>
+              <div class="tcard-title">Mental health support setup</div>
+              <div class="tcard-note">Check-ins, mood tracking, Jedi philosophy prompts</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Seed memories for 8 remaining agents</div>
+              <div class="tcard-note">Orbit has 39 points; Baymax/Beast/etc. have zero memories in Qdrant</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Run graphify on workspace-main</div>
+              <div class="tcard-note">Build knowledge graph of the codebase + docs</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Make agentmemory persistent (LaunchAgent)</div>
+              <div class="tcard-note">Currently must be started manually each reboot</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Re-ingest RAG after new files added</div>
+              <div class="tcard-note">Run <code>openclaw rag ingest</code> to pick up new docs</div>
+            </div>
+
+          </div>
         </div>
-      </details>
 
-      <!-- RICK -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🔬</span>
-          <span class="agent-drop-name">Rick</span>
-          <span class="agent-drop-title">Rick Sanchez · DevOps & SysAdmin</span>
-          <span class="agent-drop-count">6 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Pi 5 setup</td><td><span class="badge badge-red">High</span></td><td class="col-note">Ollama + OpenClaw node + wake word detection + dedicated AI box</td></tr>
-            <tr><td class="col-name">Hook up Moxie robot</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">OpenMoxie server on Pi — robot controller + voice in other rooms</td></tr>
-            <tr><td class="col-name">DB-GPT — create LaunchAgent</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Currently dies when terminal closes — needs auto-start (port 5670)</td></tr>
-            <tr><td class="col-name">Home Assistant hub</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Lights, sensors, locks</td></tr>
-            <tr><td class="col-name">Surveillance + AI</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Frigate + Ollama on Pi</td></tr>
-            <tr><td class="col-name">Look into OpenRouter</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">For API token management across providers</td></tr>
-          </tbody></table>
+        <!-- ── LOW PRIORITY ── -->
+        <div class="todo-col tcol-low">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">🔵</span>
+            <span class="todo-col-title">Low Priority</span>
+            <span class="todo-col-count">7</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Run /graphify on workspace</div>
+              <div class="tcard-note">Map codebase/docs into knowledge graph</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Disable mem0 PostHog telemetry</div>
+              <div class="tcard-note">Noisy errors in logs — find config flag to disable</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Get Telegram + Google Chat access</div>
+              <div class="tcard-note">Slack done ✅ — these two still pending</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Get Google Drive access</div>
+              <div class="tcard-note">Via gog skill — needs OAuth setup</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Notion MCP setup</div>
+              <div class="tcard-note">developers.notion.com/docs/mcp</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Look into OpenRouter</div>
+              <div class="tcard-note">For API token management across providers</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">Diagrams of everything</div>
+              <div class="tcard-note">Architecture, agent flows, system maps</div>
+            </div>
+
+          </div>
         </div>
-      </details>
 
-      <!-- BEAST -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">📚</span>
-          <span class="agent-drop-name">Beast</span>
-          <span class="agent-drop-title">Hank McCoy · Learning & Certs</span>
-          <span class="agent-drop-count">5 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Book library database</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Build on GitHub — catalog Jesse's book collection</td></tr>
-            <tr><td class="col-name">AWS certification track</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Plan study path + resources</td></tr>
-            <tr><td class="col-name">PMP certification track</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Plan study path + resources</td></tr>
-            <tr><td class="col-name">ITIL certification track</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Plan study path + resources</td></tr>
-            <tr><td class="col-name">Diagrams of everything</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Architecture, agent flows, system maps</td></tr>
-          </tbody></table>
+        <!-- ── DONE ── -->
+        <div class="todo-col tcol-done">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">✅</span>
+            <span class="todo-col-title">Done</span>
+            <span class="todo-col-count">9</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Fixed RAG (ChromaDB 1.5.9)</div>
+              <div class="tcard-note">Python 3.14 compatible — 166 vectors intact</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">GitHub CLI authenticated</div>
+              <div class="tcard-note">JesseFuentes1985 — repo, read:org, gist scopes</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Slack connected</div>
+              <div class="tcard-note">Socket Mode — clawbot workspace</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Open WebUI running</div>
+              <div class="tcard-note">localhost:8080 — Ollama in browser</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">All 9 agents active</div>
+              <div class="tcard-note">Cross-agent messaging enabled — Vision added 2026-08-16</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">All 14 repos cloned</div>
+              <div class="tcard-note">workspace-main/repos/ + open-webui installed</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">GitHub Pages dashboard live</div>
+              <div class="tcard-note">jessefuentes1985.github.io/AI-Agent-Crew</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Add mem0 seed memories (Orbit)</div>
+              <div class="tcard-note">39 points seeded in Qdrant — Orbit crew facts, Jesse prefs, running services</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
+              <div class="tcard-title">Anthropic credits auto-reload</div>
+              <div class="tcard-note">Reloads to $55 when balance hits $5</div>
+            </div>
+
+          </div>
         </div>
-      </details>
 
-      <!-- GREEN LANTERN -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🟢</span>
-          <span class="agent-drop-name">Green Lantern</span>
-          <span class="agent-drop-title">Hal Jordan · Creativity & Last Star</span>
-          <span class="agent-drop-count">3 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Last Star — story & world building</td><td><span class="badge badge-red">High</span></td><td class="col-note">Sci-fi universe — lore in Notion, characters on Eraser.io (Jesse copies manually)</td></tr>
-            <tr><td class="col-name">Blender MCP setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">github.com/ahujasid/blender-mcp</td></tr>
-            <tr><td class="col-name">Build The Hex in Blender</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Freighter/gunship from Last Star — GLB → 360° web viewer</td></tr>
-          </tbody></table>
-        </div>
-      </details>
-
-      <!-- THANOS -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">👊</span>
-          <span class="agent-drop-name">Thanos</span>
-          <span class="agent-drop-title">Productivity & Project Management</span>
-          <span class="agent-drop-count">1 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Import all projects</td><td><span class="badge badge-red">High</span></td><td class="col-note">Bring Jesse's active projects into Thanos for tracking + deadlines</td></tr>
-          </tbody></table>
-        </div>
-      </details>
-
-      <!-- BAYMAX -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🤖</span>
-          <span class="agent-drop-name">Baymax</span>
-          <span class="agent-drop-title">Health Guardian</span>
-          <span class="agent-drop-count">2 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Healthy food tracking setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Log meals, nutrition goals</td></tr>
-            <tr><td class="col-name">Workout tracking setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Log workouts, progress</td></tr>
-          </tbody></table>
-        </div>
-      </details>
-
-      <!-- QUI-GON -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🧘</span>
-          <span class="agent-drop-name">Qui-Gon</span>
-          <span class="agent-drop-title">Qui-Gon Jinn · Wellness & Mind</span>
-          <span class="agent-drop-count">2 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Meditation workflow</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Guided sessions, reminders, streak tracking</td></tr>
-            <tr><td class="col-name">Mental health support setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Check-ins, mood tracking, Jedi philosophy prompts</td></tr>
-          </tbody></table>
-        </div>
-      </details>
-
-      <!-- Vision -->
-      <details class="agent-drop">
-        <summary class="agent-drop-head">
-          <span class="agent-drop-emoji">🔮</span>
-          <span class="agent-drop-name">Vision</span>
-          <span class="agent-drop-title">Data & Memory · RAG / Qdrant / Vector Search</span>
-          <span class="agent-drop-count">6 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Fix rag-daily-sync (7 errors)</td><td><span class="badge badge-red">High</span></td><td class="col-note">7 consecutive cron failures — root cause unknown, needs investigation</td></tr>
-            <tr><td class="col-name">Wire mem0 into agent workflows</td><td><span class="badge badge-red">High</span></td><td class="col-note">Auto-store/recall facts on session end for all 9 agents</td></tr>
-            <tr><td class="col-name">Seed memories for 8 remaining agents</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Orbit has 39 points; Baymax/Beast/etc. have zero memories in Qdrant</td></tr>
-            <tr><td class="col-name">Run graphify on workspace-main</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Build knowledge graph of the codebase + docs</td></tr>
-            <tr><td class="col-name">Make agentmemory persistent (LaunchAgent)</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Currently must be started manually each reboot</td></tr>
-            <tr><td class="col-name">Re-ingest RAG after new files added</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Run <code>openclaw rag ingest</code> to pick up new docs</td></tr>
-          </tbody></table>
-        </div>
-      </details>
-
+      </div><!-- end todo-board -->
     </div>
-
 
     <!-- ══ RACI + FIX LOG ══ -->
     <div class="section" id="section-raci">
