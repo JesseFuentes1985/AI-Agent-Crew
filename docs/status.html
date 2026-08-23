@@ -91,6 +91,9 @@
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: rgba(255,255,255,.02); }
     .col-name { font-weight: 600; }
+    .agent-name-cell { display: flex; align-items: center; gap: .65rem; }
+    .agent-tbl-av { width: 36px; height: 36px; min-width: 36px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(0,212,255,.35); box-shadow: 0 0 8px rgba(0,212,255,.2); flex-shrink: 0; }
+    .agent-tbl-av img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
     .col-path { color: var(--muted); font-size: .78rem; font-family: monospace; }
     .col-note { color: var(--muted); font-size: .8rem; }
 
@@ -175,7 +178,9 @@
     <span class="nav-badge">System Status</span>
   </div>
   <div class="nav-right">
-    <a href="https://jessefuentes1985.github.io/AI-Agent-Crew/">← Back to Crew</a>
+    <a href="https://jessefuentes1985.github.io/AI-Agent-Crew/">Crew</a>
+    <a href="https://jessefuentes1985.github.io/AI-Agent-Crew/docs/status.html" style="color:var(--accent)">Status</a>
+    <a href="https://jessefuentes1985.github.io/AI-Agent-Crew/docs/automations.html">Automations</a>
   </div>
 </nav>
 
@@ -261,8 +266,8 @@
         </div>
         <div class="stat-card">
           <div class="stat-label">mem0 (Qdrant)</div>
-          <div class="stat-value green">648 KB</div>
-          <div class="stat-sub">per-agent memories</div>
+          <div class="stat-value green">39 pts</div>
+          <div class="stat-sub">Orbit seed memories • v1.19.0</div>
         </div>
       </div>
 
@@ -352,66 +357,73 @@
 
     <!-- ══ AGENTS ══ -->
     <div class="section" id="section-agents">
-      <div class="section-title">👥 AI Agents &amp; Folders <span class="count">8 agents</span></div>
+      <div class="section-title">👥 AI Agents &amp; Folders <span class="count">9 agents</span></div>
 
       <div class="card">
         <table>
           <thead><tr><th>Agent</th><th>ID</th><th>Folder</th><th>MEMORY.md</th><th>Status</th></tr></thead>
           <tbody>
             <tr>
-              <td class="col-name">🛸 Orbit</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/orbit.jpg" alt="Orbit" onerror="this.parentNode.innerHTML='🛸'"/></div>Orbit</div></td>
               <td class="col-path">main</td>
               <td class="col-path">workspace-main/</td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">🟢 Green Lantern</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/greenlantern.jpg" alt="Green Lantern" onerror="this.parentNode.innerHTML='🟢'"/></div>Green Lantern</div></td>
               <td class="col-path">greenlantern</td>
               <td class="col-path">workspace-greenlantern/</td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">🔬 Rick</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/rick.jpg" alt="Rick" onerror="this.parentNode.innerHTML='🔬'"/></div>Rick</div></td>
               <td class="col-path">rick</td>
               <td class="col-path">workspace-rick/</td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">💰 Tony Stark</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/tonystark.jpg" alt="Tony Stark" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div>Tony Stark</div></td>
               <td class="col-path">tonystark</td>
               <td class="col-path">workspace-tonystark/</td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">🧘 Qui-Gon</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/quigon.jpg" alt="Qui-Gon" onerror="this.parentNode.innerHTML='🧘'"/></div>Qui-Gon</div></td>
               <td class="col-path">quigon</td>
               <td class="col-path">workspace-quigon/</td>
               <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">📚 Beast</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/beast.jpg" alt="Beast" onerror="this.parentNode.innerHTML='📚'"/></div>Beast</div></td>
               <td class="col-path">beast</td>
               <td class="col-path">workspace-beast/</td>
               <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">🤖 Baymax</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/baymax.jpg" alt="Baymax" onerror="this.parentNode.innerHTML='🤖'"/></div>Baymax</div></td>
               <td class="col-path">baymax</td>
               <td class="col-path">workspace-baymax/</td>
               <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
             <tr>
-              <td class="col-name">👊 Thanos</td>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/thanos.jpg" alt="Thanos" onerror="this.parentNode.innerHTML='👊'"/></div>Thanos</div></td>
               <td class="col-path">thanos</td>
               <td class="col-path">workspace-thanos/</td>
               <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Missing</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
+            <tr>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/vision.jpg" alt="Vision" onerror="this.parentNode.innerHTML='🔮'"/></div>Vision</div></td>
+              <td class="col-path">vision</td>
+              <td class="col-path">workspace-vision/</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
           </tbody>
@@ -600,194 +612,420 @@
 
     <!-- ══ TODO ══ -->
     <div class="section" id="section-todo">
-      <div class="section-title">✅ Things To Do <span class="count">by agent</span></div>
-      <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.25rem;line-height:1.6;">
-        This is a reference of what each agent still needs set up. The real system lives in OpenClaw on the Mac mini — this page just reflects it.
+      <div class="section-title">✅ Things To Do <span class="count">by priority</span></div>
+      <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.5rem;line-height:1.6;">
+        Tasks organized by priority across all agents. The real system lives in OpenClaw on the Mac mini — this page just reflects it.
       </p>
 
-      <!-- DONE card at top -->
-      <div class="card" style="margin-bottom:1rem">
-        <div class="card-label" style="color:var(--green)">✅ Done</div>
-        <table>
-          <thead><tr><th>Task</th><th>Agent</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td class="col-name">Fixed RAG (ChromaDB 1.5.9)</td><td class="col-note">Orbit</td><td class="col-note">Python 3.14 compatible — 166 vectors intact</td></tr>
-            <tr><td class="col-name">GitHub CLI authenticated</td><td class="col-note">Orbit</td><td class="col-note">JesseFuentes1985 — repo, read:org, gist scopes</td></tr>
-            <tr><td class="col-name">Slack connected</td><td class="col-note">Orbit</td><td class="col-note">Socket Mode — clawbot workspace</td></tr>
-            <tr><td class="col-name">Open WebUI running</td><td class="col-note">Orbit</td><td class="col-note">localhost:8080 — Ollama in browser</td></tr>
-            <tr><td class="col-name">All 9 agents active</td><td class="col-note">Orbit</td><td class="col-note">Cross-agent messaging enabled — Vision added 2026-08-16</td></tr>
-            <tr><td class="col-name">Anthropic credits auto-reload</td><td class="col-note">Tony Stark</td><td class="col-note">Reloads to $55 when balance hits $5</td></tr>
-            <tr><td class="col-name">All 14 repos cloned</td><td class="col-note">Orbit</td><td class="col-note">workspace-main/repos/ + open-webui installed</td></tr>
-            <tr><td class="col-name">GitHub Pages dashboard live</td><td class="col-note">Orbit</td><td class="col-note">jessefuentes1985.github.io/AI-Agent-Crew</td></tr>
-            <tr><td class="col-name">agentmemory LaunchAgent</td><td class="col-note">Orbit</td><td class="col-note">iii server auto-starts on boot — ai.openclaw.agentmemory.plist (2026-08-21)</td></tr>
-            <tr><td class="col-name">openclaw-dashboard LaunchAgent</td><td class="col-note">Rick</td><td class="col-note">Running at :7001 — ai.openclaw.dashboard.plist (2026-08-21)</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <style>
+        .todo-board { display:grid; grid-template-columns:repeat(4,1fr); gap:1.1rem; margin-bottom:2rem; align-items:start; }
+        @media(max-width:1200px){ .todo-board { grid-template-columns:repeat(2,1fr); } }
+        @media(max-width:640px) { .todo-board { grid-template-columns:1fr; } }
+        .todo-col { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+        .todo-col-hdr { padding:.7rem 1rem; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:.55rem; }
+        .todo-col-title { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+        .todo-col-count { font-size:.72rem; background:rgba(255,255,255,.07); border:1px solid var(--border); border-radius:999px; padding:.1rem .5rem; color:var(--muted); margin-left:auto; }
+        .todo-cards { padding:.7rem; display:flex; flex-direction:column; gap:.6rem; }
+        .tcard { border:1px solid rgba(255,255,255,.08); border-radius:9px; padding:.7rem .85rem; background:rgba(255,255,255,.02); }
+        .tcard-meta { display:flex; align-items:center; gap:.5rem; margin-bottom:.4rem; }
+        .tcard-av { width:26px; height:26px; border-radius:50%; overflow:hidden; flex-shrink:0; border:1px solid rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center; font-size:.85rem; }
+        .tcard-av img { width:100%; height:100%; object-fit:cover; }
+        .tcard-who { font-size:.7rem; color:var(--muted); font-weight:600; }
+        .tcard-title { font-size:.82rem; font-weight:600; color:var(--text); line-height:1.35; }
+        .tcard-note { font-size:.75rem; color:var(--muted); line-height:1.5; margin-top:.3rem; }
+        .tcard-note code { background:rgba(0,212,255,.08); color:var(--accent); padding:.1rem .28rem; border-radius:4px; font-size:.8em; }
+        /* column colour themes */
+        .tcol-high .todo-col-hdr { border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.05); }
+        .tcol-high .todo-col-title { color:#ff6b6b; }
+        .tcol-high .tcard { border-color:rgba(255,107,107,.18); }
+        .tcol-med  .todo-col-hdr { border-color:rgba(245,200,66,.35); background:rgba(245,200,66,.05); }
+        .tcol-med  .todo-col-title { color:#f5c842; }
+        .tcol-med  .tcard { border-color:rgba(245,200,66,.15); }
+        .tcol-low  .todo-col-hdr { border-color:rgba(140,130,255,.35); background:rgba(140,130,255,.05); }
+        .tcol-low  .todo-col-title { color:#b0aaff; }
+        .tcol-low  .tcard { border-color:rgba(140,130,255,.15); }
+        .tcol-done .todo-col-hdr { border-color:rgba(0,255,136,.3); background:rgba(0,255,136,.04); }
+        .tcol-done .todo-col-title { color:#00ff88; }
+        .tcol-done .tcard { border-color:rgba(0,255,136,.12); opacity:.65; }
+        .tcol-done .tcard-title { text-decoration:line-through; text-decoration-color:rgba(0,255,136,.4); }
+      </style>
 
-      <!-- AGENT DROPDOWNS -->
+      <div class="todo-board">
 
-      <!-- ORBIT -->
-      <details class="agent-drop" open>
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🛸</span>
-          <span class="agent-drop-name">Orbit</span>
-          <span class="agent-drop-title">Core Architect · System & Admin</span>
-          <span class="agent-drop-count">11 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">agentmemory config (Jesse must do)</td><td><span class="badge badge-red">High</span></td><td class="col-note">Add agentmemory plugin block to <code>~/.openclaw/openclaw.json</code> — see MEMORY.md for the exact JSON. Can't be done by agents (protected path).</td></tr>
-            <tr><td class="col-name">Fix memory search</td><td><span class="badge badge-red">High</span></td><td class="col-note">Install llama-cpp plugin: <code>openclaw plugins install @openclaw/llama-cpp-provider</code></td></tr>
-            <tr><td class="col-name">Wire mem0 into agent workflows</td><td><span class="badge badge-red">High</span></td><td class="col-note">Agents should auto-store/recall facts via mem0</td></tr>
-            <tr><td class="col-name">Get Firecrawl API key</td><td><span class="badge badge-red">High</span></td><td class="col-note">Free at firecrawl.dev — needed for JS-heavy scraping</td></tr>
-            <tr><td class="col-name">Get Zep API key</td><td><span class="badge badge-red">High</span></td><td class="col-note">Free at getzep.com — unlocks cloud memory</td></tr>
-            <tr><td class="col-name">Add MEMORY.md to 4 agents</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Qui-Gon, Beast, Baymax, Thanos are missing it</td></tr>
-            <tr><td class="col-name">Install Docker</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Needed for self-hosted Firecrawl + Zep</td></tr>
-            <tr><td class="col-name">Open WebUI LaunchAgent</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Auto-start on login — dies if terminal closes</td></tr>
-            <tr><td class="col-name">Wire LangGraph into workflows</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Stateful multi-step agent orchestration</td></tr>
-            <tr><td class="col-name">Add mem0 seed memories (all 8)</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Give each agent starting memory context</td></tr>
-            <tr><td class="col-name">Re-ingest RAG DB</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">After new files added, run <code>rag ingest</code></td></tr>
-            <tr><td class="col-name">Run /graphify on workspace</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Map codebase/docs into knowledge graph</td></tr>
-            <tr><td class="col-name">Disable mem0 PostHog telemetry</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Noisy errors in logs — find config flag to disable</td></tr>
-            <tr><td class="col-name">Get Telegram + Google Chat access</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Slack done ✅ — these two still pending</td></tr>
-            <tr><td class="col-name">Get Google Drive access</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Via gog skill — needs OAuth setup</td></tr>
-            <tr><td class="col-name">Notion MCP setup</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">developers.notion.com/docs/mcp</td></tr>
-          </tbody></table>
+        <!-- ── HIGH PRIORITY ── -->
+        <div class="todo-col tcol-high">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">🔴</span>
+            <span class="todo-col-title">High Priority</span>
+            <span class="todo-col-count">12</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">agentmemory config — Jesse must add to openclaw.json</div>
+              <div class="tcard-note">Protected path — agents can't touch it. Add the plugin block from MEMORY.md to <code>~/.openclaw/openclaw.json</code> manually to activate the agentmemory plugin.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Peekaboo — grant permissions (Jesse)</div>
+              <div class="tcard-note">System Settings → Privacy &amp; Security → Screen Recording + Accessibility → grant to Peekaboo. Required before Rick can wire the MCP server into agents.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Fix memory search</div>
+              <div class="tcard-note">Install llama-cpp plugin: <code>openclaw plugins install @openclaw/llama-cpp-provider</code></div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Wire mem0 into agent workflows</div>
+              <div class="tcard-note">Agents should auto-store/recall facts via mem0</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Get Firecrawl API key</div>
+              <div class="tcard-note">Free at firecrawl.dev — needed for JS-heavy scraping</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Get Zep API key</div>
+              <div class="tcard-note">Free at getzep.com — unlocks cloud memory</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
+              <div class="tcard-title">ElevenLabs — assign agent voices</div>
+              <div class="tcard-note">Pick voice ID per agent from elevenlabs.io Voice Library once API key is in</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Pi 5 setup</div>
+              <div class="tcard-note">Ollama + OpenClaw node + wake word detection + dedicated AI box</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div><span class="tcard-who">🟢 Green Lantern</span></div>
+              <div class="tcard-title">Last Star — story &amp; world building</div>
+              <div class="tcard-note">Sci-fi universe — lore in Notion, characters on Eraser.io (Jesse copies manually)</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/thanos.jpg" alt="👊" onerror="this.parentNode.innerHTML='👊'"/></div><span class="tcard-who">👊 Thanos</span></div>
+              <div class="tcard-title">Import all projects</div>
+              <div class="tcard-note">Bring Jesse's active projects into Thanos for tracking + deadlines</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Fix rag-daily-sync (7 errors)</div>
+              <div class="tcard-note">7 consecutive cron failures — root cause unknown, needs investigation</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Wire mem0 into agent workflows</div>
+              <div class="tcard-note">Auto-store/recall facts on session end for all 9 agents</div>
+            </div>
+
+          </div>
         </div>
-      </details>
 
-      <!-- TONY STARK -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">💰</span>
-          <span class="agent-drop-name">Tony Stark</span>
-          <span class="agent-drop-title">Business & Investing</span>
-          <span class="agent-drop-count">2 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">ElevenLabs — assign agent voices</td><td><span class="badge badge-red">High</span></td><td class="col-note">Pick voice ID per agent from elevenlabs.io Voice Library once API key is in</td></tr>
-            <tr><td class="col-name">Connect to a broker</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Hook into brokerage API for investing/markets track</td></tr>
-          </tbody></table>
+        <!-- ── MEDIUM PRIORITY ── -->
+        <div class="todo-col tcol-med">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">🟡</span>
+            <span class="todo-col-title">Medium Priority</span>
+            <span class="todo-col-count">24</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Add MEMORY.md to 4 agents</div>
+              <div class="tcard-note">Qui-Gon, Beast, Baymax, Thanos are missing it</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Install Docker</div>
+              <div class="tcard-note">Needed for self-hosted Firecrawl + Zep</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Open WebUI LaunchAgent</div>
+              <div class="tcard-note">Auto-start on login — dies if terminal closes</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Wire LangGraph into workflows</div>
+              <div class="tcard-note">Stateful multi-step agent orchestration</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Re-ingest RAG DB</div>
+              <div class="tcard-note">After new files added, run <code>rag ingest</code></div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
+              <div class="tcard-title">Connect to a broker</div>
+              <div class="tcard-note">Hook into brokerage API for investing/markets track</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Hook up Moxie robot</div>
+              <div class="tcard-note">OpenMoxie server on Pi — robot controller + voice in other rooms</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">DB-GPT — create LaunchAgent</div>
+              <div class="tcard-note">Currently dies when terminal closes — needs auto-start (port 5670)</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Home Assistant hub</div>
+              <div class="tcard-note">Lights, sensors, locks</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Surveillance + AI</div>
+              <div class="tcard-note">Frigate + Ollama on Pi</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">Book library database</div>
+              <div class="tcard-note">Build on GitHub — catalog Jesse's book collection</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">AWS certification track</div>
+              <div class="tcard-note">Plan study path + resources</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">PMP certification track</div>
+              <div class="tcard-note">Plan study path + resources</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">ITIL certification track</div>
+              <div class="tcard-note">Plan study path + resources</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div><span class="tcard-who">🟢 Green Lantern</span></div>
+              <div class="tcard-title">Blender MCP setup</div>
+              <div class="tcard-note">github.com/ahujasid/blender-mcp</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div><span class="tcard-who">🟢 Green Lantern</span></div>
+              <div class="tcard-title">Build The Hex in Blender</div>
+              <div class="tcard-note">Freighter/gunship from Last Star — GLB → 360° web viewer</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/baymax.jpg" alt="🤖" onerror="this.parentNode.innerHTML='🤖'"/></div><span class="tcard-who">🤖 Baymax</span></div>
+              <div class="tcard-title">Healthy food tracking setup</div>
+              <div class="tcard-note">Log meals, nutrition goals</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/baymax.jpg" alt="🤖" onerror="this.parentNode.innerHTML='🤖'"/></div><span class="tcard-who">🤖 Baymax</span></div>
+              <div class="tcard-title">Workout tracking setup</div>
+              <div class="tcard-note">Log workouts, progress</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/quigon.jpg" alt="🧘" onerror="this.parentNode.innerHTML='🧘'"/></div><span class="tcard-who">🧘 Qui-Gon</span></div>
+              <div class="tcard-title">Meditation workflow</div>
+              <div class="tcard-note">Guided sessions, reminders, streak tracking</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/quigon.jpg" alt="🧘" onerror="this.parentNode.innerHTML='🧘'"/></div><span class="tcard-who">🧘 Qui-Gon</span></div>
+              <div class="tcard-title">Mental health support setup</div>
+              <div class="tcard-note">Check-ins, mood tracking, Jedi philosophy prompts</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Seed memories for 8 remaining agents</div>
+              <div class="tcard-note">Orbit has 39 points; Baymax/Beast/etc. have zero memories in Qdrant</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Run graphify on workspace-main</div>
+              <div class="tcard-note">Build knowledge graph of the codebase + docs</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Make agentmemory persistent (LaunchAgent)</div>
+              <div class="tcard-note">Currently must be started manually each reboot</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/vision.jpg" alt="🔮" onerror="this.parentNode.innerHTML='🔮'"/></div><span class="tcard-who">🔮 Vision</span></div>
+              <div class="tcard-title">Re-ingest RAG after new files added</div>
+              <div class="tcard-note">Run <code>openclaw rag ingest</code> to pick up new docs</div>
+            </div>
+
+          </div>
         </div>
-      </details>
 
-      <!-- RICK -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🔬</span>
-          <span class="agent-drop-name">Rick</span>
-          <span class="agent-drop-title">Rick Sanchez · DevOps & SysAdmin</span>
-          <span class="agent-drop-count">8 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Peekaboo — grant permissions (Jesse)</td><td><span class="badge badge-red">High</span></td><td class="col-note">System Settings → Privacy &amp; Security → Screen Recording + Accessibility → grant to Peekaboo. Required before Rick can wire in MCP.</td></tr>
-            <tr><td class="col-name">Wire Peekaboo into OpenClaw</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Expose stdio MCP server — agents can screenshot, inspect UI, click + type in any macOS app</td></tr>
-            <tr><td class="col-name">Pi 5 setup</td><td><span class="badge badge-red">High</span></td><td class="col-note">Ollama + OpenClaw node + wake word detection + dedicated AI box</td></tr>
-            <tr><td class="col-name">Hook up Moxie robot</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">OpenMoxie server on Pi — robot controller + voice in other rooms</td></tr>
-            <tr><td class="col-name">DB-GPT — create LaunchAgent</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Currently dies when terminal closes — needs auto-start (port 5670)</td></tr>
-            <tr><td class="col-name">Home Assistant hub</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Lights, sensors, locks</td></tr>
-            <tr><td class="col-name">Surveillance + AI</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Frigate + Ollama on Pi</td></tr>
-            <tr><td class="col-name">Look into OpenRouter</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">For API token management across providers</td></tr>
-          </tbody></table>
+        <!-- ── LOW PRIORITY ── -->
+        <div class="todo-col tcol-low">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">🔵</span>
+            <span class="todo-col-title">Low Priority</span>
+            <span class="todo-col-count">7</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Run /graphify on workspace</div>
+              <div class="tcard-note">Map codebase/docs into knowledge graph</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Disable mem0 PostHog telemetry</div>
+              <div class="tcard-note">Noisy errors in logs — find config flag to disable</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Get Telegram + Google Chat access</div>
+              <div class="tcard-note">Slack done ✅ — these two still pending</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Get Google Drive access</div>
+              <div class="tcard-note">Via gog skill — needs OAuth setup</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Notion MCP setup</div>
+              <div class="tcard-note">developers.notion.com/docs/mcp</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Look into OpenRouter</div>
+              <div class="tcard-note">For API token management across providers</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">Diagrams of everything</div>
+              <div class="tcard-note">Architecture, agent flows, system maps</div>
+            </div>
+
+          </div>
         </div>
-      </details>
 
-      <!-- BEAST -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">📚</span>
-          <span class="agent-drop-name">Beast</span>
-          <span class="agent-drop-title">Hank McCoy · Learning & Certs</span>
-          <span class="agent-drop-count">5 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Book library database</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Build on GitHub — catalog Jesse's book collection</td></tr>
-            <tr><td class="col-name">AWS certification track</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Plan study path + resources</td></tr>
-            <tr><td class="col-name">PMP certification track</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Plan study path + resources</td></tr>
-            <tr><td class="col-name">ITIL certification track</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Plan study path + resources</td></tr>
-            <tr><td class="col-name">Diagrams of everything</td><td><span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)">Low</span></td><td class="col-note">Architecture, agent flows, system maps</td></tr>
-          </tbody></table>
+        <!-- ── DONE ── -->
+        <div class="todo-col tcol-done">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">✅</span>
+            <span class="todo-col-title">Done</span>
+            <span class="todo-col-count">11</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Fixed RAG (ChromaDB 1.5.9)</div>
+              <div class="tcard-note">Python 3.14 compatible — 166 vectors intact</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">GitHub CLI authenticated</div>
+              <div class="tcard-note">JesseFuentes1985 — repo, read:org, gist scopes</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Slack connected</div>
+              <div class="tcard-note">Socket Mode — clawbot workspace</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Open WebUI running</div>
+              <div class="tcard-note">localhost:8080 — Ollama in browser</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">All 9 agents active</div>
+              <div class="tcard-note">Cross-agent messaging enabled — Vision added 2026-08-16</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">All 14 repos cloned</div>
+              <div class="tcard-note">workspace-main/repos/ + open-webui installed</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">GitHub Pages dashboard live</div>
+              <div class="tcard-note">jessefuentes1985.github.io/AI-Agent-Crew</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Add mem0 seed memories (Orbit)</div>
+              <div class="tcard-note">39 points seeded in Qdrant — Orbit crew facts, Jesse prefs, running services</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
+              <div class="tcard-title">Anthropic credits auto-reload</div>
+              <div class="tcard-note">Reloads to $55 when balance hits $5</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">agentmemory LaunchAgent created</div>
+              <div class="tcard-note">iii server auto-starts on boot — ai.openclaw.agentmemory.plist (2026-08-21)</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">openclaw-dashboard LaunchAgent</div>
+              <div class="tcard-note">Running at :7001, auto-starts on boot — ai.openclaw.dashboard.plist (2026-08-21)</div>
+            </div>
+
+          </div>
         </div>
-      </details>
 
-      <!-- GREEN LANTERN -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🟢</span>
-          <span class="agent-drop-name">Green Lantern</span>
-          <span class="agent-drop-title">Hal Jordan · Creativity & Last Star</span>
-          <span class="agent-drop-count">3 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Last Star — story & world building</td><td><span class="badge badge-red">High</span></td><td class="col-note">Sci-fi universe — lore in Notion, characters on Eraser.io (Jesse copies manually)</td></tr>
-            <tr><td class="col-name">Blender MCP setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">github.com/ahujasid/blender-mcp</td></tr>
-            <tr><td class="col-name">Build The Hex in Blender</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Freighter/gunship from Last Star — GLB → 360° web viewer</td></tr>
-          </tbody></table>
-        </div>
-      </details>
-
-      <!-- THANOS -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">👊</span>
-          <span class="agent-drop-name">Thanos</span>
-          <span class="agent-drop-title">Productivity & Project Management</span>
-          <span class="agent-drop-count">1 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Import all projects</td><td><span class="badge badge-red">High</span></td><td class="col-note">Bring Jesse's active projects into Thanos for tracking + deadlines</td></tr>
-          </tbody></table>
-        </div>
-      </details>
-
-      <!-- BAYMAX -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🤖</span>
-          <span class="agent-drop-name">Baymax</span>
-          <span class="agent-drop-title">Health Guardian</span>
-          <span class="agent-drop-count">2 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Healthy food tracking setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Log meals, nutrition goals</td></tr>
-            <tr><td class="col-name">Workout tracking setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Log workouts, progress</td></tr>
-          </tbody></table>
-        </div>
-      </details>
-
-      <!-- QUI-GON -->
-      <details class="agent-drop">
-        <summary class="agent-drop-hdr">
-          <span class="agent-drop-emoji">🧘</span>
-          <span class="agent-drop-name">Qui-Gon</span>
-          <span class="agent-drop-title">Qui-Gon Jinn · Wellness & Mind</span>
-          <span class="agent-drop-count">2 open</span>
-          <span class="agent-drop-chev">›</span>
-        </summary>
-        <div class="agent-drop-body">
-          <table><thead><tr><th>Task</th><th>Priority</th><th>Notes</th></tr></thead><tbody>
-            <tr><td class="col-name">Meditation workflow</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Guided sessions, reminders, streak tracking</td></tr>
-            <tr><td class="col-name">Mental health support setup</td><td><span class="badge badge-warn">Medium</span></td><td class="col-note">Check-ins, mood tracking, Jedi philosophy prompts</td></tr>
-          </tbody></table>
-        </div>
-      </details>
-
+      </div><!-- end todo-board -->
     </div>
-
 
     <!-- ══ RACI + FIX LOG ══ -->
     <div class="section" id="section-raci">
@@ -808,6 +1046,7 @@
               <th>🤖 Baymax</th>
               <th>🧘 Qui-Gon</th>
               <th>👊 Thanos</th>
+              <th>🔮 Vision</th>
             </tr>
           </thead>
           <tbody>
@@ -815,43 +1054,43 @@
               <td class="col-name">OpenClaw / Gateway</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td><span class="badge badge-ok">C</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-pause">I</span></td>
             </tr>
             <tr>
               <td class="col-name">Agent Config &amp; Crew</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td><span class="badge badge-ok">C</span></td>
-              <td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-pause">I</span></td>
             </tr>
             <tr>
               <td class="col-name">RAG / ChromaDB</td>
-              <td><span class="badge badge-done">A/R</span></td>
               <td><span class="badge badge-ok">C</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-done">A/R</span></td>
             </tr>
             <tr>
               <td class="col-name">mem0 / Qdrant</td>
-              <td><span class="badge badge-done">A/R</span></td>
               <td><span class="badge badge-ok">C</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td><span class="badge badge-ok">C</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-done">A/R</span></td>
             </tr>
             <tr>
               <td class="col-name">Servers / Infra / Pi / Docker</td>
               <td><span class="badge badge-pause">I</span></td>
               <td><span class="badge badge-done">A/R</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Ollama &amp; Local Models</td>
               <td><span class="badge badge-ok">C</span></td>
               <td><span class="badge badge-done">A/R</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-ok">C</span></td>
             </tr>
             <tr>
               <td class="col-name">Home Automation / Moxie</td>
               <td><span class="badge badge-pause">I</span></td>
               <td><span class="badge badge-done">A/R</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Business / Investing / Markets</td>
@@ -859,7 +1098,7 @@
               <td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
-              <td><span class="badge badge-ok">C</span></td>
+              <td><span class="badge badge-ok">C</span></td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">API Credits &amp; Cost Monitoring</td>
@@ -867,7 +1106,7 @@
               <td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
-              <td><span class="badge badge-pause">I</span></td>
+              <td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Last Star — Story &amp; Lore</td>
@@ -875,48 +1114,48 @@
               <td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td><span class="badge badge-ok">C</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">The Hex — Blender / 3D</td>
               <td><span class="badge badge-pause">I</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Learning / Certs (AWS, PMP, ITIL)</td>
               <td><span class="badge badge-pause">I</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Book Library / DB</td>
               <td><span class="badge badge-pause">I</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-ok">C</span></td>
             </tr>
             <tr>
               <td class="col-name">Health / Nutrition / Sleep</td>
               <td><span class="badge badge-pause">I</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Mental Health / Mindfulness</td>
               <td><span class="badge badge-pause">I</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
-              <td class="col-muted">—</td>
+              <td class="col-muted">—</td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Projects &amp; Deadlines</td>
               <td><span class="badge badge-ok">C</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
-              <td><span class="badge badge-done">A/R</span></td>
+              <td><span class="badge badge-done">A/R</span></td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">GitHub Pages Dashboard</td>
@@ -924,7 +1163,7 @@
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-ok">C</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td>
-              <td><span class="badge badge-pause">I</span></td>
+              <td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td>
             </tr>
           </tbody>
         </table>
@@ -938,223 +1177,271 @@
         <span style="font-size:.8rem;color:var(--muted);align-self:center;">— = not involved</span>
       </div>
 
-      <!-- FIX LOG -->
-      <div class="section-title" style="font-size:1rem;margin-top:.25rem;margin-bottom:1rem;">🔧 Incident &amp; Fix Log</div>
+      <!-- FIX LOG — KANBAN -->
+      <div class="section-title" style="font-size:1rem;margin-top:.25rem;margin-bottom:1.25rem;">🔧 Incident &amp; Fix Log</div>
 
-      <!-- OPEN INCIDENTS -->
-      <div class="incident-card" style="border-color:rgba(255,107,107,.25)">
-        <div class="incident-header" style="background:rgba(255,107,107,.05);border-color:rgba(255,107,107,.2)">
-          <div class="incident-meta">
-            <span class="badge badge-down"><span class="dot dot-red"></span>Open</span>
-            <span class="incident-date">2026-08-15</span>
-            <span class="incident-system">DB-GPT</span>
-          </div>
-        </div>
-        <div class="incident-body">
-          <div class="incident-row">
-            <div class="incident-label">⚠️ Issue</div>
-            <div class="incident-text">DB-GPT is down. Was running at <code>localhost:5670</code> — AI SQL assistant for querying local data. Process is not running, port is closed, UI unreachable.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔍 Root Cause</div>
-            <div class="incident-text">Service was not daemonized — it was started manually in a terminal session and that session ended. No LaunchAgent or persistent process manager configured, so it doesn't survive restarts or session exits.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔧 Fix Needed</div>
-            <div class="incident-text">
-              Two steps:<br/>
-              <strong>1. Restart it now</strong> — spin it back up manually:<br/>
-              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">cd ~/.openclaw/workspace-main/repos/DB-GPT<br/>python dbgpt/app/dbgpt_server.py --port 5670</code>
-              <strong style="display:block;margin-top:.75rem">2. Make it permanent</strong> — create a LaunchAgent so it starts on login and stays running. (Owner: Rick)
-            </div>
-          </div>
-          <div class="incident-row" style="border-bottom:none">
-            <div class="incident-label">✅ How to Test</div>
-            <div class="incident-text">
-              <code style="display:block;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">curl -s http://localhost:5670 | head -5</code>
-              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: HTML response. Or open <strong>http://localhost:5670</strong> in browser — should load the DB-GPT UI.</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- KANBAN COLUMN STYLES -->
+      <style>
+        .kanban-board { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.25rem; margin-bottom:2rem; }
+        @media(max-width:900px){ .kanban-board { grid-template-columns:1fr; } }
+        .kanban-col { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+        .kanban-col-header { padding:.75rem 1.1rem; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:.6rem; }
+        .kanban-col-title { font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; }
+        .kanban-col-count { font-size:.75rem; background:rgba(255,255,255,.07); border:1px solid var(--border); border-radius:999px; padding:.1rem .55rem; color:var(--muted); margin-left:auto; }
+        .kanban-cards { padding:.75rem; display:flex; flex-direction:column; gap:.65rem; }
 
-      <!-- OPEN INCIDENTS -->
-      <div class="incident-card" style="border-color:rgba(245,200,66,.25)">
-        <div class="incident-header" style="background:rgba(245,200,66,.05);border-color:rgba(245,200,66,.2)">
-          <div class="incident-meta">
-            <span class="badge badge-warn"><span class="dot dot-yellow"></span>Open</span>
-            <span class="incident-date">2026-08-13</span>
-            <span class="incident-system">Flowise</span>
-          </div>
-        </div>
-        <div class="incident-body">
-          <div class="incident-row">
-            <div class="incident-label">⚠️ Issue</div>
-            <div class="incident-text">Flowise install is incomplete. Visual LLM flow builder — never came up. <code>npm install</code> ran out of memory (OOM killed) mid-install. Repo is cloned but the package is unusable.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔍 Root Cause</div>
-            <div class="incident-text">Flowise has a very large dependency tree. The default Node.js heap size (~1.5 GB) isn't enough to install it on a machine under memory pressure. OOM killer terminated the process before packages finished writing.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔧 Fix Needed</div>
-            <div class="incident-text">
-              Try install with expanded heap limit:<br/>
-              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">cd ~/.openclaw/workspace-main/repos/Flowise<br/>npm cache clean --force<br/>NODE_OPTIONS="--max-old-space-size=4096" npm install</code>
-              If that still OOMs, run it in a Docker container instead (requires Docker to be installed first — Owner: Rick).
-            </div>
-          </div>
-          <div class="incident-row" style="border-bottom:none">
-            <div class="incident-label">✅ How to Test</div>
-            <div class="incident-text">
-              After install completes:<br/>
-              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">cd ~/.openclaw/workspace-main/repos/Flowise<br/>npx flowise start</code>
-              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: "Flowise is running on port 3000" — open <strong>http://localhost:3000</strong></span>
-            </div>
-          </div>
-        </div>
-      </div>
+        /* collapsible incident cards */
+        .icard { border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+        .icard[open] { box-shadow:0 4px 18px rgba(0,0,0,.25); }
+        .icard > summary { list-style:none; padding:.75rem 1rem; cursor:pointer; display:flex; align-items:center; gap:.6rem; user-select:none; }
+        .icard > summary::-webkit-details-marker { display:none; }
+        .icard > summary .chevron { margin-left:auto; font-size:.7rem; color:var(--muted); transition:transform .2s; }
+        .icard[open] > summary .chevron { transform:rotate(90deg); }
+        .icard > summary:hover { background:rgba(255,255,255,.03); }
+        .icard-title { font-size:.82rem; font-weight:600; color:var(--text); line-height:1.35; }
+        .icard-date { font-size:.73rem; color:var(--muted); margin-top:.1rem; }
+        .icard-body { border-top:1px solid var(--border); }
+        .icard-row { padding:.75rem 1rem; border-bottom:1px solid rgba(255,255,255,.04); display:grid; grid-template-columns:110px 1fr; gap:.75rem; align-items:start; }
+        .icard-row:last-child { border-bottom:none; }
+        .icard-lbl { font-size:.72rem; font-weight:700; color:var(--muted); padding-top:.1rem; white-space:nowrap; }
+        .icard-txt { font-size:.82rem; color:var(--text); line-height:1.6; }
+        .icard-txt code { background:rgba(0,212,255,.08); color:var(--accent); padding:.1rem .3rem; border-radius:4px; font-size:.8em; }
+        .icard-txt pre { margin:.4rem 0 0; padding:.5rem .75rem; background:rgba(0,0,0,.3); border-radius:6px; font-size:.78rem; color:#cdd6f4; overflow-x:auto; }
 
-      <div class="incident-card" style="border-color:rgba(108,99,255,.35)">
-        <div class="incident-header" style="background:rgba(108,99,255,.06);border-color:rgba(108,99,255,.25)">
-          <div class="incident-meta">
-            <span class="badge badge-warn" style="background:rgba(108,99,255,.15);color:#a8a3ff;border-color:rgba(108,99,255,.4)"><span class="dot" style="background:#a8a3ff;box-shadow:0 0 6px #a8a3ff"></span>Not Started</span>
-            <span class="incident-date">2026-08-15</span>
-            <span class="incident-system">ElevenLabs — Agent Voices</span>
-          </div>
-        </div>
-        <div class="incident-body">
-          <div class="incident-row">
-            <div class="incident-label">⚠️ Issue</div>
-            <div class="incident-text">No agent has a voice. ElevenLabs integration was planned from day one but never started. All 8 agents respond in text only — no TTS personality.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔍 Root Cause</div>
-            <div class="incident-text">No ElevenLabs API key. No voice IDs assigned per agent. OpenClaw TTS config not wired. Tony Stark owns this track but setup hasn't begun.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔧 Fix Needed</div>
-            <div class="incident-text">
-              <strong>Step 1 — Get API key (Jesse):</strong> Sign up at <a href="https://elevenlabs.io" target="_blank" style="color:var(--accent)">elevenlabs.io</a> — free tier: 10k chars/month.<br/><br/>
-              <strong>Step 2 — Pick voices (Tony Stark):</strong> Browse the Voice Library, assign one voice ID per agent. Save IDs here in the log.<br/><br/>
-              <strong>Step 3 — Wire into OpenClaw (Orbit):</strong> Add ElevenLabs provider to OpenClaw TTS config with the API key.<br/><br/>
-              <strong>Step 4 — Test each agent (Jesse):</strong> Send a message to each agent and confirm their voice plays back.
-            </div>
-          </div>
-          <div class="incident-row" style="border-bottom:none">
-            <div class="incident-label">✅ How to Test</div>
-            <div class="incident-text">
-              Once wired in, ask any agent something out loud and confirm unique voice responds.<br/>
-              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">curl https://api.elevenlabs.io/v1/voices \<br/>  -H "xi-api-key: YOUR_KEY" | jq '.voices[].name'</code>
-              <span style="color:#a8a3ff;font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: list of available voice names you can assign to each agent</span>
-            </div>
-          </div>
-        </div>
-      </div>
+        /* col colour themes */
+        .col-open   .kanban-col-header { border-color:rgba(255,107,107,.3); background:rgba(255,107,107,.04); }
+        .col-open   .kanban-col-title  { color:#ff6b6b; }
+        .col-wip    .kanban-col-header { border-color:rgba(245,200,66,.3); background:rgba(245,200,66,.04); }
+        .col-wip    .kanban-col-title  { color:#f5c842; }
+        .col-done   .kanban-col-header { border-color:rgba(0,255,136,.3); background:rgba(0,255,136,.04); }
+        .col-done   .kanban-col-title  { color:#00ff88; }
 
-      <!-- DIVIDER between open and resolved -->
-      <div style="display:flex;align-items:center;gap:.75rem;margin:.25rem 0 1.25rem">
-        <hr style="flex:1;border:none;border-top:1px solid var(--border)"/>
-        <span style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap">Resolved</span>
-        <hr style="flex:1;border:none;border-top:1px solid var(--border)"/>
-      </div>
+        .icard-open  { border-color:rgba(255,107,107,.25); }
+        .icard-open  > summary { background:rgba(255,107,107,.04); }
+        .icard-wip   { border-color:rgba(245,200,66,.25); }
+        .icard-wip   > summary { background:rgba(245,200,66,.04); }
+        .icard-ns    { border-color:rgba(108,99,255,.3); }
+        .icard-ns    > summary { background:rgba(108,99,255,.04); }
+        .icard-done  { border-color:rgba(0,255,136,.2); }
+        .icard-done  > summary { background:rgba(0,255,136,.03); }
+      </style>
 
-      <!-- INCIDENT CARD -->
-      <div class="incident-card">
-        <div class="incident-header">
-          <div class="incident-meta">
-            <span class="badge badge-ok"><span class="dot dot-green"></span>Resolved</span>
-            <span class="incident-date">2026-08-15</span>
-            <span class="incident-system">RAG / ChromaDB</span>
-          </div>
-        </div>
-        <div class="incident-body">
-          <div class="incident-row">
-            <div class="incident-label">⚠️ Issue</div>
-            <div class="incident-text">RAG database completely offline. ChromaDB 1.1.1 crashed on every import with a <code>ModuleNotFoundError</code> for <code>pydantic.v1</code>. The daily sync cron was running but nothing was being indexed. 166 vectors sitting in the DB, unreachable.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔍 Root Cause</div>
-            <div class="incident-text">ChromaDB 1.1.1 uses <code>from pydantic.v1 import BaseSettings</code> — the Pydantic v1 compatibility shim. Python 3.14 removed support for that shim entirely. The moment you tried to <code>import chromadb</code>, Python threw and the whole RAG stack went down with it.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔧 Fix</div>
-            <div class="incident-text">Upgraded ChromaDB from <code>1.1.1 → 1.5.9</code> in the <code>.venv</code> (Python 3.14) environment. Version 1.5.9 uses Pydantic v2 natively — no compat shim. Zero data loss: all 166 vectors confirmed intact after upgrade.<br/><code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">.venv/bin/pip install --upgrade chromadb</code></div>
-          </div>
-          <div class="incident-row" style="border-bottom:none">
-            <div class="incident-label">✅ How to Test</div>
-            <div class="incident-text">
-              Run this in terminal — if it prints the vector count, RAG is healthy:<br/>
-              <code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">cd ~/.openclaw/workspace-main<br/>.venv/bin/python -c "import chromadb; c = chromadb.PersistentClient(path='~/.openclaw/rag/db'); print(c.get_collection('knowledge').count())"</code>
-              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected output: <strong>166</strong></span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="kanban-board">
 
-      <!-- INCIDENT CARD -->
-      <div class="incident-card">
-        <div class="incident-header">
-          <div class="incident-meta">
-            <span class="badge badge-ok"><span class="dot dot-green"></span>Resolved</span>
-            <span class="incident-date">2026-08-14</span>
-            <span class="incident-system">GitHub CLI / gh auth</span>
+        <!-- ── OPEN ── -->
+        <div class="kanban-col col-open">
+          <div class="kanban-col-header">
+            <span style="font-size:1rem">🔴</span>
+            <span class="kanban-col-title">Open</span>
+            <span class="kanban-col-count">2</span>
           </div>
-        </div>
-        <div class="incident-body">
-          <div class="incident-row">
-            <div class="incident-label">⚠️ Issue</div>
-            <div class="incident-text">GitHub CLI authenticated but <code>gh</code> commands that touch org data failed with <em>"missing required scope: read:org"</em>. Could not push to repos or access org-level info.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔍 Root Cause</div>
-            <div class="incident-text">Token was piped in via <code>echo TOKEN | gh auth login --with-token</code>. That method only grants the scopes baked into the token at creation time. The token was missing <code>read:org</code>.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔧 Fix</div>
-            <div class="incident-text">Re-authenticated via the interactive device OAuth flow instead of token pipe. Selected all required scopes during the browser flow.<br/><code style="display:block;margin-top:.5rem;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">gh auth login</code><br/>Scopes granted: <code>repo</code>, <code>read:org</code>, <code>gist</code>. Then wired <code>gh</code> into git HTTPS with <code>gh auth setup-git</code>.</div>
-          </div>
-          <div class="incident-row" style="border-bottom:none">
-            <div class="incident-label">✅ How to Test</div>
-            <div class="incident-text">
-              <code style="display:block;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">gh auth status</code>
-              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: account JesseFuentes1985, scopes include repo, read:org, gist</span>
-            </div>
-          </div>
-        </div>
-      </div>
+          <div class="kanban-cards">
 
-      <!-- INCIDENT CARD -->
-      <div class="incident-card">
-        <div class="incident-header">
-          <div class="incident-meta">
-            <span class="badge badge-ok"><span class="dot dot-green"></span>Resolved</span>
-            <span class="incident-date">2026-03-14</span>
-            <span class="incident-system">Anthropic API Credits</span>
+            <!-- DB-GPT -->
+            <details class="icard icard-open">
+              <summary>
+                <span class="badge badge-down" style="flex-shrink:0"><span class="dot dot-red"></span>Down</span>
+                <div>
+                  <div class="icard-title">DB-GPT</div>
+                  <div class="icard-date">2026-08-15 · Owner: Rick</div>
+                </div>
+                <span class="chevron">▶</span>
+              </summary>
+              <div class="icard-body">
+                <div class="icard-row"><span class="icard-lbl">Issue</span><div class="icard-txt">DB-GPT is down. Was running at <code>localhost:5670</code>. Process not running, port closed, UI unreachable.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Root Cause</span><div class="icard-txt">Service was not daemonized — started manually in a terminal session that ended. No LaunchAgent configured.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Fix Needed</span><div class="icard-txt"><strong>1. Restart now:</strong><pre>cd ~/.openclaw/workspace-main/repos/DB-GPT
+python dbgpt/app/dbgpt_server.py --port 5670</pre><strong>2. Create LaunchAgent</strong> so it survives reboots. (Rick owns this)</div></div>
+                <div class="icard-row"><span class="icard-lbl">How to Test</span><div class="icard-txt"><pre>curl -s http://localhost:5670 | head -5</pre><span style="color:var(--green);font-size:.8rem">✓ HTML response, or open localhost:5670 in browser</span></div></div>
+              </div>
+            </details>
+
+            <!-- Flowise -->
+            <details class="icard icard-wip">
+              <summary>
+                <span class="badge badge-warn" style="flex-shrink:0"><span class="dot dot-yellow"></span>Paused</span>
+                <div>
+                  <div class="icard-title">Flowise — OOM Install</div>
+                  <div class="icard-date">2026-08-13 · Owner: Rick</div>
+                </div>
+                <span class="chevron">▶</span>
+              </summary>
+              <div class="icard-body">
+                <div class="icard-row"><span class="icard-lbl">Issue</span><div class="icard-txt">Visual LLM flow builder. <code>npm install</code> OOM-killed mid-install. Repo cloned, package unusable.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Root Cause</span><div class="icard-txt">Large dependency tree. Default Node.js heap (~1.5 GB) not enough under memory pressure.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Fix Needed</span><div class="icard-txt"><pre>cd ~/.openclaw/workspace-main/repos/Flowise
+npm cache clean --force
+NODE_OPTIONS="--max-old-space-size=4096" npm install</pre>If still OOMs → Docker install instead (needs Docker first).</div></div>
+                <div class="icard-row"><span class="icard-lbl">How to Test</span><div class="icard-txt"><pre>npx flowise start</pre><span style="color:var(--green);font-size:.8rem">✓ "Flowise is running on port 3000" → open localhost:3000</span></div></div>
+              </div>
+            </details>
+
           </div>
         </div>
-        <div class="incident-body">
-          <div class="incident-row">
-            <div class="incident-label">⚠️ Issue</div>
-            <div class="incident-text">All Anthropic API calls started returning <code>402 Payment Required</code>. Every agent running on Claude went completely offline. Full outage.</div>
+
+        <!-- ── NOT STARTED ── -->
+        <div class="kanban-col col-wip">
+          <div class="kanban-col-header">
+            <span style="font-size:1rem">🟡</span>
+            <span class="kanban-col-title">Not Started</span>
+            <span class="kanban-col-count">1</span>
           </div>
-          <div class="incident-row">
-            <div class="incident-label">🔍 Root Cause</div>
-            <div class="incident-text">No auto-reload was configured on the Anthropic account. Balance drained to $0 with no warning threshold set. API keys remain valid but all calls are blocked when balance hits zero.</div>
-          </div>
-          <div class="incident-row">
-            <div class="incident-label">🔧 Fix</div>
-            <div class="incident-text">Manually reloaded credits. Configured auto-reload in the Anthropic console: triggers at <strong>$5 balance</strong>, reloads to <strong>$55</strong>. Never hits zero again.</div>
-          </div>
-          <div class="incident-row" style="border-bottom:none">
-            <div class="incident-label">✅ How to Test</div>
-            <div class="incident-text">
-              <code style="display:block;padding:.5rem .75rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem">curl https://api.anthropic.com/v1/messages -H "x-api-key: $ANTHROPIC_API_KEY" -H "anthropic-version: 2023-06-01" -H "content-type: application/json" -d '{"model":"claude-haiku-4-5","max_tokens":10,"messages":[{"role":"user","content":"ping"}]}'</code>
-              <span style="color:var(--green);font-size:.8rem;display:block;margin-top:.4rem">✓ Expected: JSON response with <code>content</code> field, no 402 error</span>
-            </div>
+          <div class="kanban-cards">
+
+            <!-- ElevenLabs Voices -->
+            <details class="icard icard-ns">
+              <summary>
+                <span class="badge" style="background:rgba(108,99,255,.15);color:#a8a3ff;border:1px solid rgba(108,99,255,.4);flex-shrink:0"><span class="dot" style="background:#a8a3ff;box-shadow:0 0 6px #a8a3ff"></span>Queued</span>
+                <div>
+                  <div class="icard-title">ElevenLabs — Agent Voices</div>
+                  <div class="icard-date">2026-08-15 · Owner: Tony Stark</div>
+                </div>
+                <span class="chevron">▶</span>
+              </summary>
+              <div class="icard-body">
+                <div class="icard-row"><span class="icard-lbl">Issue</span><div class="icard-txt">No agent has a voice. All 8 respond text-only. ElevenLabs planned from day one — never started.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Root Cause</span><div class="icard-txt">No ElevenLabs API key. No voice IDs assigned. OpenClaw TTS not wired.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Steps</span><div class="icard-txt">
+                  <strong>1. Jesse:</strong> Sign up at <a href="https://elevenlabs.io" target="_blank" style="color:var(--accent)">elevenlabs.io</a> (free = 10k chars/mo)<br/>
+                  <strong>2. Tony Stark:</strong> Browse Voice Library, assign one voice ID per agent<br/>
+                  <strong>3. Orbit:</strong> Wire ElevenLabs provider into OpenClaw TTS config<br/>
+                  <strong>4. Jesse:</strong> Test each agent voice
+                </div></div>
+                <div class="icard-row"><span class="icard-lbl">How to Test</span><div class="icard-txt"><pre>curl https://api.elevenlabs.io/v1/voices \
+  -H "xi-api-key: YOUR_KEY" | jq '.voices[].name'</pre><span style="color:#a8a3ff;font-size:.8rem">✓ Returns list of voice names to assign per agent</span></div></div>
+              </div>
+            </details>
+
           </div>
         </div>
-      </div>
+
+        <!-- ── RESOLVED ── -->
+        <div class="kanban-col col-done">
+          <div class="kanban-col-header">
+            <span style="font-size:1rem">🟢</span>
+            <span class="kanban-col-title">Resolved</span>
+            <span class="kanban-col-count">6</span>
+          </div>
+          <div class="kanban-cards">
+
+            <!-- mem0 / Qdrant -->
+            <details class="icard icard-done">
+              <summary>
+                <span class="badge badge-ok" style="flex-shrink:0"><span class="dot dot-green"></span>Fixed</span>
+                <div>
+                  <div class="icard-title">mem0 / Qdrant — Migration &amp; LaunchAgent</div>
+                  <div class="icard-date">2026-08-16</div>
+                </div>
+                <span class="chevron">▶</span>
+              </summary>
+              <div class="icard-body">
+                <div class="icard-row"><span class="icard-lbl">What happened</span><div class="icard-txt">After gateway restart, Qdrant not running and <code>mem0</code> collection missing. Previous setup used <code>qdrant-client</code> embedded SQLite mode — incompatible with full Qdrant server binary. Storage dir also renamed from <code>collection/</code> → <code>collections/</code> in v1.19.0.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Root Cause</span><div class="icard-txt">No Qdrant server binary. Embedded SQLite format ≠ WAL format. LaunchAgent blocked by Gatekeeper (ad-hoc signed binary).</div></div>
+                <div class="icard-row"><span class="icard-lbl">Fix</span><div class="icard-txt">Downloaded Qdrant v1.19.0 binary. Re-signed with <code>codesign --force --deep --sign -</code>. Created LaunchAgent + kickstart helper. Re-seeded 39 memories via <code>nomic-embed-text</code> directly into Qdrant server.</div></div>
+                <div class="icard-row"><span class="icard-lbl">What's a point?</span><div class="icard-txt">One memory = one point. Each point: unique ID + 768-dim vector (semantic embedding) + payload (text, timestamps, user_id). Search finds by meaning, not keywords.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Test</span><div class="icard-txt">Query "Vim editor" → Jesse's Vim pref @ 0.59. Query "agent crew members" → 8-agent roster @ 0.75. ✅ 39 points confirmed.</div></div>
+              </div>
+            </details>
+
+            <!-- Security node Desktop -->
+            <details class="icard icard-done">
+              <summary>
+                <span class="badge badge-ok" style="flex-shrink:0"><span class="dot dot-green"></span>Fixed</span>
+                <div>
+                  <div class="icard-title">Security — node Desktop Access</div>
+                  <div class="icard-date">2026-08-16</div>
+                </div>
+                <span class="chevron">▶</span>
+              </summary>
+              <div class="icard-body">
+                <div class="icard-row"><span class="icard-lbl">What happened</span><div class="icard-txt">macOS prompted <code>node</code> (Homebrew Node.js running OpenClaw) for Desktop file access. Jesse clicked Allow accidentally.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Root Cause</span><div class="icard-txt">Homebrew node is ad-hoc signed (no TeamID), so macOS groups all child processes under one TCC entry. Any OpenClaw exec could trigger the prompt.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Fix</span><div class="icard-txt"><strong>System Settings → Privacy &amp; Security → Files and Folders → node → Desktop Folder OFF</strong>. OpenClaw needs zero Desktop access.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Prevention</span><div class="icard-txt">Default answer for unexpected <code>node</code> privacy prompts: <strong>Don't Allow</strong>. Document any legit grants here.</div></div>
+              </div>
+            </details>
+
+            <!-- Session message too large -->
+            <details class="icard icard-done">
+              <summary>
+                <span class="badge badge-ok" style="flex-shrink:0"><span class="dot dot-green"></span>Fixed</span>
+                <div>
+                  <div class="icard-title">Session — Message Too Large</div>
+                  <div class="icard-date">2026-08-16</div>
+                </div>
+                <span class="chevron">▶</span>
+              </summary>
+              <div class="icard-body">
+                <div class="icard-row"><span class="icard-lbl">What happened</span><div class="icard-txt">Webchat showed <code>[chat.history omitted: message too large]</code>. Active JSONL transcript grew unbounded with no rotation configured.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Root Cause</span><div class="icard-txt"><code>truncateAfterCompaction</code> not set. JSONL grows forever without it.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Fix</span><div class="icard-txt">Added to <code>openclaw.json</code> → <code>agents.defaults.compaction</code>:<br/><code>"truncateAfterCompaction": true</code><br/><code>"maxActiveTranscriptBytes": "10mb"</code><br/>Gateway restarted to apply.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Test</span><div class="icard-txt">Next compaction event rotates transcript. Sessions should no longer hit the payload limit.</div></div>
+              </div>
+            </details>
+
+            <!-- RAG ChromaDB -->
+            <details class="icard icard-done">
+              <summary>
+                <span class="badge badge-ok" style="flex-shrink:0"><span class="dot dot-green"></span>Fixed</span>
+                <div>
+                  <div class="icard-title">RAG / ChromaDB — Python 3.14 Crash</div>
+                  <div class="icard-date">2026-08-15</div>
+                </div>
+                <span class="chevron">▶</span>
+              </summary>
+              <div class="icard-body">
+                <div class="icard-row"><span class="icard-lbl">What happened</span><div class="icard-txt">RAG completely offline. ChromaDB 1.1.1 threw <code>ModuleNotFoundError: pydantic.v1</code> on every import. 166 vectors unreachable.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Root Cause</span><div class="icard-txt">ChromaDB 1.1.1 used Pydantic v1 compat shim — removed in Python 3.14.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Fix</span><div class="icard-txt">Upgraded <code>chromadb 1.1.1 → 1.5.9</code> (Pydantic v2 native). Zero data loss — 166 vectors intact.<pre>.venv/bin/pip install --upgrade chromadb</pre></div></div>
+                <div class="icard-row"><span class="icard-lbl">Test</span><div class="icard-txt"><pre>cd ~/.openclaw/workspace-main
+.venv/bin/python -c "import chromadb; c=chromadb.PersistentClient(path='~/.openclaw/rag/db'); print(c.get_collection('knowledge').count())"</pre><span style="color:var(--green);font-size:.8rem">✓ Expected: 166</span></div></div>
+              </div>
+            </details>
+
+            <!-- GitHub CLI -->
+            <details class="icard icard-done">
+              <summary>
+                <span class="badge badge-ok" style="flex-shrink:0"><span class="dot dot-green"></span>Fixed</span>
+                <div>
+                  <div class="icard-title">GitHub CLI — Missing Scopes</div>
+                  <div class="icard-date">2026-08-14</div>
+                </div>
+                <span class="chevron">▶</span>
+              </summary>
+              <div class="icard-body">
+                <div class="icard-row"><span class="icard-lbl">What happened</span><div class="icard-txt"><code>gh</code> commands failed: <em>"missing required scope: read:org"</em>. Could not push or access org data.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Root Cause</span><div class="icard-txt">Token piped via <code>echo TOKEN | gh auth login --with-token</code> — only grants scopes baked into the token. Token was missing <code>read:org</code>.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Fix</span><div class="icard-txt">Re-authenticated via interactive device OAuth flow. Scopes granted: <code>repo</code>, <code>read:org</code>, <code>gist</code>. Then ran <code>gh auth setup-git</code>.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Test</span><div class="icard-txt"><pre>gh auth status</pre><span style="color:var(--green);font-size:.8rem">✓ Account: JesseFuentes1985, scopes: repo, read:org, gist</span></div></div>
+              </div>
+            </details>
+
+            <!-- Anthropic Credits -->
+            <details class="icard icard-done">
+              <summary>
+                <span class="badge badge-ok" style="flex-shrink:0"><span class="dot dot-green"></span>Fixed</span>
+                <div>
+                  <div class="icard-title">Anthropic API — Credits Hit $0</div>
+                  <div class="icard-date">2026-03-14</div>
+                </div>
+                <span class="chevron">▶</span>
+              </summary>
+              <div class="icard-body">
+                <div class="icard-row"><span class="icard-lbl">What happened</span><div class="icard-txt">All Claude API calls returned <code>402 Payment Required</code>. Every agent offline. Full crew outage.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Root Cause</span><div class="icard-txt">No auto-reload configured. Balance silently drained to $0 with no alert threshold.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Fix</span><div class="icard-txt">Manually reloaded credits. Configured auto-reload: triggers at <strong>$5</strong>, reloads to <strong>$55</strong>.</div></div>
+                <div class="icard-row"><span class="icard-lbl">Test</span><div class="icard-txt"><pre>curl https://api.anthropic.com/v1/messages \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d '{"model":"claude-haiku-4-5","max_tokens":10,"messages":[{"role":"user","content":"ping"}]}'</pre><span style="color:var(--green);font-size:.8rem">✓ JSON response, no 402</span></div></div>
+              </div>
+            </details>
+
+          </div>
+        </div>
+
+      </div><!-- end kanban-board -->
 
     </div>
 
