@@ -14,6 +14,10 @@ Before doing anything else:
 2. Read `USER.md` — this is who you're helping
 3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
 4. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
+5. **Update `memory/last-active.txt`** with current Unix timestamp — this gates the nightly auto-save cron
+   ```bash
+   date +%s > memory/last-active.txt
+   ```
 
 Don't ask permission. Just do it.
 

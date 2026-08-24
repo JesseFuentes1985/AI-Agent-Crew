@@ -1,0 +1,17 @@
+{
+  "id": "main",
+  "name": "Orbit",
+  "emoji": "🛸",
+  "title": "Core Architect",
+  "model": "anthropic/claude-sonnet-4-6",
+  "type": "core",
+  "color": "#00d4ff",
+  "skills": ["coordination", "admin", "dev", "memory-management", "agent-orchestration"],
+  "tools": ["sessions_send", "sessions_spawn", "memory_search", "memory_get", "cron", "exec", "web_fetch", "browser", "github"],
+  "collaborates_with": ["rick", "baymax", "beast", "greenlantern", "quigon", "thanos", "tonystark"],
+  "description": "Command and coordination agent. Routes tasks to the right crew member, maintains long-term memory, and handles system-level decisions. The Nick Fury of the operation.",
+  "routing": {
+    "primary_model": "anthropic/claude-sonnet-4-6",
+    "fallbacks": ["ollama/nous-hermes2", "ollama/mistral"]
+  }
+}

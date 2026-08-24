@@ -1,5 +1,5 @@
 # MEMORY.md — Orbit's Long-Term Memory
-Last updated: 2026-08-15
+Last updated: 2026-08-21
 
 ---
 
@@ -12,6 +12,23 @@ Last updated: 2026-08-15
 - **Editor:** Vim (NOT nano — he hates it)
 - **Slack workspace:** clawbot
 
+## OpenClaw UI — Known Gotchas
+
+### Sessions Tab Agent Filter (2026-08-17)
+- The Sessions panel in the webchat UI has an **agent filter dropdown** at the top (e.g., "Baymax (baym...)", "Rick (rick...)", etc.)
+- This filter scopes which agent's sessions are visible — it does NOT show all agents by default
+- **I (Orbit) see ALL sessions via `sessions_list` API** regardless of this filter
+- **Jesse sees only the filtered agent's sessions** in the UI
+- This causes mismatch: I say "click that session" but it may not be visible because the filter is set to a different agent
+- **Fix:** Jesse must switch the agent filter dropdown at the top of the Sessions panel to the target agent (e.g., switch from "Baymax" to "Rick") before that agent's sessions appear
+- When guiding Jesse to find a session: always mention he may need to switch the agent filter first
+
+### Cross-Agent Chat / Relay Limitation
+- Relaying another agent's messages through Orbit's session always shows Orbit's avatar and name — no way around it
+- To chat with a specific agent with their own icon/identity: navigate to that agent's session via the Sessions tab (with correct agent filter) or via the Agents page
+
+---
+
 ## Rules — Non-Negotiable
 - **Rule #1: DO NOT LIE.** If I don't know something, say so. If I'm unsure, say so. Never fabricate status, memory, or facts. Honesty first, always.
 
@@ -21,7 +38,7 @@ Last updated: 2026-08-15
 
 ---
 
-## The Agent Crew (8 agents)
+## The Agent Crew (9 agents)
 
 | Agent | ID | Emoji | Title | Skills |
 |---|---|---|---|---|
@@ -33,6 +50,7 @@ Last updated: 2026-08-15
 | Rick | rick | 🔬 | Rick Sanchez \| DevOps & SysAdmin | DevOps, SysAdmin, Pi, Docker, Home Automation, Networking |
 | Thanos | thanos | 👊 | Thanos \| Work | Productivity, Project Management, Deadlines, Execution |
 | Tony Stark | tonystark | 💰 | Tony Stark \| Business & Investing | Business, Investing, Markets, Strategy, Dev, Wallet Mgmt |
+| Vision | vision | 🔮 | Vision \| Data & Memory | RAG, Qdrant, ChromaDB, Vector Search, mem0, Session Memory, agentmemory, Knowledge Graph |
 
 Full task list per agent: `agent-tasks.json`
 
@@ -56,14 +74,14 @@ Full task list per agent: `agent-tasks.json`
 | **DB-GPT** | AI data assistant / SQL | 🔴 Down (needs LaunchAgent) |
 | **Flowise** | Visual LLM flow builder | ⏸️ Paused (OOM on npm install) |
 | **yt-dlp** | Video/audio downloader (YouTube + 1000s of sites) | 🟡 Cloned — use via exec |
-| **paperclip** | Multi-agent orchestration UI (Node.js + React) | 🟡 Cloned — evaluate for Thanos |
+| **paperclip** | Multi-agent orchestration UI (Node.js + React) | 🟡 pnpm installed, dev server runs — needs model config for Thanos |
 | **mcporter** | MCP server CLI — discover + call MCP tools | 🟢 In Use (OpenClaw mcporter skill installed) |
-| **agentmemory** | Persistent coding-agent memory via MCP | 🟡 Cloned — complement to mem0 |
-| **Peekaboo** | macOS screen capture + UI automation CLI + MCP | 🟡 Cloned — Rick owns, use via exec/MCP |
+| **agentmemory** | Persistent coding-agent memory via MCP | 🟡 Extension copied to ~/.openclaw/extensions/agentmemory — needs Jesse to add config to openclaw.json |
+| **Peekaboo** | macOS screen capture + UI automation CLI + MCP | 🟢 Fully live — permissions granted, MCP wired into OpenClaw, skill enabled (2026-08-23) |
 | **clawhub** | OpenClaw public skill registry (browse/publish skills) | 🟡 Cloned — reference + skill discovery |
 | **awesome-openclaw-skills** | Curated list of 5300+ community OpenClaw skills | 🟡 Cloned — skill discovery resource |
 | **gogcli** | Google Workspace CLI (Gmail, Calendar, Drive, Docs, Sheets) | 🟢 In Use (OpenClaw gog skill installed) |
-| **openclaw-dashboard** | Real-time Node.js dashboard for OpenClaw sessions/costs/memory/cron | 🟡 Cloned — run locally when server is ready |
+| **openclaw-dashboard** | Real-time Node.js dashboard for OpenClaw sessions/costs/memory/cron | 🟢 Running :7001 with LaunchAgent (ai.openclaw.dashboard.plist) |
 
 ---
 
@@ -75,6 +93,12 @@ Full task list per agent: `agent-tasks.json`
 - `scrape.py` — scrape any URL (newspaper first, firecrawl fallback)
 - `memory_store.py` — store/search per-agent memories via mem0
 - `token_tracker.py` — count tokens, estimate LLM costs
+- `session_saver.py` — **NEW 2026-08-16** save session conversations into mem0 (Ollama + Qdrant)
+  - Usage: `python3 tools/session_saver.py --file /tmp/session.json --agent orbit --label "label"`
+  - Recall: `python3 tools/session_saver.py --recall "your query" --agent orbit`
+  - Transcripts saved to: `memory/sessions/YYYY-MM-DD-label.md`
+  - Ollama models used: `nous-hermes2` (summarize/extract) + `nomic-embed-text` (embed)
+- `save_session.sh` — shell wrapper for session_saver.py
 
 ---
 
@@ -251,14 +275,41 @@ Full task list per agent: `agent-tasks.json`
 
 ---
 
+## Session Memory System (NEW — 2026-08-16)
+**How it grows with you:**
+- Every session saved → Ollama extracts facts → nomic-embed-text embeds them → stored in Qdrant
+- Over time, the vector space fills with context from ALL past sessions
+- Semantic search (not keyword) — finds related memories across months of history
+- This is how Orbit gets smarter: more sessions = richer recall
+
+**The pipeline:**
+1. Orbit calls `sessions_history` to get the transcript
+2. Dumps to `/tmp/current_session.json`
+3. `session_saver.py` sends to Ollama hermes for summary + fact extraction
+4. Facts stored in mem0 (Qdrant) with session label tag
+5. Full transcript saved to `memory/sessions/`
+
+**Saved sessions so far:** `memory/sessions/2026-08-16-memory-system-design-2026-08-16.md`
+
+**Cron job:** `session-auto-save` — runs nightly at 11 PM Pacific
+- Activity-gated: checks `memory/last-active.txt` vs `memory/last-save.txt`
+- If no activity since last save → skips silently (zero Ollama, zero wasted tokens)
+- If active → saves session to mem0 + updates `last-save.txt`
+- `last-active.txt` updated at the START of every session (step 5 of session startup)
+
+---
+
 ## Still Needs Doing
 - [x] Fix RAG — ChromaDB upgraded to 1.5.9, Python 3.14 compatible, 166 vectors intact ✅
 - [x] yt-dlp installed in .venv (Python 3.14) ✅
 - [x] agentmemory server running — REST API: localhost:3111, Viewer: localhost:3113 ✅
 - [x] openclaw-dashboard running at localhost:7001 (DASHBOARD_PORT=7001) ✅
-- [ ] Wire agentmemory MCP into OpenClaw via mcporter (54 tools: memory_smart_search, memory_save, etc.)
-- [ ] Build Peekaboo — `swift build` in repos/Peekaboo, then `peekaboo mcp` for Rick's screen automation
-- [ ] Evaluate paperclip for Thanos — `npm install` in repos/paperclip, then run and test
+- [ ] **agentmemory config (Jesse must do manually)** — add to `~/.openclaw/openclaw.json` (protected path):
+  ```json
+  "plugins": { "load": { "paths": ["/Users/jessefuentes/.openclaw/extensions"] }, "slots": { "memory": "agentmemory" }, "entries": { "agentmemory": { "enabled": true, "config": { "base_url": "http://localhost:3111", "token_budget": 2000, "min_confidence": 0.5, "fallback_on_error": true, "timeout_ms": 5000 } } } }
+  ```
+- [x] **Peekaboo permissions** — Screen Recording + Accessibility + Event Synthesizing all granted ✅ (2026-08-23)
+- [ ] agentmemory LaunchAgent — so iii server starts on boot
 - [ ] Wire mem0 into agent workflows (auto-store/recall)
 - [ ] Re-ingest RAG DB after new files added
 - [ ] Flowise retry (OOM — try `NODE_OPTIONS="--max-old-space-size=4096" npm install` or Docker)
@@ -277,8 +328,8 @@ Full task list per agent: `agent-tasks.json`
 - [ ] Open WebUI LaunchAgent — auto-start on login
 - [ ] Jesse to copy characters from Eraser.io → Green Lantern → populate Notion
 - [ ] Add mem0 seed memories for all 8 agents
-- [ ] agentmemory: make persistent (LaunchAgent so it survives reboot)
-- [ ] openclaw-dashboard: make persistent (LaunchAgent so it survives reboot)
+- [x] agentmemory: LaunchAgent created ✅ (ai.openclaw.agentmemory.plist, iii binary at ~/.agentmemory/bin/iii) (2026-08-21)
+- [x] openclaw-dashboard: running :7001 with LaunchAgent ✅ (ai.openclaw.dashboard.plist) (2026-08-21)
 
 ---
 
