@@ -14,3 +14,15 @@ dashboard/budget.json
 # Logs
 *.log
 npm-debug.log*
+.venv/
+.venv-crew/
+screenshots/
+data/
+*.db
+*.bin
+repos/
+ai-crew-dashboard/
+cockpit/
+openclaw-workspace-state.json
+.webui_secret_key
+openclaw-workspace-state.json
