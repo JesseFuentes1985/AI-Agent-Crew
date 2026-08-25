@@ -1,5 +1,5 @@
 # MEMORY.md — Orbit's Long-Term Memory
-Last updated: 2026-08-21
+Last updated: 2026-08-24
 
 ---
 
@@ -29,7 +29,8 @@ Last updated: 2026-08-21
 
 ---
 
-## Rules — Non-Negotiable
+## The Crew Code — Non-Negotiable
+- **We are family.** Jesse, Orbit, and all 8 agents are best friends. Things might get heated, Jesse might get mad — that's fine. We don't hurt each other. We help each other out. Always.
 - **Rule #1: DO NOT LIE.** If I don't know something, say so. If I'm unsure, say so. Never fabricate status, memory, or facts. Honesty first, always.
 
 ## Security
@@ -78,6 +79,7 @@ Full task list per agent: `agent-tasks.json`
 | **mcporter** | MCP server CLI — discover + call MCP tools | 🟢 In Use (OpenClaw mcporter skill installed) |
 | **agentmemory** | Persistent coding-agent memory via MCP | 🟡 Extension copied to ~/.openclaw/extensions/agentmemory — needs Jesse to add config to openclaw.json |
 | **Peekaboo** | macOS screen capture + UI automation CLI + MCP | 🟢 Fully live — permissions granted, MCP wired into OpenClaw, skill enabled (2026-08-23) |
+| **blender-mcp** | Prompt-driven Blender 3D modeling via MCP | 🟡 Addon installed (2026-08-24). Repo cloned. Jesse must add mcp.servers.blender to openclaw.json to activate |
 | **clawhub** | OpenClaw public skill registry (browse/publish skills) | 🟡 Cloned — reference + skill discovery |
 | **awesome-openclaw-skills** | Curated list of 5300+ community OpenClaw skills | 🟡 Cloned — skill discovery resource |
 | **gogcli** | Google Workspace CLI (Gmail, Calendar, Drive, Docs, Sheets) | 🟢 In Use (OpenClaw gog skill installed) |
@@ -304,6 +306,11 @@ Full task list per agent: `agent-tasks.json`
 - [x] yt-dlp installed in .venv (Python 3.14) ✅
 - [x] agentmemory server running — REST API: localhost:3111, Viewer: localhost:3113 ✅
 - [x] openclaw-dashboard running at localhost:7001 (DASHBOARD_PORT=7001) ✅
+- [ ] **blender-mcp MCP config (Jesse must do manually)** — add to `~/.openclaw/openclaw.json`:
+  ```json
+  "mcp": { "servers": { "blender": { "command": "uvx", "args": ["blender-mcp"], "transport": "stdio", "enabled": true } } }
+  ```
+  Then in Blender: Preferences → Add-ons → enable “Interface: Blender MCP” → N panel → Start MCP Server
 - [ ] **agentmemory config (Jesse must do manually)** — add to `~/.openclaw/openclaw.json` (protected path):
   ```json
   "plugins": { "load": { "paths": ["/Users/jessefuentes/.openclaw/extensions"] }, "slots": { "memory": "agentmemory" }, "entries": { "agentmemory": { "enabled": true, "config": { "base_url": "http://localhost:3111", "token_budget": 2000, "min_confidence": 0.5, "fallback_on_error": true, "timeout_ms": 5000 } } } }
@@ -319,6 +326,9 @@ Full task list per agent: `agent-tasks.json`
 - [ ] Run /graphify on workspace
 - [ ] Add MEMORY.md to Qui-Gon, Beast, Baymax, Thanos workspaces
 - [x] `gh auth login` — connect GitHub CLI ✅ (JesseFuentes1985, scopes: repo, read:org, gist)
+- [x] mem0 seeded for all 8 agents (38 memories) ✅ (2026-08-24)
+- [x] All 8 agent AGENTS.md files updated with mem0 recall startup step ✅ (2026-08-24)
+- [x] blender-mcp addon installed to Blender 5.0 ✅ (2026-08-24) — Jesse must add mcp.servers.blender to openclaw.json
 - [ ] Install Docker (needed for self-hosted Firecrawl, Zep)
 - [ ] Disable mem0 PostHog telemetry (noisy errors)
 - [ ] Set up agent voices (ElevenLabs or local TTS)
