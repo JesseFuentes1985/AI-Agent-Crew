@@ -451,10 +451,18 @@
         .mk-col { border-right:1px solid var(--border); padding:.55rem .65rem; min-width:0; }
         .mk-col:last-child { border-right:none; }
         .mk-hdr { font-size:.58rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin-bottom:.45rem; display:flex; align-items:center; gap:.3rem; white-space:nowrap; }
-        .mk-item { padding:.28rem 0; border-bottom:1px solid rgba(255,255,255,.04); }
-        .mk-item:last-child { border-bottom:none; }
-        .mk-name { font-size:.73rem; font-weight:600; color:var(--text); word-break:break-word; }
-        .mk-desc { font-size:.64rem; color:var(--muted); line-height:1.3; margin-top:.08rem; }
+        details.mk-item { border-bottom:1px solid rgba(255,255,255,.04); }
+        details.mk-item:last-child { border-bottom:none; }
+        details.mk-item[open] { border-bottom:none; }
+        details.mk-item > summary { list-style:none; cursor:pointer; padding:.3rem 0; display:flex; align-items:center; gap:.35rem; }
+        details.mk-item > summary::-webkit-details-marker { display:none; }
+        .mk-name { font-size:.73rem; font-weight:600; color:var(--text); word-break:break-word; display:flex; align-items:center; gap:.3rem; }
+        .mk-name::before { content:'\25B8'; font-size:.55rem; color:var(--muted); flex-shrink:0; transition:transform .15s; }
+        details.mk-item[open] .mk-name::before { transform:rotate(90deg); }
+        .mk-drop { padding:.35rem .4rem .45rem .75rem; border-left:2px solid rgba(255,255,255,.08); margin:.05rem 0 .35rem; }
+        .mk-drop p { margin:.18rem 0; font-size:.65rem; color:var(--muted); line-height:1.45; }
+        .mk-drop strong { color:rgba(255,255,255,.72); }
+        .mk-drop code { background:rgba(255,255,255,.08); padding:.05rem .28rem; border-radius:3px; font-size:.62rem; font-family:monospace; word-break:break-all; }
         .mk-empty { font-size:.65rem; color:rgba(255,255,255,.18); font-style:italic; padding:.3rem 0; }
       </style>
 
@@ -470,23 +478,23 @@
           <div class="mk">
             <div class="mk-col">
               <div class="mk-hdr">🟢 Active</div>
-              <div class="mk-item"><div class="mk-name">newspaper</div><div class="mk-desc">Article scraper, local, no key</div></div>
-              <div class="mk-item"><div class="mk-name">paul</div><div class="mk-desc">Plan-Apply-Unify dev loop</div></div>
-              <div class="mk-item"><div class="mk-name">mcporter</div><div class="mk-desc">CLI to call MCP servers</div></div>
-              <div class="mk-item"><div class="mk-name">gogcli</div><div class="mk-desc">Google Workspace CLI + MCP</div></div>
-              <div class="mk-item"><div class="mk-name">Scrapling</div><div class="mk-desc">Anti-bot web scraper</div></div>
-              <div class="mk-item"><div class="mk-name">Langflow</div><div class="mk-desc">Visual flow builder / MCP server</div></div>
-              <div class="mk-item"><div class="mk-name">openai-agents-python</div><div class="mk-desc">OpenAI Agents SDK</div></div>
+              <details class="mk-item"><summary><span class="mk-name">newspaper</span></summary><div class="mk-drop"><p><strong>What:</strong> Lightweight Python scraper — pulls clean article text from any URL. Local, no API key needed.</p><p><strong>Use:</strong> <code>python3 tools/scrape.py &lt;url&gt;</code> — newspaper is the default engine</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">paul</span></summary><div class="mk-drop"><p><strong>What:</strong> Plan-Apply-Unify Loop — structured dev workflow for making code changes safely.</p><p><strong>Use:</strong> <code>cd repos/paul && python paul.py</code> — describe the change you want</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">mcporter</span></summary><div class="mk-drop"><p><strong>What:</strong> CLI to discover, authenticate, and call any MCP server over HTTP or stdio.</p><p><strong>Use:</strong> OpenClaw mcporter skill installed — just ask Orbit to use any MCP tool</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">gogcli</span></summary><div class="mk-drop"><p><strong>What:</strong> Google Workspace CLI — Gmail, Calendar, Drive, Docs, Sheets. Also runs as a stdio MCP server.</p><p><strong>Use:</strong> OpenClaw gog skill installed — ask Orbit to check email, calendar, Drive, etc.</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">Scrapling</span></summary><div class="mk-drop"><p><strong>What:</strong> Advanced scraper that bypasses Cloudflare, handles JS, and adapts to site changes automatically.</p><p><strong>Use:</strong> Installed in .venv — <code>from scrapling import Scraper</code> or ask Orbit to scrape any URL</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">Langflow</span></summary><div class="mk-drop"><p><strong>What:</strong> Visual drag-and-drop LLM flow builder. Build pipelines that export as REST APIs or MCP servers.</p><p><strong>Use:</strong> <code>python -m langflow run</code> — opens at localhost:7860</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">openai-agents-python</span></summary><div class="mk-drop"><p><strong>What:</strong> OpenAI Agents SDK — tools, handoffs, guardrails, streaming. Installed in .venv (Python 3.14).</p><p><strong>Use:</strong> <code>from agents import Agent, Runner</code> — complement to crewAI for OpenAI-native flows</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🟡 Wiring</div>
-              <div class="mk-item"><div class="mk-name">clawhub</div><div class="mk-desc">OpenClaw public skill registry</div></div>
-              <div class="mk-item"><div class="mk-name">awesome-openclaw-skills</div><div class="mk-desc">5300+ community skills reference</div></div>
-              <div class="mk-item"><div class="mk-name">awesome-mcp-servers</div><div class="mk-desc">Best MCP server directory</div></div>
+              <details class="mk-item"><summary><span class="mk-name">clawhub</span></summary><div class="mk-drop"><p><strong>What:</strong> OpenClaw’s official public skill registry — browse, install, and publish skills.</p><p><strong>Use:</strong> <code>clawhub search &lt;query&gt;</code> or <code>openclaw skills install &lt;slug&gt;</code></p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">awesome-openclaw-skills</span></summary><div class="mk-drop"><p><strong>What:</strong> Curated list of 5300+ community OpenClaw skills — check before building anything.</p><p><strong>Use:</strong> Browse <code>repos/awesome-openclaw-skills/</code> → <code>openclaw skills install &lt;slug&gt;</code></p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">awesome-mcp-servers</span></summary><div class="mk-drop"><p><strong>What:</strong> 93k+ star curated directory of MCP servers for every use case imaginable.</p><p><strong>Use:</strong> Browse <code>repos/awesome-mcp-servers/</code> → pick a server → plug in via mcporter</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🔴 Attention</div>
-              <div class="mk-item"><div class="mk-name">firecrawl</div><div class="mk-desc">Needs API key — firecrawl.dev (free)</div></div>
+              <details class="mk-item"><summary><span class="mk-name">firecrawl</span></summary><div class="mk-drop"><p><strong>What:</strong> JS-heavy scraper — fully renders pages before extracting clean Markdown. Handles SPAs, auth walls.</p><p><strong>Use:</strong> Free key at <strong>firecrawl.dev</strong> → set <code>FIRECRAWL_API_KEY</code> → scrape.py auto-uses it</p></div></details>
             </div>
           </div>
         </div>
@@ -501,18 +509,18 @@
           <div class="mk">
             <div class="mk-col">
               <div class="mk-hdr">🟢 Active</div>
-              <div class="mk-item"><div class="mk-name">Peekaboo</div><div class="mk-desc">macOS UI automation + MCP — fully live</div></div>
+              <details class="mk-item"><summary><span class="mk-name">Peekaboo</span></summary><div class="mk-drop"><p><strong>What:</strong> macOS screen capture + AX UI inspection + automation MCP server. Agents can see, click, and type in any app.</p><p><strong>Use:</strong> Already wired — use <code>peekaboo__see</code>, <code>peekaboo__click</code>, <code>peekaboo__type</code> tools directly in any agent session</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🟡 Wiring</div>
-              <div class="mk-item"><div class="mk-name">openclaw-dashboard</div><div class="mk-desc">Sessions/cost dashboard :7001</div></div>
-              <div class="mk-item"><div class="mk-name">free-for-dev</div><div class="mk-desc">Free SaaS/APIs reference list</div></div>
+              <details class="mk-item"><summary><span class="mk-name">openclaw-dashboard</span></summary><div class="mk-drop"><p><strong>What:</strong> Real-time Node.js dashboard showing all agent sessions, costs, memory files, and cron jobs.</p><p><strong>Use:</strong> Running at <strong>localhost:7001</strong> — open in browser. LaunchAgent keeps it alive on boot.</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">free-for-dev</span></summary><div class="mk-drop"><p><strong>What:</strong> Massive curated list of free SaaS, PaaS, IaaS, APIs, CI/CD, hosting, and monitoring tools.</p><p><strong>Use:</strong> Browse <code>repos/free-for-dev/README.md</code> — check here before paying for any service</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🔴 Attention</div>
-              <div class="mk-item"><div class="mk-name">OpenHands</div><div class="mk-desc">Needs Docker to run</div></div>
-              <div class="mk-item"><div class="mk-name">DB-GPT</div><div class="mk-desc">Down — no LaunchAgent</div></div>
-              <div class="mk-item"><div class="mk-name">Flowise</div><div class="mk-desc">Paused — npm OOM killed</div></div>
+              <details class="mk-item"><summary><span class="mk-name">OpenHands</span></summary><div class="mk-drop"><p><strong>What:</strong> Self-hosted AI dev control center — run Claude Code, Codex locally in a sandboxed environment.</p><p><strong>Use:</strong> Install Docker first → <code>brew install --cask docker</code> → then pull the runtime image</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">DB-GPT</span></summary><div class="mk-drop"><p><strong>What:</strong> AI SQL assistant with natural language queries, data analysis, and visualization at localhost:5670.</p><p><strong>Use:</strong> Rick needs to add a LaunchAgent plist so it auto-starts and stays up after terminal closes</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">Flowise</span></summary><div class="mk-drop"><p><strong>What:</strong> Visual LLM flow builder — similar to Langflow, drag-and-drop pipeline editor.</p><p><strong>Use:</strong> Fix OOM first: <code>cd repos/Flowise && NODE_OPTIONS="--max-old-space-size=4096" npm install</code></p></div></details>
             </div>
           </div>
         </div>
@@ -527,17 +535,17 @@
           <div class="mk">
             <div class="mk-col">
               <div class="mk-hdr">🟢 Active</div>
-              <div class="mk-item"><div class="mk-name">graphify</div><div class="mk-desc">Knowledge graph for codebases</div></div>
-              <div class="mk-item"><div class="mk-name">aider</div><div class="mk-desc">AI pair programmer — code edits</div></div>
+              <details class="mk-item"><summary><span class="mk-name">graphify</span></summary><div class="mk-drop"><p><strong>What:</strong> Turns any codebase or docs into a persistent knowledge graph with community detection and query tools.</p><p><strong>Use:</strong> OpenClaw skill installed — run <code>/graphify</code> in any session, or <code>graphify &lt;path&gt;</code> in CLI</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">aider</span></summary><div class="mk-drop"><p><strong>What:</strong> AI pair programmer that edits code directly in your repo, reviews diffs, and applies changes.</p><p><strong>Use:</strong> <code>cd &lt;repo&gt; && aider --model claude-sonnet-4-5</code> — describe the change you want</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🟡 Wiring</div>
-              <div class="mk-item"><div class="mk-name">yt-dlp</div><div class="mk-desc">Video/audio downloader</div></div>
-              <div class="mk-item"><div class="mk-name">awesome-llm-apps</div><div class="mk-desc">100+ AI agent templates</div></div>
+              <details class="mk-item"><summary><span class="mk-name">yt-dlp</span></summary><div class="mk-drop"><p><strong>What:</strong> Download video and audio from YouTube and 1000+ other sites.</p><p><strong>Use:</strong> <code>yt-dlp &lt;url&gt;</code> in .venv — add <code>-x --audio-format mp3</code> for audio only</p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">awesome-llm-apps</span></summary><div class="mk-drop"><p><strong>What:</strong> 100+ ready-to-run AI agents, RAG apps, and agent skill templates — Apache-2.0 license.</p><p><strong>Use:</strong> Browse <code>repos/awesome-llm-apps/</code> → <code>npx skills add &lt;url&gt;</code> to install directly</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🔴 Attention</div>
-              <div class="mk-item"><div class="mk-name">langgraph</div><div class="mk-desc">Stateful agent flows — not wired yet</div></div>
+              <details class="mk-item"><summary><span class="mk-name">langgraph</span></summary><div class="mk-drop"><p><strong>What:</strong> Build stateful multi-step agent workflows with persistent state, loops, and conditional routing.</p><p><strong>Use:</strong> <code>from langgraph.graph import StateGraph</code> in .venv — Beast + Thanos are first candidates</p></div></details>
             </div>
           </div>
         </div>
@@ -552,15 +560,15 @@
           <div class="mk">
             <div class="mk-col">
               <div class="mk-hdr">🟢 Active</div>
-              <div class="mk-item"><div class="mk-name">crewAI</div><div class="mk-desc">Multi-agent crew orchestration</div></div>
+              <details class="mk-item"><summary><span class="mk-name">crewAI</span></summary><div class="mk-drop"><p><strong>What:</strong> Multi-agent crew orchestration — assign roles, goals, and tools to agents that collaborate on tasks.</p><p><strong>Use:</strong> Use .venv-crew (Python 3.11) → <code>crewai create crew &lt;name&gt;</code> or run existing crew scripts</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🟡 Wiring</div>
-              <div class="mk-item"><div class="mk-name">paperclip</div><div class="mk-desc">Multi-agent UI — goals + budgets</div></div>
+              <details class="mk-item"><summary><span class="mk-name">paperclip</span></summary><div class="mk-drop"><p><strong>What:</strong> Multi-agent orchestration UI with goal alignment, org charts, and budget enforcement.</p><p><strong>Use:</strong> OpenClaw registers as an HTTP/webhook agent — needs model config wired in for Thanos</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🔴 Attention</div>
-              <div class="mk-item"><div class="mk-name">plane</div><div class="mk-desc">Jira alt — needs Docker</div></div>
+              <details class="mk-item"><summary><span class="mk-name">plane</span></summary><div class="mk-drop"><p><strong>What:</strong> Open-source Jira/Linear alternative — issues, sprints, cycles, roadmaps, modules. Thanos manages crew projects here.</p><p><strong>Use:</strong> Needs Docker → <code>cd repos/plane && docker compose up</code></p></div></details>
             </div>
           </div>
         </div>
@@ -575,12 +583,12 @@
           <div class="mk">
             <div class="mk-col">
               <div class="mk-hdr">🟢 Active</div>
-              <div class="mk-item"><div class="mk-name">litellm</div><div class="mk-desc">Token counter + cost tracker</div></div>
+              <details class="mk-item"><summary><span class="mk-name">litellm</span></summary><div class="mk-drop"><p><strong>What:</strong> Unified interface for 100+ LLMs with token counting, cost tracking, and fallback routing.</p><p><strong>Use:</strong> <code>python3 tools/token_tracker.py</code> or run <code>litellm proxy</code> for a local OpenAI-compatible endpoint</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🟡 Wiring</div>
-              <div class="mk-item"><div class="mk-name">OpenVoice</div><div class="mk-desc">Voice cloning — needs HuggingFace models</div></div>
-              <div class="mk-item"><div class="mk-name">public-apis</div><div class="mk-desc">Free public APIs reference</div></div>
+              <details class="mk-item"><summary><span class="mk-name">OpenVoice</span></summary><div class="mk-drop"><p><strong>What:</strong> Instant voice cloning by MIT/MyShell — clone any voice from a short sample. Multilingual, MIT license.</p><p><strong>Use:</strong> Download checkpoints: <code>cd repos/OpenVoice && python download_models.py</code> → then <code>python demo_part1.py</code></p></div></details>
+              <details class="mk-item"><summary><span class="mk-name">public-apis</span></summary><div class="mk-drop"><p><strong>What:</strong> Hundreds of free, no-auth public APIs — finance, health, weather, entertainment, data.</p><p><strong>Use:</strong> Browse <code>repos/public-apis/README.md</code> — most need no key, just call the endpoint</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🔴 Attention</div>
@@ -603,11 +611,11 @@
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🟡 Wiring</div>
-              <div class="mk-item"><div class="mk-name">blender-mcp</div><div class="mk-desc">Prompt-driven 3D — needs openclaw.json config</div></div>
+              <details class="mk-item"><summary><span class="mk-name">blender-mcp</span></summary><div class="mk-drop"><p><strong>What:</strong> Connect any LLM to Blender — describe 3D objects and scenes in plain English, MCP handles the rest.</p><p><strong>Use:</strong> Jesse adds blender block to openclaw.json → Blender → Add-ons → enable “Blender MCP” → N panel → Start MCP Server</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🔴 Attention</div>
-              <div class="mk-item"><div class="mk-name">penpot</div><div class="mk-desc">Figma alt — needs Docker</div></div>
+              <details class="mk-item"><summary><span class="mk-name">penpot</span></summary><div class="mk-drop"><p><strong>What:</strong> Open-source self-hosted Figma alternative — design UI/UX, export to code. Green Lantern uses for Last Star assets.</p><p><strong>Use:</strong> Needs Docker → <code>cd repos/penpot && docker compose -f docker-compose.yaml up -d</code></p></div></details>
             </div>
           </div>
         </div>
@@ -622,15 +630,15 @@
           <div class="mk">
             <div class="mk-col">
               <div class="mk-hdr">🟢 Active</div>
-              <div class="mk-item"><div class="mk-name">mem0</div><div class="mk-desc">Per-agent memory — Qdrant + Ollama, 38 seeds loaded</div></div>
+              <details class="mk-item"><summary><span class="mk-name">mem0</span></summary><div class="mk-drop"><p><strong>What:</strong> Universal agent memory layer — stores and recalls facts per agent using Qdrant vector DB + nomic-embed-text. 38 seeds loaded.</p><p><strong>Use:</strong> <code>python3 tools/memory_store.py --store "fact" --agent orbit</code> or <code>--recall "query"</code></p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🟡 Wiring</div>
-              <div class="mk-item"><div class="mk-name">agentmemory</div><div class="mk-desc">54 MCP memory tools — needs openclaw.json config</div></div>
+              <details class="mk-item"><summary><span class="mk-name">agentmemory</span></summary><div class="mk-drop"><p><strong>What:</strong> 54 MCP memory tools + 17 skills + 12 lifecycle hooks for persistent coding-agent memory across sessions.</p><p><strong>Use:</strong> Jesse adds config to openclaw.json → tools like <code>memory_smart_search</code> and <code>memory_save</code> appear in all agents</p></div></details>
             </div>
             <div class="mk-col">
               <div class="mk-hdr">🔴 Attention</div>
-              <div class="mk-item"><div class="mk-name">zep</div><div class="mk-desc">Cloud memory SDK — needs API key (getzep.com)</div></div>
+              <details class="mk-item"><summary><span class="mk-name">zep</span></summary><div class="mk-drop"><p><strong>What:</strong> Cloud-hosted long-term agent memory SDK with semantic search, temporal context, and structured data.</p><p><strong>Use:</strong> Free key at <strong>getzep.com</strong> → set <code>ZEP_API_KEY</code> → <code>from zep_cloud.client import AsyncZep</code></p></div></details>
             </div>
           </div>
         </div>
