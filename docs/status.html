@@ -435,129 +435,187 @@
     <div class="section" id="section-repos">
       <div class="section-title">📦 Repos <span class="count">33 total</span></div>
       <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.5rem;line-height:1.6;">
-        All repos live in <code>~/.openclaw/workspace-main/repos/</code>. Grouped by agent — each agent owns their tools.
+        All repos live in <code>~/.openclaw/workspace-main/repos/</code>. Each agent has their own Kanban — Active, Needs Wiring, Needs Attention.
       </p>
 
       <style>
-        .agent-repo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; align-items:start; }
-        @media(max-width:1100px){ .agent-repo-grid { grid-template-columns:repeat(2,1fr); } }
-        @media(max-width:640px) { .agent-repo-grid { grid-template-columns:1fr; } }
-        .agent-card { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
-        .agent-card-hdr { display:flex; align-items:center; gap:.6rem; padding:.75rem 1rem; border-bottom:1px solid var(--border); }
-        .agent-card-av { width:28px; height:28px; border-radius:50%; overflow:hidden; flex-shrink:0; }
-        .agent-card-av img { width:100%; height:100%; object-fit:cover; }
-        .agent-card-name { font-size:.82rem; font-weight:700; color:var(--text); }
-        .repo-list { padding:.6rem .75rem; display:flex; flex-direction:column; gap:0; }
-        .repo-row { display:flex; align-items:baseline; gap:.5rem; padding:.45rem 0; border-bottom:1px solid rgba(255,255,255,.04); }
-        .repo-row:last-child { border-bottom:none; }
-        .repo-dot { font-size:.6rem; flex-shrink:0; margin-top:2px; }
-        .repo-name { font-size:.8rem; font-weight:600; color:var(--text); white-space:nowrap; }
-        .repo-desc { font-size:.75rem; color:var(--muted); line-height:1.4; }
-        .repo-tag { font-size:.62rem; font-weight:700; padding:.1rem .4rem; border-radius:4px; white-space:nowrap; flex-shrink:0; }
-        .rtag-active  { background:rgba(52,211,153,.15); color:#34d399; }
-        .rtag-wire    { background:rgba(251,191,36,.12); color:#fbbf24; }
-        .rtag-attn    { background:rgba(248,113,113,.12); color:#f87171; }
-        .rtag-docker  { background:rgba(139,92,246,.15); color:#a78bfa; }
-        .rtag-key     { background:rgba(99,179,237,.12); color:#63b3ed; }
-        .rtag-ref     { background:rgba(160,160,160,.1); color:#999; }
+        .agent-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; align-items:start; }
+        @media(max-width:900px){ .agent-grid { grid-template-columns:1fr; } }
+        .acard { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+        .acard-hdr { display:flex; align-items:center; gap:.6rem; padding:.7rem 1rem; border-bottom:1px solid var(--border); background:rgba(255,255,255,.02); }
+        .acard-av { width:30px; height:30px; border-radius:50%; overflow:hidden; flex-shrink:0; }
+        .acard-av img { width:100%; height:100%; object-fit:cover; }
+        .acard-name { font-size:.88rem; font-weight:700; }
+        .acard-count { font-size:.68rem; color:var(--muted); margin-left:auto; }
+        .mk { display:grid; grid-template-columns:repeat(3,1fr); }
+        .mk-col { border-right:1px solid var(--border); padding:.55rem .65rem; min-width:0; }
+        .mk-col:last-child { border-right:none; }
+        .mk-hdr { font-size:.58rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin-bottom:.45rem; display:flex; align-items:center; gap:.3rem; white-space:nowrap; }
+        .mk-item { padding:.28rem 0; border-bottom:1px solid rgba(255,255,255,.04); }
+        .mk-item:last-child { border-bottom:none; }
+        .mk-name { font-size:.73rem; font-weight:600; color:var(--text); word-break:break-word; }
+        .mk-desc { font-size:.64rem; color:var(--muted); line-height:1.3; margin-top:.08rem; }
+        .mk-empty { font-size:.65rem; color:rgba(255,255,255,.18); font-style:italic; padding:.3rem 0; }
       </style>
 
-      <div class="agent-repo-grid">
+      <div class="agent-grid">
 
-        <!-- ORBIT -->
-        <div class="agent-card">
-          <div class="agent-card-hdr">
-            <div class="agent-card-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div>
-            <span class="agent-card-name">🛸 Orbit</span>
+        <!-- ─── ORBIT ─── -->
+        <div class="acard">
+          <div class="acard-hdr">
+            <div class="acard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div>
+            <span class="acard-name">🛸 Orbit</span>
+            <span class="acard-count">14 repos</span>
           </div>
-          <div class="repo-list">
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">mem0</span><span class="repo-desc">Per-agent memory (Qdrant + Ollama)</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">newspaper</span><span class="repo-desc">Article scraper, local, no key</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">paul</span><span class="repo-desc">Plan-Apply-Unify dev loop</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">mcporter</span><span class="repo-desc">CLI to discover + call MCP servers</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">gogcli</span><span class="repo-desc">Google Workspace CLI + MCP server</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">Scrapling</span><span class="repo-desc">Anti-bot web scraper</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">Langflow</span><span class="repo-desc">Visual LLM flow builder / MCP server</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">openai-agents-python</span><span class="repo-desc">OpenAI Agents SDK</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">agentmemory</span><span class="repo-desc">54 MCP memory tools — needs openclaw.json config</span><span class="repo-tag rtag-wire">Needs Wiring</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">clawhub</span><span class="repo-desc">OpenClaw public skill registry</span><span class="repo-tag rtag-wire">Needs Wiring</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">awesome-openclaw-skills</span><span class="repo-desc">5300+ community skills reference</span><span class="repo-tag rtag-ref">Reference</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">awesome-mcp-servers</span><span class="repo-desc">Best MCP server directory</span><span class="repo-tag rtag-ref">Reference</span></div>
-            <div class="repo-row"><span class="repo-dot">🔴</span><span class="repo-name">firecrawl</span><span class="repo-desc">JS scraper — needs API key (firecrawl.dev)</span><span class="repo-tag rtag-key">Needs Key</span></div>
-            <div class="repo-row"><span class="repo-dot">🔴</span><span class="repo-name">zep</span><span class="repo-desc">Cloud memory SDK — needs API key (getzep.com)</span><span class="repo-tag rtag-key">Needs Key</span></div>
+          <div class="mk">
+            <div class="mk-col">
+              <div class="mk-hdr">🟢 Active</div>
+              <div class="mk-item"><div class="mk-name">mem0</div><div class="mk-desc">Per-agent memory (Qdrant + Ollama)</div></div>
+              <div class="mk-item"><div class="mk-name">newspaper</div><div class="mk-desc">Article scraper, local, no key</div></div>
+              <div class="mk-item"><div class="mk-name">paul</div><div class="mk-desc">Plan-Apply-Unify dev loop</div></div>
+              <div class="mk-item"><div class="mk-name">mcporter</div><div class="mk-desc">CLI to call MCP servers</div></div>
+              <div class="mk-item"><div class="mk-name">gogcli</div><div class="mk-desc">Google Workspace CLI + MCP</div></div>
+              <div class="mk-item"><div class="mk-name">Scrapling</div><div class="mk-desc">Anti-bot web scraper</div></div>
+              <div class="mk-item"><div class="mk-name">Langflow</div><div class="mk-desc">Visual flow builder / MCP server</div></div>
+              <div class="mk-item"><div class="mk-name">openai-agents-python</div><div class="mk-desc">OpenAI Agents SDK</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🟡 Wiring</div>
+              <div class="mk-item"><div class="mk-name">agentmemory</div><div class="mk-desc">54 MCP tools — needs openclaw.json config</div></div>
+              <div class="mk-item"><div class="mk-name">clawhub</div><div class="mk-desc">OpenClaw public skill registry</div></div>
+              <div class="mk-item"><div class="mk-name">awesome-openclaw-skills</div><div class="mk-desc">5300+ community skills reference</div></div>
+              <div class="mk-item"><div class="mk-name">awesome-mcp-servers</div><div class="mk-desc">Best MCP server directory</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🔴 Attention</div>
+              <div class="mk-item"><div class="mk-name">firecrawl</div><div class="mk-desc">Needs API key — firecrawl.dev (free)</div></div>
+              <div class="mk-item"><div class="mk-name">zep</div><div class="mk-desc">Needs API key — getzep.com (free)</div></div>
+            </div>
           </div>
         </div>
 
-        <!-- RICK -->
-        <div class="agent-card">
-          <div class="agent-card-hdr">
-            <div class="agent-card-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div>
-            <span class="agent-card-name">🔬 Rick</span>
+        <!-- ─── RICK ─── -->
+        <div class="acard">
+          <div class="acard-hdr">
+            <div class="acard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div>
+            <span class="acard-name">🔬 Rick</span>
+            <span class="acard-count">6 repos</span>
           </div>
-          <div class="repo-list">
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">Peekaboo</span><span class="repo-desc">macOS UI automation + MCP — fully live</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">openclaw-dashboard</span><span class="repo-desc">Real-time sessions/cost dashboard :7001</span><span class="repo-tag rtag-wire">Needs Wiring</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">free-for-dev</span><span class="repo-desc">Free SaaS/PaaS/IaaS reference list</span><span class="repo-tag rtag-ref">Reference</span></div>
-            <div class="repo-row"><span class="repo-dot">🔴</span><span class="repo-name">OpenHands</span><span class="repo-desc">Dev agent control center — needs Docker</span><span class="repo-tag rtag-docker">Needs Docker</span></div>
-            <div class="repo-row"><span class="repo-dot">🔴</span><span class="repo-name">DB-GPT</span><span class="repo-desc">AI SQL assistant — dies without LaunchAgent</span><span class="repo-tag rtag-attn">Down</span></div>
-            <div class="repo-row"><span class="repo-dot">🔴</span><span class="repo-name">Flowise</span><span class="repo-desc">Visual flow builder — npm OOM killed</span><span class="repo-tag rtag-attn">Paused</span></div>
-          </div>
-        </div>
-
-        <!-- BEAST -->
-        <div class="agent-card">
-          <div class="agent-card-hdr">
-            <div class="agent-card-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div>
-            <span class="agent-card-name">📚 Beast</span>
-          </div>
-          <div class="repo-list">
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">graphify</span><span class="repo-desc">Knowledge graph for codebases + docs</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">aider</span><span class="repo-desc">AI pair programmer — code review + edits</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">yt-dlp</span><span class="repo-desc">Video/audio downloader — YouTube + more</span><span class="repo-tag rtag-wire">Needs Wiring</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">awesome-llm-apps</span><span class="repo-desc">100+ AI agent + RAG app templates</span><span class="repo-tag rtag-ref">Reference</span></div>
-            <div class="repo-row"><span class="repo-dot">🔴</span><span class="repo-name">langgraph</span><span class="repo-desc">Stateful agent orchestration — not wired yet</span><span class="repo-tag rtag-wire">Not Wired</span></div>
+          <div class="mk">
+            <div class="mk-col">
+              <div class="mk-hdr">🟢 Active</div>
+              <div class="mk-item"><div class="mk-name">Peekaboo</div><div class="mk-desc">macOS UI automation + MCP — fully live</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🟡 Wiring</div>
+              <div class="mk-item"><div class="mk-name">openclaw-dashboard</div><div class="mk-desc">Sessions/cost dashboard :7001</div></div>
+              <div class="mk-item"><div class="mk-name">free-for-dev</div><div class="mk-desc">Free SaaS/APIs reference list</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🔴 Attention</div>
+              <div class="mk-item"><div class="mk-name">OpenHands</div><div class="mk-desc">Needs Docker to run</div></div>
+              <div class="mk-item"><div class="mk-name">DB-GPT</div><div class="mk-desc">Down — no LaunchAgent</div></div>
+              <div class="mk-item"><div class="mk-name">Flowise</div><div class="mk-desc">Paused — npm OOM killed</div></div>
+            </div>
           </div>
         </div>
 
-        <!-- THANOS -->
-        <div class="agent-card">
-          <div class="agent-card-hdr">
-            <div class="agent-card-av"><img src="avatars/thanos.jpg" alt="👊" onerror="this.parentNode.innerHTML='👊'"/></div>
-            <span class="agent-card-name">👊 Thanos</span>
+        <!-- ─── BEAST ─── -->
+        <div class="acard">
+          <div class="acard-hdr">
+            <div class="acard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div>
+            <span class="acard-name">📚 Beast</span>
+            <span class="acard-count">5 repos</span>
           </div>
-          <div class="repo-list">
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">crewAI</span><span class="repo-desc">Multi-agent crew orchestration (.venv-crew)</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">paperclip</span><span class="repo-desc">Multi-agent UI — goals, org charts, budgets</span><span class="repo-tag rtag-wire">Needs Wiring</span></div>
-            <div class="repo-row"><span class="repo-dot">🔴</span><span class="repo-name">plane</span><span class="repo-desc">Project management (Jira alt) — needs Docker</span><span class="repo-tag rtag-docker">Needs Docker</span></div>
-          </div>
-        </div>
-
-        <!-- TONY STARK -->
-        <div class="agent-card">
-          <div class="agent-card-hdr">
-            <div class="agent-card-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div>
-            <span class="agent-card-name">💰 Tony Stark</span>
-          </div>
-          <div class="repo-list">
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">litellm</span><span class="repo-desc">Token counter + cost tracker for 100+ LLMs</span><span class="repo-tag rtag-active">Active</span></div>
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">OpenVoice</span><span class="repo-desc">Voice cloning — needs HuggingFace checkpoints</span><span class="repo-tag rtag-wire">Needs Wiring</span></div>
-            <div class="repo-row"><span class="repo-dot">🟡</span><span class="repo-name">public-apis</span><span class="repo-desc">Hundreds of free public APIs — reference</span><span class="repo-tag rtag-ref">Reference</span></div>
-          </div>
-        </div>
-
-        <!-- GREEN LANTERN -->
-        <div class="agent-card">
-          <div class="agent-card-hdr">
-            <div class="agent-card-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div>
-            <span class="agent-card-name">🟢 Green Lantern</span>
-          </div>
-          <div class="repo-list">
-            <div class="repo-row"><span class="repo-dot">🟢</span><span class="repo-name">blender-mcp</span><span class="repo-desc">Prompt-driven 3D modeling — needs openclaw.json config</span><span class="repo-tag rtag-wire">Needs Wiring</span></div>
-            <div class="repo-row"><span class="repo-dot">🔴</span><span class="repo-name">penpot</span><span class="repo-desc">Figma alternative — needs Docker</span><span class="repo-tag rtag-docker">Needs Docker</span></div>
+          <div class="mk">
+            <div class="mk-col">
+              <div class="mk-hdr">🟢 Active</div>
+              <div class="mk-item"><div class="mk-name">graphify</div><div class="mk-desc">Knowledge graph for codebases</div></div>
+              <div class="mk-item"><div class="mk-name">aider</div><div class="mk-desc">AI pair programmer — code edits</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🟡 Wiring</div>
+              <div class="mk-item"><div class="mk-name">yt-dlp</div><div class="mk-desc">Video/audio downloader</div></div>
+              <div class="mk-item"><div class="mk-name">awesome-llm-apps</div><div class="mk-desc">100+ AI agent templates</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🔴 Attention</div>
+              <div class="mk-item"><div class="mk-name">langgraph</div><div class="mk-desc">Stateful agent flows — not wired yet</div></div>
+            </div>
           </div>
         </div>
 
-      </div><!-- end agent-repo-grid -->
+        <!-- ─── THANOS ─── -->
+        <div class="acard">
+          <div class="acard-hdr">
+            <div class="acard-av"><img src="avatars/thanos.jpg" alt="👊" onerror="this.parentNode.innerHTML='👊'"/></div>
+            <span class="acard-name">👊 Thanos</span>
+            <span class="acard-count">3 repos</span>
+          </div>
+          <div class="mk">
+            <div class="mk-col">
+              <div class="mk-hdr">🟢 Active</div>
+              <div class="mk-item"><div class="mk-name">crewAI</div><div class="mk-desc">Multi-agent crew orchestration</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🟡 Wiring</div>
+              <div class="mk-item"><div class="mk-name">paperclip</div><div class="mk-desc">Multi-agent UI — goals + budgets</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🔴 Attention</div>
+              <div class="mk-item"><div class="mk-name">plane</div><div class="mk-desc">Jira alt — needs Docker</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── TONY STARK ─── -->
+        <div class="acard">
+          <div class="acard-hdr">
+            <div class="acard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div>
+            <span class="acard-name">💰 Tony Stark</span>
+            <span class="acard-count">3 repos</span>
+          </div>
+          <div class="mk">
+            <div class="mk-col">
+              <div class="mk-hdr">🟢 Active</div>
+              <div class="mk-item"><div class="mk-name">litellm</div><div class="mk-desc">Token counter + cost tracker</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🟡 Wiring</div>
+              <div class="mk-item"><div class="mk-name">OpenVoice</div><div class="mk-desc">Voice cloning — needs HuggingFace models</div></div>
+              <div class="mk-item"><div class="mk-name">public-apis</div><div class="mk-desc">Free public APIs reference</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🔴 Attention</div>
+              <div class="mk-empty">All clear</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── GREEN LANTERN ─── -->
+        <div class="acard">
+          <div class="acard-hdr">
+            <div class="acard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div>
+            <span class="acard-name">🟢 Green Lantern</span>
+            <span class="acard-count">2 repos</span>
+          </div>
+          <div class="mk">
+            <div class="mk-col">
+              <div class="mk-hdr">🟢 Active</div>
+              <div class="mk-empty">None yet</div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🟡 Wiring</div>
+              <div class="mk-item"><div class="mk-name">blender-mcp</div><div class="mk-desc">Prompt-driven 3D — needs openclaw.json config</div></div>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🔴 Attention</div>
+              <div class="mk-item"><div class="mk-name">penpot</div><div class="mk-desc">Figma alt — needs Docker</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end agent-grid -->
     </div>
 
     <!-- ══ TODO ══ -->
