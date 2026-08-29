@@ -209,7 +209,7 @@
     <div class="sidebar-label">Stack</div>
     <div class="sidebar-item" data-section="repos">
       <span class="icon">📦</span> Repos
-      <span class="badge">24</span>
+      <span class="badge">33</span>
     </div>
 
     <hr class="sidebar-divider"/>
@@ -433,261 +433,293 @@
 
     <!-- ══ REPOS ══ -->
     <div class="section" id="section-repos">
-      <div class="section-title">📦 Repos <span class="count">32 total</span></div>
-      <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.25rem;line-height:1.6;">
-        All repos live in <code>~/.openclaw/workspace-main/repos/</code>. The column "How We Use It in OpenClaw" is the important one — this is how each tool connects to the real system on the Mac mini.
+      <div class="section-title">📦 Repos <span class="count">33 total</span></div>
+      <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.5rem;line-height:1.6;">
+        All repos live in <code>~/.openclaw/workspace-main/repos/</code>. Cards show what each tool is and how it connects to the real system on the Mac mini.
       </p>
 
-      <!-- ACTIVE / IN USE -->
-      <div class="card" style="margin-bottom:1rem">
-        <div class="card-label" style="color:var(--green)">🟢 Active — Wired into OpenClaw</div>
-        <table>
-          <thead><tr><th>Repo</th><th>What It Is</th><th>How We Use It in OpenClaw</th><th>Owner</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="col-name">mem0</td>
-              <td class="col-note">Per-agent memory store</td>
-              <td class="col-note">Orbit calls <code>memory_store.py</code> to save/recall facts per agent via Qdrant + nomic-embed-text</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">litellm</td>
-              <td class="col-note">Token counter + cost tracker for 100+ LLMs</td>
-              <td class="col-note">Used via <code>token_tracker.py</code> to estimate cost before/after agent runs</td>
-              <td class="col-note">Tony Stark</td>
-            </tr>
+      <div class="repo-board">
 
-            <tr>
-              <td class="col-name">newspaper</td>
-              <td class="col-note">Lightweight article scraper, fully local</td>
-              <td class="col-note">Primary in <code>scrape.py</code> — no API key needed, fast for standard articles</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">graphify</td>
-              <td class="col-note">Knowledge graph builder for codebases/docs</td>
-              <td class="col-note">OpenClaw graphify skill installed — run <code>/graphify</code> to map any repo into a queryable graph</td>
-              <td class="col-note">Beast</td>
-            </tr>
+        <!-- ── ACTIVE ── -->
+        <div class="todo-col rcol-active">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">🟢</span>
+            <span class="todo-col-title">Active — Wired In</span>
+            <span class="todo-col-count">16</span>
+          </div>
+          <div class="todo-cards">
 
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">mem0</div>
+              <div class="tcard-sub">Per-agent memory store (Qdrant + Ollama)</div>
+              <div class="tcard-note">Orbit calls <code>memory_store.py</code> to save/recall facts per agent via Qdrant + nomic-embed-text</div>
+            </div>
 
-            <tr>
-              <td class="col-name">paul</td>
-              <td class="col-note">Plan-Apply-Unify Loop for structured dev</td>
-              <td class="col-note">Dev workflow wrapper — plan a change, apply it, unify with existing code</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">crewAI</td>
-              <td class="col-note">Multi-agent crew orchestration</td>
-              <td class="col-note">Runs on Python 3.11 (.venv-crew) — build crews of specialized agents for complex tasks</td>
-              <td class="col-note">Thanos</td>
-            </tr>
-            <tr>
-              <td class="col-name">openai-agents-python</td>
-              <td class="col-note">OpenAI Agents SDK (tools, handoffs, guardrails)</td>
-              <td class="col-note">Installed in .venv (Python 3.14) — complement to crewAI for OpenAI-native agent flows</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">aider</td>
-              <td class="col-note">AI pair programmer that edits code in your repo</td>
-              <td class="col-note">Runs from .venv-crew — Beast uses it for code review + auto-edits in any repo</td>
-              <td class="col-note">Beast</td>
-            </tr>
-            <tr>
-              <td class="col-name">open-webui</td>
-              <td class="col-note">Chat UI for Ollama models</td>
-              <td class="col-note">Running at <strong>localhost:8080</strong> — lets Jesse chat with any Ollama model in browser</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">mcporter</td>
-              <td class="col-note">CLI to discover + call MCP servers</td>
-              <td class="col-note">OpenClaw mcporter skill installed — Orbit uses it to connect any MCP tool to the agent crew</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">gogcli</td>
-              <td class="col-note">Google Workspace CLI (Gmail, Calendar, Drive, Docs, Sheets)</td>
-              <td class="col-note">OpenClaw gog skill installed. Also exposes <code>gog mcp</code> stdio MCP server — agents can read Gmail, manage calendar, search Drive, interact with all Google Workspace without browser automation</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">Scrapling</td>
-              <td class="col-note">Adaptive web scraper — bypasses Cloudflare/anti-bot, handles JS sites, has MCP server built in</td>
-              <td class="col-note">Installed in .venv — replaces/upgrades <code>scrape.py</code>. Wrapper at <code>tools/scrapling_fetch.py</code>. Orbit + Beast + Tony Stark use for deep scraping, market data, research</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
+              <div class="tcard-title">litellm</div>
+              <div class="tcard-sub">Token counter + cost tracker for 100+ LLMs</div>
+              <div class="tcard-note">Used via <code>token_tracker.py</code> to estimate cost before/after agent runs</div>
+            </div>
 
-      <!-- CLONED — READY TO WIRE -->
-      <div class="card" style="margin-bottom:1rem">
-        <div class="card-label" style="color:var(--yellow)">🟡 Cloned — Needs Wiring into OpenClaw</div>
-        <table>
-          <thead><tr><th>Repo</th><th>What It Is</th><th>How We'll Use It in OpenClaw</th><th>Owner</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="col-name">yt-dlp</td>
-              <td class="col-note">Video/audio downloader — YouTube + 1000s of sites</td>
-              <td class="col-note">Orbit calls via <code>exec</code> — download video/audio for Beast (learning), Green Lantern (Last Star research), or any agent needing media</td>
-              <td class="col-note">Beast</td>
-            </tr>
-            <tr>
-              <td class="col-name">agentmemory</td>
-              <td class="col-note">Persistent memory for coding agents via MCP — explicitly supports OpenClaw</td>
-              <td class="col-note">Native OpenClaw plugin — installs 12 lifecycle hooks, 17 skills, and 54 MCP tools (<code>memory_smart_search</code>, <code>memory_save</code>, etc.) so agents auto-remember decisions across sessions without manual prompting</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">Peekaboo</td>
-              <td class="col-note">macOS screen capture + accessibility + UI automation CLI + MCP</td>
-              <td class="col-note">Part of openclaw GitHub org — exposes stdio MCP server so agents can take screenshots, inspect UI elements, click + type in any macOS app. Rick wires it in. Requires macOS 15+.</td>
-              <td class="col-note">Rick</td>
-            </tr>
-            <tr>
-              <td class="col-name">clawhub</td>
-              <td class="col-note">OpenClaw public skill registry — browse, publish, search skills</td>
-              <td class="col-note">Powers <code>openclaw skills install &lt;slug&gt;</code> directly — the official skill registry. Search before building. Orbit can publish crew skills here. Use <code>clawhub</code> CLI to manage full skill lifecycle.</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">awesome-openclaw-skills</td>
-              <td class="col-note">Curated list of 5300+ community OpenClaw skills by category</td>
-              <td class="col-note">5400+ skills, all installable via <code>openclaw skills install &lt;slug&gt;</code>. Check this before building anything new — someone probably already made it. Security scanned via VirusTotal partnership.</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">paperclip</td>
-              <td class="col-note">Open-source multi-agent orchestration UI — goals, org charts, budgets</td>
-              <td class="col-note">OpenClaw registers as an HTTP/webhook agent in Paperclip's org chart — Paperclip handles goal alignment + budget enforcement across agent teams. Evaluate for Thanos's project track.</td>
-              <td class="col-note">Thanos</td>
-            </tr>
-            <tr>
-              <td class="col-name">openclaw-dashboard</td>
-              <td class="col-note">Real-time Node.js dashboard for OpenClaw — sessions, costs, memory, cron, health</td>
-              <td class="col-note">Reads directly from <code>~/.openclaw/agents/&lt;id&gt;/sessions/</code> — live sessions, costs, memory files, cron jobs, logs. Run locally when server is ready; this replaces the GitHub Pages reference with a real control plane</td>
-              <td class="col-note">Rick</td>
-            </tr>
-            <tr>
-              <td class="col-name">Langflow</td>
-              <td class="col-note">Visual drag-and-drop LLM flow builder — like Flowise but more powerful, deploys as API or MCP server</td>
-              <td class="col-note">Installing in .venv — replaces Flowise. Any agent can build visual flows that expose as MCP tools. Orbit uses to wire multi-step pipelines without writing code</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">OpenVoice</td>
-              <td class="col-note">Instant voice cloning by MIT/MyShell — clone any voice, multilingual, MIT license, free commercial use</td>
-              <td class="col-note">Cloned + deps installed. Needs model checkpoints (~few GB from HuggingFace). Will give each agent their own cloned voice — top priority for Tony Stark's voice setup queue</td>
-              <td class="col-note">Tony Stark</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">newspaper</div>
+              <div class="tcard-sub">Lightweight article scraper — fully local, no key</div>
+              <div class="tcard-note">Primary in <code>scrape.py</code> — fast for standard articles, no API key needed</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">graphify</div>
+              <div class="tcard-sub">Knowledge graph builder for codebases + docs</div>
+              <div class="tcard-note">OpenClaw graphify skill installed — run <code>/graphify</code> to map any repo into a queryable graph</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">paul</div>
+              <div class="tcard-sub">Plan-Apply-Unify Loop for structured dev</div>
+              <div class="tcard-note">Dev workflow wrapper — plan a change, apply it, unify with existing code</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/thanos.jpg" alt="👊" onerror="this.parentNode.innerHTML='👊'"/></div><span class="tcard-who">👊 Thanos</span></div>
+              <div class="tcard-title">crewAI</div>
+              <div class="tcard-sub">Multi-agent crew orchestration</div>
+              <div class="tcard-note">Python 3.11 (.venv-crew) — build crews of specialized agents for complex multi-step tasks</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">openai-agents-python</div>
+              <div class="tcard-sub">OpenAI Agents SDK — tools, handoffs, guardrails</div>
+              <div class="tcard-note">Installed in .venv (Python 3.14) — complement to crewAI for OpenAI-native agent flows</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">aider</div>
+              <div class="tcard-sub">AI pair programmer that edits code in your repo</div>
+              <div class="tcard-note">Runs from .venv-crew — Beast uses it for code review + auto-edits in any repo</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">open-webui</div>
+              <div class="tcard-sub">Chat UI for Ollama models — localhost:8080</div>
+              <div class="tcard-note">Running at <strong>localhost:8080</strong> — lets Jesse chat with any Ollama model in browser</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">mcporter</div>
+              <div class="tcard-sub">CLI to discover + call MCP servers</div>
+              <div class="tcard-note">OpenClaw mcporter skill installed — Orbit uses it to connect any MCP tool to the agent crew</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">gogcli</div>
+              <div class="tcard-sub">Google Workspace CLI — Gmail, Calendar, Drive, Docs, Sheets</div>
+              <div class="tcard-note">OpenClaw gog skill installed. Also exposes <code>gog mcp</code> stdio MCP server for full Google Workspace access without browser automation</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Peekaboo</div>
+              <div class="tcard-sub">macOS screen capture + UI automation CLI + MCP</div>
+              <div class="tcard-note">Fully live ✅ (2026-08-23) — Screen Recording, Accessibility + Event Synthesizing all granted. MCP server wired into OpenClaw. Peekaboo skill enabled. Agents can screenshot, inspect UI, click + type in any macOS app.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div><span class="tcard-who">🟢 Green Lantern</span></div>
+              <div class="tcard-title">blender-mcp</div>
+              <div class="tcard-sub">Connect Blender to any LLM — prompt-driven 3D modeling</div>
+              <div class="tcard-note">Addon installed (2026-08-24). Repo at <code>repos/blender-mcp/</code>. Jesse must add <code>mcp.servers.blender</code> block to <code>openclaw.json</code> to activate. Then: Blender → Preferences → Add-ons → enable "Interface: Blender MCP" → N panel → Start MCP Server.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Scrapling</div>
+              <div class="tcard-sub">Adaptive web scraper — bypasses Cloudflare/anti-bot, handles JS</div>
+              <div class="tcard-note">Installed in .venv ✅ — replaces/upgrades <code>scrape.py</code>. Orbit, Beast, Tony Stark use for deep scraping, market data, research without getting blocked</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">Langflow</div>
+              <div class="tcard-sub">Visual LLM flow builder — drag-and-drop, deploys as API or MCP server</div>
+              <div class="tcard-note">Cloned ✅, installing in .venv — replaces Flowise. Any agent can build visual workflows that expose as MCP tools. Orbit uses to wire multi-step pipelines without writing code</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
+              <div class="tcard-title">OpenVoice</div>
+              <div class="tcard-sub">Instant voice cloning by MIT/MyShell — multilingual, MIT license</div>
+              <div class="tcard-note">Cloned ✅, deps installed — needs model checkpoints from HuggingFace. Will give each agent their own cloned voice. Top priority for agent voice setup</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── NEEDS WIRING ── -->
+        <div class="todo-col rcol-wire">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">🟡</span>
+            <span class="todo-col-title">Needs Wiring</span>
+            <span class="todo-col-count">10</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">yt-dlp</div>
+              <div class="tcard-sub">Video/audio downloader — YouTube + 1000s of sites</div>
+              <div class="tcard-note">Orbit calls via <code>exec</code> — download media for Beast (learning), Green Lantern (Last Star research), or any agent</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">agentmemory</div>
+              <div class="tcard-sub">Persistent coding-agent memory via MCP — OpenClaw native</div>
+              <div class="tcard-note">12 lifecycle hooks, 17 skills, 54 MCP tools (<code>memory_smart_search</code>, <code>memory_save</code>…). Needs config added to openclaw.json by Jesse.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">clawhub</div>
+              <div class="tcard-sub">OpenClaw public skill registry — browse, publish, search</div>
+              <div class="tcard-note">Powers <code>openclaw skills install &lt;slug&gt;</code> — the official registry. Orbit can publish crew skills here. Use <code>clawhub</code> CLI for full skill lifecycle.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">awesome-openclaw-skills</div>
+              <div class="tcard-sub">Curated list of 5300+ community OpenClaw skills</div>
+              <div class="tcard-note">All installable via <code>openclaw skills install &lt;slug&gt;</code>. Check before building anything — someone probably already made it. VirusTotal scanned.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/thanos.jpg" alt="👊" onerror="this.parentNode.innerHTML='👊'"/></div><span class="tcard-who">👊 Thanos</span></div>
+              <div class="tcard-title">paperclip</div>
+              <div class="tcard-sub">Multi-agent orchestration UI — goals, org charts, budgets</div>
+              <div class="tcard-note">OpenClaw registers as an HTTP/webhook agent — Paperclip handles goal alignment + budget enforcement. Evaluating for Thanos's project track.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">openclaw-dashboard</div>
+              <div class="tcard-sub">Real-time Node.js dashboard — sessions, costs, memory, cron</div>
+              <div class="tcard-note">Reads from <code>~/.openclaw/agents/&lt;id&gt;/sessions/</code> — live sessions, costs, memory files, logs. Running at :7001. Will replace this GitHub Pages reference when server is ready.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">OpenHands</div>
+              <div class="tcard-sub">Self-hosted developer control center — run Claude Code, Codex locally</div>
+              <div class="tcard-note">Cloned ✅ — needs Docker to run the agent sandbox + backend. Once up: Orbit coordinates coding agents through it, Rick automates infrastructure tasks</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div><span class="tcard-who">🟢 Green Lantern</span></div>
+              <div class="tcard-title">penpot</div>
+              <div class="tcard-sub">Open-source Figma alternative — self-hosted design platform</div>
+              <div class="tcard-note">Cloned ✅ — needs Docker for backend + DB. Green Lantern uses for Last Star visual design, ship concepts, UI mockups</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/thanos.jpg" alt="👊" onerror="this.parentNode.innerHTML='👊'"/></div><span class="tcard-who">👊 Thanos</span></div>
+              <div class="tcard-title">plane</div>
+              <div class="tcard-sub">Open-source Jira/Linear alternative — issues, sprints, roadmaps</div>
+              <div class="tcard-note">Cloned ✅ — needs Docker for full stack. Thanos manages all crew projects here — tasks, sprints, deadlines. Replaces scattered TASKS.md files</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span></div>
+              <div class="tcard-title">awesome-llm-apps</div>
+              <div class="tcard-sub">100+ ready-to-run AI agents, RAG apps, and agent skills</div>
+              <div class="tcard-note">Cloned ✅ — Apache-2.0. Orbit + Beast grab templates directly. Use <code>npx skills add &lt;url&gt;</code> to install agent skills straight from this repo</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── NEEDS ATTENTION ── -->
+        <div class="todo-col rcol-attn">
+          <div class="todo-col-hdr">
+            <span style="font-size:.95rem">🔴</span>
+            <span class="todo-col-title">Needs Attention</span>
+            <span class="todo-col-count">5</span>
+          </div>
+          <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span><span class="rcard-tag rcard-tag-key">Needs Key</span></div>
+              <div class="tcard-title">firecrawl</div>
+              <div class="tcard-sub">JS-heavy web scraper → clean Markdown</div>
+              <div class="tcard-note">Falls back to newspaper without key — JS-heavy sites fail silently. Get free key at <strong>firecrawl.dev</strong> → set <code>FIRECRAWL_API_KEY</code></div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span><span class="rcard-tag rcard-tag-key">Needs Key</span></div>
+              <div class="tcard-title">zep</div>
+              <div class="tcard-sub">Agent memory SDK — long-term cloud memory</div>
+              <div class="tcard-note">Installed in .venv but cloud features inactive without API key. Free key at <strong>getzep.com</strong></div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/beast.jpg" alt="📚" onerror="this.parentNode.innerHTML='📚'"/></div><span class="tcard-who">📚 Beast</span><span class="rcard-tag rcard-tag-wire">Not Wired</span></div>
+              <div class="tcard-title">langgraph</div>
+              <div class="tcard-sub">Stateful multi-step agent orchestration</div>
+              <div class="tcard-note">Installed in .venv but not used in any workflow. Beast + Thanos are first candidates for stateful agent flows.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span><span class="rcard-tag rcard-tag-down">Down</span></div>
+              <div class="tcard-title">DB-GPT</div>
+              <div class="tcard-sub">AI data assistant / SQL — localhost:5670</div>
+              <div class="tcard-note">Process not running — dies when terminal closes. No LaunchAgent configured. Rick to add auto-start.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span><span class="rcard-tag rcard-tag-pause">Paused</span></div>
+              <div class="tcard-title">Flowise</div>
+              <div class="tcard-sub">Visual LLM flow builder</div>
+              <div class="tcard-note"><code>npm install</code> OOM killed — package unusable. Fix: <code>NODE_OPTIONS="--max-old-space-size=4096" npm install</code> or Docker.</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- end repo-board -->
 
       <!-- REFERENCE REPOS -->
-      <div class="card" style="margin-bottom:1rem">
-        <div class="card-label" style="color:var(--accent)">📚 Reference — Cloned, Browse Anytime</div>
-        <table>
-          <thead><tr><th>Repo</th><th>What It Is</th><th>How Agents Use It</th><th>Owner</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="col-name">free-for-dev</td>
-              <td class="col-note">Massive curated list of free SaaS/PaaS/IaaS services for devs</td>
-              <td class="col-note">Rick + Tony Stark reference before paying for anything — find free APIs, CI/CD, DBs, hosting, monitoring</td>
-              <td class="col-note">Rick</td>
-            </tr>
-            <tr>
-              <td class="col-name">awesome-mcp-servers</td>
-              <td class="col-note">93k+ star curated list of MCP servers — the best tool directory for OpenClaw</td>
-              <td class="col-note">Orbit checks before building any new integration — pick an existing MCP server and plug in via mcporter</td>
-              <td class="col-note">Orbit</td>
-            </tr>
-            <tr>
-              <td class="col-name">public-apis</td>
-              <td class="col-note">Collective list of hundreds of free public APIs</td>
-              <td class="col-note">Tony Stark (finance), Baymax (health), Beast (data) — find free data sources before building anything custom</td>
-              <td class="col-note">All agents</td>
-            </tr>
-            <tr>
-              <td class="col-name">awesome-llm-apps</td>
-              <td class="col-note">100+ ready-to-run AI agents, RAG apps, and agent skills — Apache-2.0</td>
-              <td class="col-note">Orbit + Beast grab templates directly. Also use <code>npx skills add &lt;url&gt;</code> to install agent skills straight from this repo</td>
-              <td class="col-note">Beast</td>
-            </tr>
-          </tbody>
-        </table>
+      <div style="margin-top:1.5rem">
+        <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.75rem;">📚 Reference — Browse Anytime</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.65rem;">
+          <div class="tcard" style="flex:1;min-width:220px">
+            <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+            <div class="tcard-title">free-for-dev</div>
+            <div class="tcard-sub">Massive curated list of free SaaS/PaaS/IaaS services</div>
+            <div class="tcard-note">Rick + Tony Stark check here before paying for anything — free APIs, CI/CD, DBs, hosting, monitoring</div>
+          </div>
+          <div class="tcard" style="flex:1;min-width:220px">
+            <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+            <div class="tcard-title">awesome-mcp-servers</div>
+            <div class="tcard-sub">93k+ star curated list of MCP servers — best tool directory</div>
+            <div class="tcard-note">Orbit checks here before building any new integration — pick an existing MCP server and plug in via mcporter</div>
+          </div>
+          <div class="tcard" style="flex:1;min-width:220px">
+            <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
+            <div class="tcard-title">public-apis</div>
+            <div class="tcard-sub">Hundreds of free public APIs — finance, health, data, more</div>
+            <div class="tcard-note">Tony Stark (finance), Baymax (health), Beast (data) — find free data sources before building anything custom</div>
+          </div>
+        </div>
       </div>
 
-      <!-- NEEDS DOCKER -->
-      <div class="card" style="margin-bottom:1rem">
-        <div class="card-label" style="color:#a78bfa">🐋 Needs Docker — Cloned, Waiting on <code>brew install --cask docker</code></div>
-        <table>
-          <thead><tr><th>Repo</th><th>What It Is</th><th>Why Docker + Who Uses It</th><th>Owner</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="col-name">OpenHands</td>
-              <td class="col-note">Self-hosted developer control center — runs Claude Code, Codex, or any coding agent locally</td>
-              <td class="col-note">Docker runs the agent sandbox + backend. Once up: Orbit coordinates coding agents through it, Rick automates infrastructure tasks</td>
-              <td class="col-note">Orbit / Rick</td>
-            </tr>
-            <tr>
-              <td class="col-name">penpot</td>
-              <td class="col-note">Open-source Figma alternative — self-hosted design platform (SVG/CSS/HTML standards)</td>
-              <td class="col-note">Docker runs backend + frontend + DB. Green Lantern uses for Last Star visual design, ship concepts, UI mockups</td>
-              <td class="col-note">Green Lantern</td>
-            </tr>
-            <tr>
-              <td class="col-name">plane</td>
-              <td class="col-note">Open-source Jira/Linear/ClickUp alternative — issues, sprints, roadmaps, docs</td>
-              <td class="col-note">Docker runs the full stack. Thanos manages all crew projects in here — tasks, sprints, deadlines. Replaces scattered TASKS.md files</td>
-              <td class="col-note">Thanos</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- NEEDS ATTENTION -->
-      <div class="card">
-        <div class="card-label" style="color:var(--red)">🔴 Needs Attention</div>
-        <table>
-          <thead><tr><th>Status</th><th>Repo</th><th>Issue</th><th>Fix</th></tr></thead>
-          <tbody>
-            <tr>
-              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Needs Key</span></td>
-              <td class="col-name">firecrawl</td>
-              <td class="col-note">Falls back to newspaper without key — JS-heavy sites fail silently</td>
-              <td class="col-note">Get free API key at firecrawl.dev — then <code>FIRECRAWL_API_KEY=... python scrape.py</code></td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Needs Key</span></td>
-              <td class="col-name">zep</td>
-              <td class="col-note">Installed in .venv but cloud features inactive without API key</td>
-              <td class="col-note">Free key at getzep.com — then Orbit can use long-term cloud memory</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-warn"><span class="dot dot-yellow"></span>Not Wired</span></td>
-              <td class="col-name">langgraph</td>
-              <td class="col-note">Installed in .venv but not used in any agent workflow yet</td>
-              <td class="col-note">Design stateful agent flows — Beast/Thanos first candidates</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-down"><span class="dot dot-red"></span>Down</span></td>
-              <td class="col-name">DB-GPT</td>
-              <td class="col-note">Process not running — was at localhost:5670, dies when terminal closes</td>
-              <td class="col-note">Rick to create LaunchAgent for auto-start</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-pause"><span class="dot dot-grey"></span>Paused</span></td>
-              <td class="col-name">Flowise</td>
-              <td class="col-note">npm install OOM killed — package unusable</td>
-              <td class="col-note"><code>NODE_OPTIONS="--max-old-space-size=4096" npm install</code> or Docker</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
 
     <!-- ══ TODO ══ -->
@@ -728,6 +760,25 @@
         .tcol-done .todo-col-title { color:#00ff88; }
         .tcol-done .tcard { border-color:rgba(0,255,136,.12); opacity:.65; }
         .tcol-done .tcard-title { text-decoration:line-through; text-decoration-color:rgba(0,255,136,.4); }
+        /* ── REPO BOARD ── */
+        .repo-board { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-bottom:2rem; align-items:start; }
+        @media(max-width:1100px){ .repo-board { grid-template-columns:repeat(2,1fr); } }
+        @media(max-width:640px) { .repo-board { grid-template-columns:1fr; } }
+        .rcol-active .todo-col-hdr { border-color:rgba(0,255,136,.35); background:rgba(0,255,136,.05); }
+        .rcol-active .todo-col-title { color:#00ff88; }
+        .rcol-active .tcard { border-color:rgba(0,255,136,.15); }
+        .rcol-wire .todo-col-hdr { border-color:rgba(245,200,66,.35); background:rgba(245,200,66,.05); }
+        .rcol-wire .todo-col-title { color:#f5c842; }
+        .rcol-wire .tcard { border-color:rgba(245,200,66,.15); }
+        .rcol-attn .todo-col-hdr { border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.05); }
+        .rcol-attn .todo-col-title { color:#ff6b6b; }
+        .rcol-attn .tcard { border-color:rgba(255,107,107,.18); }
+        .tcard-sub { font-size:.72rem; color:var(--muted); margin-bottom:.3rem; line-height:1.4; }
+        .rcard-tag { font-size:.63rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:.1rem .45rem; border-radius:4px; margin-left:auto; }
+        .rcard-tag-down  { background:rgba(255,107,107,.15); color:#ff6b6b; border:1px solid rgba(255,107,107,.3); }
+        .rcard-tag-pause { background:rgba(255,255,255,.07); color:var(--muted); border:1px solid var(--border); }
+        .rcard-tag-key   { background:rgba(245,200,66,.12); color:#f5c842; border:1px solid rgba(245,200,66,.3); }
+        .rcard-tag-wire  { background:rgba(140,130,255,.12); color:#b0aaff; border:1px solid rgba(140,130,255,.3); }
       </style>
 
       <div class="todo-board">
@@ -737,9 +788,21 @@
           <div class="todo-col-hdr">
             <span style="font-size:.95rem">🔴</span>
             <span class="todo-col-title">High Priority</span>
-            <span class="todo-col-count">10</span>
+            <span class="todo-col-count">12</span>
           </div>
           <div class="todo-cards">
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">agentmemory config — Jesse must add to openclaw.json</div>
+              <div class="tcard-note">Protected path — agents can't touch it. Add the plugin block from MEMORY.md to <code>~/.openclaw/openclaw.json</code> manually to activate the agentmemory plugin.</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">Peekaboo — grant permissions (Jesse)</div>
+              <div class="tcard-note">✅ Done (2026-08-23) — Screen Recording, Accessibility + Event Synthesizing all granted. MCP wired. Peekaboo skill live.</div>
+            </div>
 
             <div class="tcard">
               <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
@@ -900,7 +963,7 @@
             <div class="tcard">
               <div class="tcard-meta"><div class="tcard-av"><img src="avatars/greenlantern.jpg" alt="🟢" onerror="this.parentNode.innerHTML='🟢'"/></div><span class="tcard-who">🟢 Green Lantern</span></div>
               <div class="tcard-title">Blender MCP setup</div>
-              <div class="tcard-note">github.com/ahujasid/blender-mcp</div>
+              <div class="tcard-note">✅ Addon installed (2026-08-24). Repo cloned. Jesse needs to add to <code>openclaw.json</code> → <code>mcp.servers.blender</code>: command <code>uvx</code>, args <code>["blender-mcp"]</code>, transport <code>stdio</code>. Then enable addon in Blender → N panel → Start MCP Server.
             </div>
 
             <div class="tcard">
@@ -1019,7 +1082,7 @@
           <div class="todo-col-hdr">
             <span style="font-size:.95rem">✅</span>
             <span class="todo-col-title">Done</span>
-            <span class="todo-col-count">9</span>
+            <span class="todo-col-count">11</span>
           </div>
           <div class="todo-cards">
 
@@ -1075,6 +1138,18 @@
               <div class="tcard-meta"><div class="tcard-av"><img src="avatars/tonystark.jpg" alt="💰" style="object-position:center 25%" onerror="this.parentNode.innerHTML='💰'"/></div><span class="tcard-who">💰 Tony Stark</span></div>
               <div class="tcard-title">Anthropic credits auto-reload</div>
               <div class="tcard-note">Reloads to $55 when balance hits $5</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/orbit.jpg" alt="🛸" onerror="this.parentNode.innerHTML='🛸'"/></div><span class="tcard-who">🛸 Orbit</span></div>
+              <div class="tcard-title">agentmemory LaunchAgent created</div>
+              <div class="tcard-note">iii server auto-starts on boot — ai.openclaw.agentmemory.plist (2026-08-21)</div>
+            </div>
+
+            <div class="tcard">
+              <div class="tcard-meta"><div class="tcard-av"><img src="avatars/rick.jpg" alt="🔬" onerror="this.parentNode.innerHTML='🔬'"/></div><span class="tcard-who">🔬 Rick</span></div>
+              <div class="tcard-title">openclaw-dashboard LaunchAgent</div>
+              <div class="tcard-note">Running at :7001, auto-starts on boot — ai.openclaw.dashboard.plist (2026-08-21)</div>
             </div>
 
           </div>
