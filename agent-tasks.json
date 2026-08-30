@@ -662,6 +662,52 @@
           "createdAt": "2026-03-14T22:54:45.807Z"
         }
       ]
+    },
+    "rocket": {
+      "tasks": [
+        {
+          "id": "rocket-1",
+          "text": "Full integration audit \u2014 health check all active tokens, MCP servers, and connectors",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rocket-2",
+          "text": "Get Firecrawl API key (firecrawl.dev \u2014 free tier) and wire into OpenClaw",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rocket-3",
+          "text": "Get Zep Cloud API key (getzep.com \u2014 free tier) and activate cloud features",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rocket-4",
+          "text": "Confirm Blender MCP wired after Jesse adds openclaw.json entry",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rocket-5",
+          "text": "MCP ecosystem scan \u2014 search GitHub/Smithery for MCP servers for: Notion, Calendar, weather, Slack",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rocket-6",
+          "text": "Document all currently registered MCP servers in TOOLS.md",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "rocket-audit-20files",
+          "text": "Audit agent workspace for all 20 required files (agent.json + 19 MD files). Add N/A stubs for non-applicable sections.",
+          "done": true,
+          "status": "done"
+        }
+      ]
     }
   }
 }

@@ -95,6 +95,7 @@ Full content in `memory/2026-08-30.md`.
 | Tony Stark | tonystark | 💰 | Tony Stark \| Business & Investing | Business, Investing, Markets, Strategy, Dev, Wallet Mgmt |
 | Vision | vision | 🔮 | Vision \| Data & Memory | RAG, Qdrant, ChromaDB, Vector Search, mem0, Session Memory, agentmemory, Knowledge Graph |
 | Cable | cable | ⚡ | Nathan Summers \| Program Manager | Program Management, Project Tracking, Milestones, Blockers, Status Reports, Cross-Agent Coordination, Escalation |
+| Rocket | rocket | 🦝 | Rocket Raccoon \| Integrations & Tools | MCP Servers, APIs, OAuth/Auth, Connectors, Tool Discovery, Repo Scouting, CLI Utilities, Automation Hooks |
 
 Full task list per agent: `agent-tasks.json`
 
