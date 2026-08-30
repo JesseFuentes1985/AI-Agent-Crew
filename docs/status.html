@@ -426,6 +426,13 @@
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
               <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
             </tr>
+            <tr>
+              <td class="col-name"><div class="agent-name-cell"><div class="agent-tbl-av"><img src="avatars/cable.jpg" alt="Cable" onerror="this.parentNode.innerHTML='⚡'"/></div>Cable</div></td>
+              <td class="col-path">cable</td>
+              <td class="col-path">workspace-cable/</td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Yes</span></td>
+              <td><span class="badge badge-ok"><span class="dot dot-green"></span>Active</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -639,6 +646,29 @@
             <div class="mk-col">
               <div class="mk-hdr">🔴 Attention</div>
               <details class="mk-item"><summary><span class="mk-name">zep</span></summary><div class="mk-drop"><p><strong>What:</strong> Cloud-hosted long-term agent memory SDK with semantic search, temporal context, and structured data.</p><p><strong>Use:</strong> Free key at <strong>getzep.com</strong> → set <code>ZEP_API_KEY</code> → <code>from zep_cloud.client import AsyncZep</code></p></div></details>
+            </div>
+          </div>
+        </div>
+
+      <!-- ─── CABLE ─── -->
+        <div class="acard">
+          <div class="acard-hdr">
+            <div class="acard-av"><img src="avatars/cable.jpg" alt="⚡" onerror="this.parentNode.innerHTML='⚡'"/></div>
+            <span class="acard-name">⚡ Cable</span>
+            <span class="acard-count">New</span>
+          </div>
+          <div class="mk">
+            <div class="mk-col">
+              <div class="mk-hdr">🟢 Active</div>
+              <details class="mk-item"><summary><span class="mk-name">Workspace</span></summary><div class="mk-drop"><p><strong>What:</strong> Full PM workspace built — SOUL.md, SCOPE.md, WORKFLOWS.md, TEMPLATES.md, SKILLS.md, ESCALATION.md, POLICIES.md, SOURCES.md.</p><p><strong>Use:</strong> Chat with Cable for project tracking, status reports, blocker triage, and milestone management.</p></div></details>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🟡 Wiring</div>
+              <details class="mk-item"><summary><span class="mk-name">Agent Config</span></summary><div class="mk-drop"><p><strong>What:</strong> Needs one JSON snippet added to openclaw.json to register Cable as a live agent in the UI.</p><p><strong>Use:</strong> Jesse adds the config block → Cable appears in Sessions tab</p></div></details>
+            </div>
+            <div class="mk-col">
+              <div class="mk-hdr">🔴 Up Next</div>
+              <details class="mk-item"><summary><span class="mk-name">Project Onboarding</span></summary><div class="mk-drop"><p><strong>What:</strong> Cable needs Jesse’s active project list to start tracking milestones and blockers.</p><p><strong>Use:</strong> Tell Cable: “Spin up [project name]” to kick off tracking</p></div></details>
             </div>
           </div>
         </div>
@@ -1102,6 +1132,7 @@
               <th>🧘 Qui-Gon</th>
               <th>👊 Thanos</th>
               <th>🔮 Vision</th>
+              <th>⚡ Cable</th>
             </tr>
           </thead>
           <tbody>
@@ -1109,43 +1140,48 @@
               <td class="col-name">OpenClaw / Gateway</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td><span class="badge badge-ok">C</span></td>
-              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-pause">I</span></td>
+              <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Agent Config &amp; Crew</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td><span class="badge badge-ok">C</span></td>
-              <td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-pause">I</span></td>
+              <td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-pause">I</span></td><td><span class="badge badge-ok">C</span></td>
             </tr>
             <tr>
               <td class="col-name">RAG / ChromaDB</td>
               <td><span class="badge badge-ok">C</span></td>
               <td><span class="badge badge-ok">C</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-done">A/R</span></td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">mem0 / Qdrant</td>
               <td><span class="badge badge-ok">C</span></td>
               <td><span class="badge badge-ok">C</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-done">A/R</span></td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Servers / Infra / Pi / Docker</td>
               <td><span class="badge badge-pause">I</span></td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Ollama &amp; Local Models</td>
               <td><span class="badge badge-ok">C</span></td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-ok">C</span></td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Home Automation / Moxie</td>
               <td><span class="badge badge-pause">I</span></td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Business / Investing / Markets</td>
@@ -1154,6 +1190,7 @@
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-ok">C</span></td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">API Credits &amp; Cost Monitoring</td>
@@ -1162,6 +1199,7 @@
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Last Star — Story &amp; Lore</td>
@@ -1170,6 +1208,7 @@
               <td><span class="badge badge-done">A/R</span></td>
               <td><span class="badge badge-ok">C</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">The Hex — Blender / 3D</td>
@@ -1177,6 +1216,7 @@
               <td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Learning / Certs (AWS, PMP, ITIL)</td>
@@ -1184,6 +1224,7 @@
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Book Library / DB</td>
@@ -1191,6 +1232,7 @@
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td><span class="badge badge-ok">C</span></td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Health / Nutrition / Sleep</td>
@@ -1198,6 +1240,7 @@
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Mental Health / Mindfulness</td>
@@ -1205,12 +1248,14 @@
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">Projects &amp; Deadlines</td>
               <td><span class="badge badge-ok">C</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-done">A/R</span></td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
             <tr>
               <td class="col-name">GitHub Pages Dashboard</td>
@@ -1219,6 +1264,7 @@
               <td><span class="badge badge-ok">C</span></td>
               <td class="col-muted">—</td><td class="col-muted">—</td>
               <td><span class="badge badge-pause">I</span></td><td class="col-muted">—</td>
+            <td class="col-muted">—</td>
             </tr>
           </tbody>
         </table>
