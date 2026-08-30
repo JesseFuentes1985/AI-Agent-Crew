@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-14",
+  "lastUpdated": "2026-08-30",
   "agents": {
     "orbit": {
       "name": "Orbit",
@@ -161,6 +161,12 @@
           "text": "Add MEMORY.md to Baymax, Beast, Qui-Gon, Thanos workspaces",
           "done": false,
           "status": "queue"
+        },
+        {
+          "id": "orbit-audit-20files",
+          "text": "Audit agent workspace for all 20 required files (agent.json + 19 MD files). Add N/A stubs for non-applicable sections.",
+          "done": false,
+          "status": "queue"
         }
       ]
     },
@@ -220,6 +226,12 @@
         {
           "id": "gl-4",
           "text": "Build the spaceship (Hex) in Blender",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "greenlantern-audit-20files",
+          "text": "Audit agent workspace for all 20 required files (agent.json + 19 MD files). Add N/A stubs for non-applicable sections.",
           "done": false,
           "status": "queue"
         }
@@ -359,6 +371,12 @@
           "text": "Install Docker Desktop (required for Firecrawl, Zep self-hosted, OpenMoxie)",
           "done": false,
           "status": "queue"
+        },
+        {
+          "id": "rick-audit-20files",
+          "text": "Audit agent workspace for all 20 required files (agent.json + 19 MD files). Add N/A stubs for non-applicable sections.",
+          "done": false,
+          "status": "queue"
         }
       ]
     },
@@ -389,6 +407,12 @@
         {
           "id": "qg-3",
           "text": "Mental Health",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "quigon-audit-20files",
+          "text": "Audit agent workspace for all 20 required files (agent.json + 19 MD files). Add N/A stubs for non-applicable sections.",
           "done": false,
           "status": "queue"
         }
@@ -456,6 +480,12 @@
         {
           "id": "beast-9",
           "text": "Set up Notion MCP (developers.notion.com/docs/mcp) for Last Star lore access",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "beast-audit-20files",
+          "text": "Audit agent workspace for all 20 required files (agent.json + 19 MD files). Add N/A stubs for non-applicable sections.",
           "done": false,
           "status": "queue"
         }
@@ -541,6 +571,12 @@
           "text": "Working out",
           "done": false,
           "status": "queue"
+        },
+        {
+          "id": "baymax-audit-20files",
+          "text": "Audit agent workspace for all 20 required files (agent.json + 19 MD files). Add N/A stubs for non-applicable sections.",
+          "done": false,
+          "status": "queue"
         }
       ]
     },
@@ -564,6 +600,12 @@
         {
           "id": "thanos-2",
           "text": "Bring in all the projects that I have",
+          "done": false,
+          "status": "queue"
+        },
+        {
+          "id": "thanos-audit-20files",
+          "text": "Audit agent workspace for all 20 required files (agent.json + 19 MD files). Add N/A stubs for non-applicable sections.",
           "done": false,
           "status": "queue"
         }
@@ -605,6 +647,12 @@
           "text": "Set up cron + auto-reload for Anthropic credits (reloads to $55 at $5)",
           "done": true,
           "status": "done"
+        },
+        {
+          "id": "tonystark-audit-20files",
+          "text": "Audit agent workspace for all 20 required files (agent.json + 19 MD files). Add N/A stubs for non-applicable sections.",
+          "done": false,
+          "status": "queue"
         }
       ],
       "notes": [

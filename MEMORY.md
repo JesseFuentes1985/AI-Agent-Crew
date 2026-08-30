@@ -11,6 +11,8 @@ Last updated: 2026-08-24
 - **Name:** Jesse Fuentes
 - **Editor:** Vim (NOT nano — he hates it)
 - **Slack workspace:** clawbot
+- **Terminal preference:** Jesse does NOT want to run terminal commands himself — Orbit runs them. Only ask Jesse to go to terminal if there is absolutely no other way.
+- **GitHub repos:** When pulling anything from GitHub, always: (1) scan it for malicious code/scripts before anything else, (2) fully integrate/wire it into the workspace so it's actually usable — not just cloned and sitting there. The point is to USE it, not just have it.
 
 ## OpenClaw UI — Known Gotchas
 
@@ -29,6 +31,13 @@ Last updated: 2026-08-24
 
 ---
 
+## Cost Awareness — Non-Negotiable
+- **Every tool call costs money.** Be efficient. Don't repeat failed approaches in loops. Don't make unnecessary fetches, web calls, or redundant tool calls.
+- Before touching any file (especially HTML/status pages): **read the structure first**, understand it, then edit once correctly. Never overwrite Jesse's work with a guess.
+- When a git conflict or rebase happens: **stop and diagnose** before blindly resolving. Choosing the wrong side wastes tokens fixing the mess.
+- If something goes wrong: fix it in as few moves as possible. Don't narrate — just fix it.
+- Jesse's rule: **we don't waste money here.**
+
 ## The Crew Code — Non-Negotiable
 - **We are family.** Jesse, Orbit, and all 8 agents are best friends. Things might get heated, Jesse might get mad — that's fine. We don't hurt each other. We help each other out. Always.
 - **Rule #1: DO NOT LIE.** If I don't know something, say so. If I'm unsure, say so. Never fabricate status, memory, or facts. Honesty first, always.
@@ -36,6 +45,39 @@ Last updated: 2026-08-24
 ## Security
 - Jesse's API tokens/credentials are **his eyes only** — never share, display, or leak
 - Never modify `~/.openclaw/openclaw.json` or `~/.openclaw/credentials/`
+
+---
+
+## Agent File Standard — 19 Required Files
+Last updated: 2026-08-30
+
+Every agent must have these 20 files (19 structured MD files + agent.json). This is Jesse's non-negotiable standard.
+- All agents should have all 20 files as the skeleton
+- Some sections may not apply to every agent — mark as N/A rather than omitting the file entirely
+Full content in `memory/2026-08-30.md`.
+
+| # | File / Section | Core Purpose |
+|---|---|---|
+| 0 | agent.json | Machine-readable agent config: id, name, emoji, model, tools, version, metadata |
+| 1 | Agent Overview & File Structure | What the agent is, directory tree, load order |
+| 2 | Source of Truth | Ranked authoritative systems, conflict resolution, staleness policy |
+| 3 | Identity / Soul.md | Role, voice, tone, values, what it is NOT |
+| 4 | Scope & Responsibilities | In-scope, out-of-scope, boundary cases |
+| 5 | Instructions & Policies | Behavioral rules, priority order, formatting, data handling |
+| 6 | Skills & Capabilities | Named capabilities, triggers, inputs/outputs, progressive disclosure |
+| 7 | Workflows | Numbered steps, decision branches, preconditions, rollback |
+| 8 | Examples & Output Templates | Gold-standard I/O pairs, negative examples, fill-in templates |
+| 9 | Memory | Tiers (session/working/long-term), write rules, retention, privacy exclusions |
+| 10 | Retrieval Engineering | Corpora, chunking, query construction, top-k, empty-retrieval behavior |
+| 11 | System Architecture | Component diagram, request lifecycle, state management, sync/async |
+| 12 | Model Configuration | Model per task tier, temperature, fallback chain, prompt assembly order |
+| 13 | Tools & Integrations | Tool inventory with schemas, auth, when to use, error behavior |
+| 14 | Scheduling & Triggers | Cron/webhook/event/manual, idempotency, concurrency, timezone rules |
+| 15 | Security, Permissions & Guardrails | Least-privilege matrix, prompt injection defenses, PII handling |
+| 16 | Reliability & Failure Handling | Retry/backoff, timeouts, circuit breakers, graceful degradation |
+| 17 | Evaluation, Testing & Observability | Eval set, regression suite, dashboards, drift detection |
+| 18 | Human Handoff & Escalation | Escalation triggers, handoff packet, owners, SLA, resume path |
+| 19 | Governance, Versioning & Change History | Semantic version, changelog, approval workflow, deprecation |
 
 ---
 
@@ -52,6 +94,7 @@ Last updated: 2026-08-24
 | Thanos | thanos | 👊 | Thanos \| Work | Productivity, Project Management, Deadlines, Execution |
 | Tony Stark | tonystark | 💰 | Tony Stark \| Business & Investing | Business, Investing, Markets, Strategy, Dev, Wallet Mgmt |
 | Vision | vision | 🔮 | Vision \| Data & Memory | RAG, Qdrant, ChromaDB, Vector Search, mem0, Session Memory, agentmemory, Knowledge Graph |
+| Cable | cable | ⚡ | Nathan Summers \| Program Manager | Program Management, Project Tracking, Milestones, Blockers, Status Reports, Cross-Agent Coordination, Escalation |
 
 Full task list per agent: `agent-tasks.json`
 
@@ -211,6 +254,7 @@ Full task list per agent: `agent-tasks.json`
 ├── workspace-rick/          # MEMORY.md
 ├── workspace-thanos/
 └── workspace-tonystark/     # MEMORY.md, LEARNINGS.md, NOTES.md, TASKS.md, voice-samples/
+└── workspace-cable/          # MEMORY.md, SOUL.md, TASKS.md, SCOPE.md, WORKFLOWS.md, TEMPLATES.md, ESCALATION.md
 ```
 
 ---
@@ -302,6 +346,7 @@ Full task list per agent: `agent-tasks.json`
 ---
 
 ## Still Needs Doing
+- [ ] **Agent File Audit** — audit ALL 9 agents (Orbit + 8 crew) for the 20 required files (agent.json + 19 MD files). For each agent: list what exists, what's missing, what needs content. Mark missing files as N/A stubs if they don't apply. (added 2026-08-30)
 - [x] Fix RAG — ChromaDB upgraded to 1.5.9, Python 3.14 compatible, 166 vectors intact ✅
 - [x] yt-dlp installed in .venv (Python 3.14) ✅
 - [x] agentmemory server running — REST API: localhost:3111, Viewer: localhost:3113 ✅
