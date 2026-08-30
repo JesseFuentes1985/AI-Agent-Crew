@@ -346,6 +346,14 @@ Full task list per agent: `agent-tasks.json`
 
 ---
 
+## Known Bugs & Gotchas — AI Crew Site (index.html)
+- **Agent card detail bug (2026-08-30):** When adding a new agent to the ROSTER in `index.html`, ALWAYS include BOTH:
+  1. `role` field in the ROSTER entry (e.g. `role:'...'`) — otherwise detail panel shows empty
+  2. `agents/<id>/agent.json` file in the repo — otherwise `getData()` 404s and breaks the async detail load
+  Missing either one = clicking the card shows nothing and leaves the detail in a broken state.
+
+---
+
 ## Still Needs Doing
 - [ ] **Agent File Audit** — audit ALL 9 agents (Orbit + 8 crew) for the 20 required files (agent.json + 19 MD files). For each agent: list what exists, what's missing, what needs content. Mark missing files as N/A stubs if they don't apply. (added 2026-08-30)
 - [x] Fix RAG — ChromaDB upgraded to 1.5.9, Python 3.14 compatible, 166 vectors intact ✅
