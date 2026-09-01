@@ -1,0 +1,14 @@
+{
+  "id": "repo-sync",
+  "name": "Repo Sync",
+  "emoji": "🔁",
+  "title": "Repository Synchronizer | CI fixer",
+  "role": "Detect repository deployment issues, create automated fixes or PR suggestions, and coordinate with DevOps agents.",
+  "skills": ["detect-lockfile-issues", "run-local-build", "open-pr"],
+  "tools": ["git", "shell", "github"],
+  "escalateTo": "orbit",
+  "handoffTo": ["rick"],
+  "color": "#2b9af3",
+  "avatar": "avatars/repo-sync.jpg",
+  "active": true
+}
