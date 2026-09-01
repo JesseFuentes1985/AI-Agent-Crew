@@ -1,0 +1,5 @@
+{
+  "allowed": ["git", "shell", "github"],
+  "restricted": [],
+  "notes": "Repo Sync can run git, shell commands, and use GitHub API for PRs."
+}
